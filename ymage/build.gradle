@@ -17,7 +17,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
 
+ext {
+    bintrayRepo = 'ymage'
+    bintrayName = 'com.yitimo.ymage'
+
+    libraryName = 'ymage'
+    artifact = 'ymage'
+
+    libraryDescription = 'Image picker for Android'
+
+    siteUrl = 'https://github.com/yitimo/ymage'
+    gitUrl = 'https://github.com/yitimo/ymage.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'yitimo'
+    developerName = 'yitimo'
+    developerEmail = 'admin@yitimo.com'
+
+    publishedGroupId= 'com.yitimo.ymage'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
 
 dependencies {
@@ -32,3 +56,6 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
