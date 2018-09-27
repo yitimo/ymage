@@ -1,0 +1,27 @@
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#333333"
+    android:overScrollMode="never"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/adapter_ymage_chosen_name"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:ellipsize="end"
+        android:textSize="15sp"/>
+    <ImageView
+        android:contentDescription="@null"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_button_drop"
+        android:padding="4dp"
+        android:scaleType="fitXY"
+        android:tint="#FFFFFF"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"/>
+</LinearLayout>

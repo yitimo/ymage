@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yitimo.ymage">
+    <application>
+        <activity android:name=".ListActivity" />
+        <activity android:name=".OriginActivity" />
+    </application>
+</manifest>

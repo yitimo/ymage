@@ -1,0 +1,26 @@
+<FrameLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="1dp">
+    <ImageView
+        android:id="@+id/adapter_ymage_img"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:background="#4F4F4F"
+        android:contentDescription="@null"/>
+    <TextView
+        android:id="@+id/adapter_ymage_img_chosen"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:minWidth="20dp"
+        android:gravity="center"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:ellipsize="end"
+        android:background="@drawable/ymage_shape_unchecked"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"/>
+</FrameLayout>
