@@ -2,13 +2,10 @@ package com.yitimo.ymage
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.*
 import com.yitimo.ymage.Ymager.chosenTheme
@@ -28,12 +25,6 @@ class ListActivity : AppCompatActivity() {
         setTheme(chosenTheme)
 
         setContentView(R.layout.ymage_activity_list)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            window.decorView.systemUiVisibility = 0
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.statusBarColor = Color.parseColor("#333333")
-//        }
         limit = intent.getIntExtra("limit", 0)
 
         initDOM()
@@ -46,9 +37,11 @@ class ListActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == resultYmageOrigin) {
             val nowChosen = data?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
             if (data?.getBooleanExtra("finish", false) == true) {
-                val intent = Intent()
-                intent.putExtra("chosen", nowChosen)
-                setResult(Activity.RESULT_OK, intent)
+                if (adapter.getChosen().size > 0) {
+                    val intent = Intent()
+                    intent.putExtra("chosen", nowChosen)
+                    setResult(Activity.RESULT_OK, intent)
+                }
                 finish()
             } else {
                 adapter.setChosen(nowChosen)
@@ -59,7 +52,7 @@ class ListActivity : AppCompatActivity() {
     private fun initDOM() {
         finish = findViewById(R.id.ymage_list_finish)
         gridRV = findViewById(R.id.ymage_grid)
-        adapter = ListAdapter(intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf(), null)
+        adapter = ListAdapter(intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf(), null, limit)
         gridRV.adapter = adapter
         gridRV.layoutManager = GridLayoutManager(this, 4)
 
@@ -79,7 +72,7 @@ class ListActivity : AppCompatActivity() {
             OriginActivity.show(this, albumsS.selectedItemId, it, adapter.getChosen(), limit)
         }
         adapter.setImagePick {
-            finish.text = if (limit > 0) "完成(${adapter.getChosen().size}/$limit)" else "完成(${adapter.getChosen().size})"
+            finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${adapter.getChosen().size}/$limit" else "${adapter.getChosen().size}")
         }
         finish.setOnClickListener {
             val chosen = adapter.getChosen()

@@ -12,9 +12,11 @@ import android.database.DataSetObserver
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import java.io.File
 
-class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+    private var limit = _limit
     private var chosen = _chosen
     private var cursor = _cursor
     private var mDataValid = false
@@ -23,7 +25,6 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?): 
     private var _onClick: ((Int) -> Unit)? = null
     private var _onPick: ((Int) -> Unit)? = null
     init {
-        Log.i("【】", "【${chosen.size}】")
         setHasStableIds(true)
         swapCursor(cursor)
     }
@@ -65,11 +66,17 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?): 
             val i = chosen.indexOfFirst { it.Id == image.Id }
             if (i >= 0) {
                 chosen.removeAt(i)
+                _onPick?.invoke(position)
+                notifyDataSetChanged()
             } else {
-                chosen.add(image)
+                if (chosen.size >= limit) {
+                    Toast.makeText(holder.itemView.context, R.string.over_limit, Toast.LENGTH_SHORT).show()
+                } else {
+                    chosen.add(image)
+                    _onPick?.invoke(position)
+                    notifyDataSetChanged()
+                }
             }
-            _onPick?.invoke(position)
-            notifyDataSetChanged()
         }
     }
 

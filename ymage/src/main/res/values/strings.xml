@@ -4,4 +4,6 @@
     <string name="origin_back">返回</string>
     <string name="origin_pick">选择</string>
     <string name="origin_finish">完成</string>
+    <string name="finish_with_count">完成(%1$s)</string>
+    <string name="over_limit">已达选择数量上限</string>
 </resources>

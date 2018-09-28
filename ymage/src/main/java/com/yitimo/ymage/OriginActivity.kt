@@ -2,13 +2,12 @@ package com.yitimo.ymage
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewPager
 import android.widget.TextView
+import android.widget.Toast
 
 class OriginActivity : AppCompatActivity() {
     private lateinit var pager: OriginPager
@@ -30,12 +29,6 @@ class OriginActivity : AppCompatActivity() {
         setTheme(Ymager.chosenTheme)
 
         setContentView(R.layout.ymage_activity_origin)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            window.decorView.systemUiVisibility = 0
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.statusBarColor = Color.parseColor("#333333")
-//        }
         bucket = intent?.getLongExtra("bucket", 0) ?: 0
         position = intent?.getIntExtra("position", 0) ?: 0
         limit = intent?.getIntExtra("limit", 0) ?: 0
@@ -56,13 +49,13 @@ class OriginActivity : AppCompatActivity() {
         } else {
             pick.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ymage_origin_unchecked, null), null, null, null)
         }
-        finish.text = if (limit > 0) "完成(${chosen.size}/$limit)" else "完成(${chosen.size})"
+        finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${chosen.size}/$limit" else "${chosen.size}")
         back.setOnClickListener {
             finish()
         }
         finish.setOnClickListener {
             changed = false
-            adapter.setItemPick(pager.currentItem)
+//            adapter.setItemPick(pager.currentItem)
             val intent = Intent()
             intent.putExtra("chosen", adapter.getChosen())
             intent.putExtra("finish", true)
@@ -70,12 +63,16 @@ class OriginActivity : AppCompatActivity() {
             finish()
         }
         pick.setOnClickListener {
+            if (limit <= adapter.getChosen().size) {
+                Toast.makeText(this, R.string.over_limit, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (adapter.toggleItemPick(pager.currentItem)) {
                 pick.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ymage_origin_chosen, null), null, null, null)
             } else {
                 pick.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(resources, R.drawable.ymage_origin_unchecked, null), null, null, null)
             }
-            finish.text = if (limit > 0) "完成(${adapter.getChosen().size}/$limit)" else "完成(${adapter.getChosen().size})"
+            finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${adapter.getChosen().size}/$limit" else "${adapter.getChosen().size}")
             changed = true
         }
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -105,6 +102,7 @@ class OriginActivity : AppCompatActivity() {
             val intent = Intent(activity, OriginActivity::class.java)
             intent.putExtra("bucket", bucket)
             intent.putExtra("position", position)
+            intent.putExtra("limit", limit)
             intent.putExtra("chosen", chosen)
             activity.startActivityForResult(intent, resultYmageOrigin)
         }
