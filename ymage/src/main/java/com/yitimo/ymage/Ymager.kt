@@ -24,7 +24,16 @@ object Ymager {
         chosenTheme = theme
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<String> = arrayOf()) {
+    fun pick(activity: Activity?, limit: Int = 1) {
+        if (activity == null) {
+            return
+        }
+        val intent = Intent(activity, ListActivity::class.java)
+        intent.putExtra("limit", limit)
+        activity.startActivityForResult(intent, resultYmage)
+    }
+
+    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<String>) {
         if (activity == null) {
             return
         }
@@ -35,7 +44,7 @@ object Ymager {
         activity.startActivityForResult(intent, resultYmage)
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<File> = arrayOf()) {
+    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<File>) {
         if (activity == null) {
             return
         }
@@ -46,7 +55,7 @@ object Ymager {
         activity.startActivityForResult(intent, resultYmage)
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<Ymage> = arrayOf()) {
+    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<Ymage>) {
         if (activity == null) {
             return
         }

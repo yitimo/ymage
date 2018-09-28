@@ -63,7 +63,7 @@ class OriginActivity : AppCompatActivity() {
             finish()
         }
         pick.setOnClickListener {
-            if (limit <= adapter.getChosen().size) {
+            if (limit <= adapter.getChosen().size && !adapter.checkPick(pager.currentItem)) {
                 Toast.makeText(this, R.string.over_limit, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
