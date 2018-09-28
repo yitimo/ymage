@@ -17,7 +17,7 @@
         android:contentDescription="@null"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_button_drop"
+        android:src="@drawable/ymage_bucket_drop"
         android:padding="4dp"
         android:scaleType="fitXY"
         android:tint="#FFFFFF"

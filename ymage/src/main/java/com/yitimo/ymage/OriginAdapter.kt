@@ -2,15 +2,10 @@ package com.yitimo.ymage
 
 import android.content.res.Resources
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.graphics.PointF
-import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.support.v4.view.PagerAdapter
-import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -20,7 +15,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import java.io.File
 import java.lang.Exception
 
-class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() {
+class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() {
     private var chosen = _chosen
     private var cursor = _cursor
     private val limitWidth = Resources.getSystem().displayMetrics.widthPixels
@@ -38,7 +33,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
         val imageSSIV = SubsamplingScaleImageView(container.context)
         imageSSIV.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         cursor.moveToPosition(position)
-        val image = Image(
+        val image = Ymage(
             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
             cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
@@ -52,7 +47,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
                 val lp = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 iv.layoutParams = lp
                 iv.scaleType = ImageView.ScaleType.CENTER
-                Ymage.setCommon?.invoke(container.context, iv, File(image.Data))
+                Ymager.setCommon?.invoke(container.context, iv, File(image.Data))
                 container.addView(iv)
                 return iv
             }
@@ -73,7 +68,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
                 imageSSIV.setImage(ImageSource.uri(image.Data))
             }
             else -> {
-                Ymage.setOrigin?.invoke(container.context, File(image.Data), limitWidth, limitHeight) {
+                Ymager.setOrigin?.invoke(container.context, File(image.Data), limitWidth, limitHeight) {
                     imageSSIV.setImage(ImageSource.bitmap(it))
                 }
             }
@@ -88,7 +83,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
 
     fun toggleItemPick(position: Int): Boolean {
         cursor.moveToPosition(position)
-        val image = Image(
+        val image = Ymage(
             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
             0,
@@ -108,7 +103,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
 
     fun setItemPick(position: Int) {
         cursor.moveToPosition(position)
-        val image = Image(
+        val image = Ymage(
             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))
         )
@@ -124,7 +119,7 @@ class OriginAdapter(_chosen: ArrayList<Image>, _cursor: Cursor): PagerAdapter() 
         return chosen.indexOfFirst { it.Id == id } >= 0
     }
 
-    fun getChosen(): ArrayList<Image> {
+    fun getChosen(): ArrayList<Ymage> {
         return chosen
     }
 

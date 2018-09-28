@@ -1,5 +1,6 @@
 package com.yitimo.ymage
 
+import android.content.Context
 import android.content.res.Resources
 import android.database.Cursor
 import android.support.v7.widget.RecyclerView
@@ -12,7 +13,7 @@ import android.provider.MediaStore
 import android.widget.TextView
 import java.io.File
 
-class ListAdapter(_chosen: ArrayList<Image> = arrayListOf(), _cursor: Cursor?): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var chosen = _chosen
     private var cursor = _cursor
     private var mDataValid = false
@@ -38,14 +39,14 @@ class ListAdapter(_chosen: ArrayList<Image> = arrayListOf(), _cursor: Cursor?): 
         if(cursor?.moveToPosition(position) != true){
             throw IllegalStateException("couldn't move cursor to position " + position)
         }
-        val image = Image(
+        val image = Ymage(
             cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
             0,
             0,
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
-        Ymage.setThumb?.invoke(holder.itemView.context, holder.image, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
+        Ymager.setThumb?.invoke(holder.itemView.context, holder.image, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
 
         holder.image.setOnClickListener {
             _onClick?.invoke(position)
@@ -93,7 +94,7 @@ class ListAdapter(_chosen: ArrayList<Image> = arrayListOf(), _cursor: Cursor?): 
 
     fun setChosen(position: Int) {
         cursor!!.moveToPosition(position)
-        val image = Image(
+        val image = Ymage(
             cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
             0,
@@ -104,7 +105,7 @@ class ListAdapter(_chosen: ArrayList<Image> = arrayListOf(), _cursor: Cursor?): 
         notifyItemChanged(position)
     }
 
-    fun setChosen(list: ArrayList<Image>) {
+    fun setChosen(list: ArrayList<Ymage>) {
         chosen = list
         notifyDataSetChanged()
     }
@@ -118,7 +119,7 @@ class ListAdapter(_chosen: ArrayList<Image> = arrayListOf(), _cursor: Cursor?): 
         notifyDataSetChanged()
     }
 
-    fun getChosen(): ArrayList<Image> {
+    fun getChosen(): ArrayList<Ymage> {
         return chosen
     }
 

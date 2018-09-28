@@ -10,12 +10,12 @@ class OriginPager(context: Context, attributeSet: AttributeSet? = null): ViewPag
         when (state) {
             0 -> {
 //                GlideApp.with(context.applicationContext).resumeRequests()
-                Ymage.resumeGlide?.invoke(context)
+                Ymager.resumeGlide?.invoke(context)
                 scrolling = false
             }
             1 -> {
 //                GlideApp.with(context.applicationContext).pauseRequests()
-                Ymage.pauseGlide?.invoke(context)
+                Ymager.pauseGlide?.invoke(context)
                 scrolling = true
             }
         }

@@ -1,7 +1,6 @@
 package com.yitimo.ymage
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.widget.TextView
 
 class OriginActivity : AppCompatActivity() {
@@ -22,7 +20,7 @@ class OriginActivity : AppCompatActivity() {
     private var position: Int = 0
     private var bucket: Long = 0
     private var limit: Int = 0
-    private var chosen: ArrayList<Image> = arrayListOf()
+    private var chosen: ArrayList<Ymage> = arrayListOf()
 
     private var changed = false
 
@@ -38,7 +36,7 @@ class OriginActivity : AppCompatActivity() {
         bucket = intent?.getLongExtra("bucket", 0) ?: 0
         position = intent?.getIntExtra("position", 0) ?: 0
         limit = intent?.getIntExtra("limit", 0) ?: 0
-        chosen = intent?.getParcelableArrayListExtra<Image>("chosen") ?: arrayListOf()
+        chosen = intent?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
 
         pager = findViewById(R.id.ymage_origin_pager)
         adapter = OriginAdapter(chosen,DBUtils.query(this, bucket) ?: return)
@@ -100,7 +98,7 @@ class OriginActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun show(activity: Activity, bucket: Long, position: Int, chosen: ArrayList<Image>, limit: Int) {
+        fun show(activity: Activity, bucket: Long, position: Int, chosen: ArrayList<Ymage>, limit: Int) {
             val intent = Intent(activity, OriginActivity::class.java)
             intent.putExtra("bucket", bucket)
             intent.putExtra("position", position)

@@ -10,7 +10,7 @@ data class Bucket (
     val Name: String = ""
 )
 
-data class Image(
+data class Ymage(
     val Id: Long,
     val Data: String,
     val Width: Int = 0,
@@ -35,12 +35,12 @@ data class Image(
     override fun describeContents(): Int {
         return 0
     }
-    companion object CREATOR : Parcelable.Creator<Image> {
-        override fun createFromParcel(parcel: Parcel): Image {
-            return Image(parcel)
+    companion object CREATOR : Parcelable.Creator<Ymage> {
+        override fun createFromParcel(parcel: Parcel): Ymage {
+            return Ymage(parcel)
         }
 
-        override fun newArray(size: Int): Array<Image?> {
+        override fun newArray(size: Int): Array<Ymage?> {
             return arrayOfNulls(size)
         }
     }

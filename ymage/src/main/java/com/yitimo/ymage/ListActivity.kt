@@ -3,13 +3,11 @@ package com.yitimo.ymage
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.*
 
@@ -41,7 +39,7 @@ class ListActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == resultYmageOrigin) {
-            val nowChosen = data?.getParcelableArrayListExtra<Image>("chosen") ?: arrayListOf()
+            val nowChosen = data?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
             if (data?.getBooleanExtra("finish", false) == true) {
                 val intent = Intent()
                 intent.putExtra("chosen", nowChosen)
@@ -56,7 +54,7 @@ class ListActivity : AppCompatActivity() {
     private fun initDOM() {
         finish = findViewById(R.id.ymage_list_finish)
         gridRV = findViewById(R.id.ymage_grid)
-        adapter = ListAdapter(arrayListOf(), null)
+        adapter = ListAdapter(intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf(), null)
         gridRV.adapter = adapter
         gridRV.layoutManager = GridLayoutManager(this, 4)
 
@@ -93,13 +91,5 @@ class ListActivity : AppCompatActivity() {
 
     private fun initAlbum() {
         albumAdapter.push(DBUtils.queryAlbums(this))
-    }
-
-    companion object {
-        fun pick(activity: Activity?, limit: Int = 1, chosen: List<Uri> = listOf()) {
-            val intent = Intent(activity, ListActivity::class.java)
-            intent.putExtra("limit", limit)
-            activity?.startActivityForResult(intent, resultYmage)
-        }
     }
 }

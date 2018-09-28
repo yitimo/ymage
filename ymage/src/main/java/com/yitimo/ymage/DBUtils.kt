@@ -62,6 +62,44 @@ object DBUtils {
         )
     }
     @SuppressLint("Recycle")
+    fun queryChosen(context: Context, chosen: Array<String>): ArrayList<Ymage> {
+        val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(
+            MediaStore.Images.Media._ID,
+            MediaStore.MediaColumns.DATA,
+            MediaStore.MediaColumns.WIDTH,
+            MediaStore.MediaColumns.HEIGHT,
+            MediaStore.Images.Media.MIME_TYPE
+        )
+        val rs = arrayListOf<Ymage>()
+        val cursor = context.contentResolver.query(
+            uri,
+            projection,
+            "${MediaStore.Images.Media.DATA} in (?)",
+            arrayOf(chosen.joinToString(",")),
+            "${MediaStore.Images.Media.DATE_TAKEN} DESC"
+        ) ?: return rs
+        cursor.moveToFirst()
+        rs.add(Ymage(
+            cursor.getLong(0),
+            cursor.getString(1),
+            cursor.getInt(2),
+            cursor.getInt(3),
+            cursor.getString(4) == "image/gif"
+        ))
+        while (cursor.moveToNext()) {
+            rs.add(Ymage(
+                cursor.getLong(0),
+                cursor.getString(1),
+                cursor.getInt(2),
+                cursor.getInt(3),
+                cursor.getString(4) == "image/gif"
+            ))
+        }
+        cursor.close()
+        return rs
+    }
+    @SuppressLint("Recycle")
     fun first(context: Context): Bucket {
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(

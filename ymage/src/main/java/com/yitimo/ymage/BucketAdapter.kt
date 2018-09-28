@@ -60,7 +60,7 @@ class BucketAdapter(_context: Context, _list: ArrayList<Bucket>): SpinnerAdapter
         val name = view.findViewById<TextView>(R.id.adapter_album_name)
         val size = view.findViewById<TextView>(R.id.adapter_album_size)
 //        GlideApp.with(context).load(list[position].Cover).override(70  * Resources.getSystem().displayMetrics.density.toInt()).into(cover)
-        Ymage.setThumb?.invoke(context, cover, File(list[position].Cover), 70  * Resources.getSystem().displayMetrics.density.toInt(), 0, R.drawable.icon_image_placeholder)
+        Ymager.setThumb?.invoke(context, cover, File(list[position].Cover), 70  * Resources.getSystem().displayMetrics.density.toInt(), 0, R.drawable.icon_image_placeholder)
         name.text = list[position].Name
         size.text = "(${list[position].Size})"
         return view
