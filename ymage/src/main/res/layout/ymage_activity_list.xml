@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListActivity"
-    android:background="#333333">
+    android:background="?colorDefault">
     <LinearLayout
         android:id="@+id/ymage_nav"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/dimenXLarge"
         android:orientation="horizontal">
         <Spinner
             android:id="@+id/ymage_albums"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#333333"/>
+            android:background="?colorDefault"/>
         <View
             android:layout_height="match_parent"
             android:layout_width="0dp"
@@ -24,11 +24,11 @@
             android:id="@+id/ymage_list_finish"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
+            android:textColor="?colorFont"
+            android:paddingStart="@dimen/dimenDefault"
+            android:paddingEnd="@dimen/dimenDefault"
             android:layout_height="match_parent"
-            android:text="完成"/>
+            android:text="@string/list_finish"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ymage_grid"

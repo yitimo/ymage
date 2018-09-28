@@ -26,13 +26,16 @@ class OriginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(Ymager.chosenTheme)
+
         setContentView(R.layout.ymage_activity_origin)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = 0
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = Color.parseColor("#333333")
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            window.decorView.systemUiVisibility = 0
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.statusBarColor = Color.parseColor("#333333")
+//        }
         bucket = intent?.getLongExtra("bucket", 0) ?: 0
         position = intent?.getIntExtra("position", 0) ?: 0
         limit = intent?.getIntExtra("limit", 0) ?: 0

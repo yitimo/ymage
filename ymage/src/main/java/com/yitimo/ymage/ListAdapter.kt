@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.database.DataSetObserver
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.TextView
 import java.io.File
 
@@ -22,6 +23,7 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?): 
     private var _onClick: ((Int) -> Unit)? = null
     private var _onPick: ((Int) -> Unit)? = null
     init {
+        Log.i("【】", "【${chosen.size}】")
         setHasStableIds(true)
         swapCursor(cursor)
     }

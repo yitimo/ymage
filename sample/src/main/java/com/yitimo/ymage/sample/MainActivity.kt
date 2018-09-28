@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
@@ -17,11 +18,13 @@ import com.yitimo.ymage.Ymage
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.resultYmage
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val need = arrayListOf<String>()
 
     private val maxCount = 9
+    private val size = Resources.getSystem().displayMetrics.widthPixels/3
     var chosen: Array<Ymage> = arrayOf()
     private lateinit var gridGL: GridLayout
     private lateinit var chooseB: Button
@@ -30,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        chooseB = findViewById<Button>(R.id.sample_pick)
-        gridGL = findViewById<GridLayout>(R.id.sample_result)
+        chooseB = findViewById(R.id.sample_pick)
+        gridGL = findViewById(R.id.sample_result)
         chooseB.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Ymager.pick(this, maxCount, chosen)
@@ -66,10 +69,7 @@ class MainActivity : AppCompatActivity() {
         gridGL.removeAllViews()
         chosen.forEach {
             val iv = ImageView(this)
-            val bitmap = BitmapFactory.decodeFile(it.Data)
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
-            iv.setImageBitmap(BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size()))
+            GlideApp.with(this).load(File(it.Data)).override(size).centerCrop().into(iv)
             gridGL.addView(iv)
         }
     }

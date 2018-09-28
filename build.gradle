@@ -18,6 +18,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         google()
         jcenter()
     }
@@ -30,4 +31,3 @@ task clean(type: Delete) {
 subprojects {
     tasks.withType(Javadoc).all {enabled = false}
 }
-

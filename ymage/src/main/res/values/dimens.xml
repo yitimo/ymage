@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="dimenLine">0.5dp</dimen>
+    <dimen name="dimenMini">3dp</dimen>
+    <dimen name="dimenSpace">12dp</dimen>
+    <dimen name="dimenFont">13sp</dimen>
+    <dimen name="dimenFontL">16sp</dimen>
+    <dimen name="dimenDefault">15dp</dimen>
+    <dimen name="dimenDefaultL">20dp</dimen>
+    <dimen name="dimenLarge">30dp</dimen>
+    <dimen name="dimenXLarge">48dp</dimen>
+</resources>

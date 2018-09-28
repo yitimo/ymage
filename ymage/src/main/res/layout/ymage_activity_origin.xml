@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#333333"
+    android:background="?colorDefault"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/dimenXLarge"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/ymage_origin_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:text="返回"
+            android:paddingStart="@dimen/dimenSpace"
+            android:paddingEnd="@dimen/dimenSpace"
+            android:textColor="?colorFont"
+            android:textSize="@dimen/dimenFontL"
+            android:text="@string/origin_back"
             android:gravity="center"/>
         <View
             android:layout_height="match_parent"
@@ -26,23 +26,23 @@
             android:id="@+id/ymage_origin_pick"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="#FFFFFF"
+            android:paddingStart="@dimen/dimenSpace"
+            android:paddingEnd="@dimen/dimenSpace"
+            android:textColor="?colorFont"
             android:drawableStart="@drawable/ymage_origin_chosen"
-            android:textSize="15sp"
-            android:drawablePadding="3dp"
-            android:text="选择"
+            android:textSize="@dimen/dimenFontL"
+            android:drawablePadding="@dimen/dimenMini"
+            android:text="@string/origin_pick"
             android:gravity="center"/>
         <TextView
             android:id="@+id/ymage_origin_finish"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:text="完成"
+            android:paddingStart="@dimen/dimenSpace"
+            android:paddingEnd="@dimen/dimenSpace"
+            android:textColor="?colorFont"
+            android:textSize="@dimen/dimenFontL"
+            android:text="@string/origin_finish"
             android:gravity="center"/>
     </LinearLayout>
     <com.yitimo.ymage.OriginPager
