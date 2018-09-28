@@ -52,7 +52,12 @@ class ListActivity : AppCompatActivity() {
     private fun initDOM() {
         finish = findViewById(R.id.ymage_list_finish)
         gridRV = findViewById(R.id.ymage_grid)
-        adapter = ListAdapter(intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf(), null, limit)
+
+        val chosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
+        adapter = ListAdapter(chosen,null, limit)
+
+        finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${chosen.size}/$limit" else "${chosen.size}")
+
         gridRV.adapter = adapter
         gridRV.layoutManager = GridLayoutManager(this, 4)
 
