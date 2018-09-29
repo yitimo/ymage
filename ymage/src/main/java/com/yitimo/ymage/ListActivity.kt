@@ -60,10 +60,10 @@ class ListActivity : AppCompatActivity() {
             finish()
         }
 
-        val chosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
-        adapter = ListAdapter(chosen,null, limit)
+        val defaultChosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
+        adapter = ListAdapter(defaultChosen,null, limit)
 
-        finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${chosen.size}/$limit" else "${chosen.size}")
+        finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${defaultChosen.size}/$limit" else "${defaultChosen.size}")
 
         gridRV.adapter = adapter
         gridRV.layoutManager = GridLayoutManager(this, 4)
