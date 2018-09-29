@@ -11,6 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimenXLarge"
         android:orientation="horizontal">
+        <TextView
+            android:id="@+id/ymage_list_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/dimenFont"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimenSpace"
+            android:paddingEnd="@dimen/dimenSpace"
+            android:text="@string/list_back"
+            android:textColor="?colorFont"/>
         <Spinner
             android:id="@+id/ymage_albums"
             android:layout_width="wrap_content"

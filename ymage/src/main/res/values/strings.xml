@@ -6,4 +6,5 @@
     <string name="origin_finish">完成</string>
     <string name="finish_with_count">完成(%1$s)</string>
     <string name="over_limit">已达选择数量上限</string>
+    <string name="list_back">返回</string>
 </resources>

@@ -3,6 +3,7 @@
     <style name="Ymage.Default" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorDefault">#333333</item>
         <item name="colorPrimary">#CD5C5C</item>
+        <item name="colorPrimaryA">#CCCD5C5C</item>
         <item name="colorPrimaryDark">#333333</item>
         <item name="colorFont">#FFFFFF</item>
         <item name="colorDefault2">#000000</item>
@@ -12,6 +13,7 @@
     <style name="Ymage.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorDefault">#FFFFFF</item>
         <item name="colorPrimary">#CD5C5C</item>
+        <item name="colorPrimaryA">#CCCD5C5C</item>
         <item name="colorPrimaryDark">#FFFFFF</item>
         <item name="colorFont">#4F4F4F</item>
         <item name="colorDefault2">#F3F3F3</item>

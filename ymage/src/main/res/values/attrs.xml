@@ -3,4 +3,5 @@
     <attr name="colorFont" format="reference|color"/>
     <attr name="colorDefault" format="reference|color"/>
     <attr name="colorDefault2" format="reference|color"/>
+    <attr name="colorPrimaryA" format="reference|color" />
 </resources>

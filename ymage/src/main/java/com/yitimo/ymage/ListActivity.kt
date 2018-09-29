@@ -16,6 +16,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var adapter: ListAdapter
     private lateinit var albumAdapter: BucketAdapter
     private lateinit var finish: TextView
+    private lateinit var back: TextView
 
     private var limit = 0
 
@@ -52,6 +53,11 @@ class ListActivity : AppCompatActivity() {
     private fun initDOM() {
         finish = findViewById(R.id.ymage_list_finish)
         gridRV = findViewById(R.id.ymage_grid)
+        back = findViewById(R.id.ymage_list_back)
+
+        back.setOnClickListener {
+            finish()
+        }
 
         val chosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
         adapter = ListAdapter(chosen,null, limit)

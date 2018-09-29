@@ -14,7 +14,7 @@ class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-//        Ymager.setTheme(Ymager.themeDefault)
+        Ymager.setTheme(R.style.MyYmage)
         Ymager.setOrigin = fun (context: Context, src: File, width: Int, height: Int, callback: (Bitmap) -> Unit) {
             GlideApp.with(context).asBitmap().load(src).override(width, height).fitCenter().into(object: SimpleTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {

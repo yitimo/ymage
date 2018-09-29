@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyYmage" parent="Ymage.Default">
+        <item name="colorPrimary">#969696</item>
+        <item name="colorPrimaryA">#969696</item>
+    </style>
+
 </resources>

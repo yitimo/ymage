@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="match_parent"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="?colorDefault"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,11 +30,13 @@
             android:paddingStart="@dimen/dimenSpace"
             android:paddingEnd="@dimen/dimenSpace"
             android:textColor="?colorFont"
+            android:drawableTint="?colorPrimary"
             android:drawableStart="@drawable/ymage_origin_chosen"
             android:textSize="@dimen/dimenFontL"
             android:drawablePadding="@dimen/dimenMini"
             android:text="@string/origin_pick"
-            android:gravity="center"/>
+            android:gravity="center"
+            tools:targetApi="m" />
         <TextView
             android:id="@+id/ymage_origin_finish"
             android:layout_width="wrap_content"

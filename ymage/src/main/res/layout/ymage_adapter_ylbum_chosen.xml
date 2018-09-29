@@ -2,26 +2,24 @@
     android:layout_width="match_parent"
     android:background="?colorDefault"
     android:overScrollMode="never"
+    android:paddingStart="@dimen/dimenSpace"
+    android:paddingEnd="@dimen/dimenSpace"
+    android:gravity="center_vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/adapter_ymage_chosen_name"
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_gravity="start|center_vertical"
+        android:layout_marginEnd="@dimen/dimenMini"
         android:layout_height="wrap_content"
         android:textColor="?colorFont"
         android:ellipsize="end"
-        android:textSize="15sp"/>
+        android:textSize="@dimen/dimenFont"/>
     <ImageView
         android:contentDescription="@null"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/dimenDefaultL"
+        android:layout_height="@dimen/dimenDefaultL"
         android:src="@drawable/ymage_bucket_drop"
-        android:padding="4dp"
         android:scaleType="fitXY"
         android:tint="?colorFont"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginStart="@dimen/dimenMini"/>
 </LinearLayout>
