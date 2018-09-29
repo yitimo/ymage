@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.yitimo.ymage.Ymager.chosenTheme
@@ -38,7 +39,7 @@ class ListActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == resultYmageOrigin) {
             val nowChosen = data?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
             if (data?.getBooleanExtra("finish", false) == true) {
-                if (adapter.getChosen().size > 0) {
+                if (nowChosen.size > 0) {
                     val intent = Intent()
                     intent.putExtra("chosen", nowChosen)
                     setResult(Activity.RESULT_OK, intent)
