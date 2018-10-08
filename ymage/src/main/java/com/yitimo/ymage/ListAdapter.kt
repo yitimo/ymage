@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.database.DataSetObserver
+import android.graphics.Color
+import android.os.Build
 import android.provider.MediaStore
+import android.support.graphics.drawable.VectorDrawableCompat
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -57,10 +60,20 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
         val index = chosen.indexOfFirst { it.Id == image.Id }
         if (index >= 0) {
             holder.picker.text = "${index+1}"
-            holder.picker.setBackgroundResource(R.drawable.ymage_shape_number)
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                holder.picker.setBackgroundResource(R.drawable.ymage_shape_number)
+            } else {
+                holder.picker.setBackgroundColor(Color.BLACK)
+                holder.picker.setTextColor(Color.WHITE)
+            }
         } else {
             holder.picker.text = ""
-            holder.picker.setBackgroundResource(R.drawable.ymage_shape_unchecked)
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                holder.picker.setBackgroundResource(R.drawable.ymage_shape_unchecked)
+            } else {
+                holder.picker.setBackgroundColor(Color.BLACK)
+                holder.picker.setTextColor(Color.WHITE)
+            }
         }
         holder.picker.setOnClickListener { _ ->
             val i = chosen.indexOfFirst { it.Id == image.Id }

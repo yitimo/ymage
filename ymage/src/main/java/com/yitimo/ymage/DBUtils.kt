@@ -26,13 +26,14 @@ object DBUtils {
         if (cursor == null) {
             return  arrayListOf()
         }
-        cursor.moveToFirst()
-        list.add(Bucket(
-            cursor.getLong(0),
-            cursor.getString(2),
-            cursor.getInt(3),
-            cursor.getString(1)
-        ))
+        if (cursor.moveToFirst()) {
+            list.add(Bucket(
+                cursor.getLong(0),
+                cursor.getString(2),
+                cursor.getInt(3),
+                cursor.getString(1)
+            ))
+        }
         while (cursor.moveToNext()) {
             list.add(Bucket(
                 cursor.getLong(0),
@@ -116,7 +117,7 @@ object DBUtils {
         cursor.moveToFirst()
         val rs = Bucket(
             0,
-            cursor.getString(0),
+            cursor.getString(0) ?: "",
             cursor.getInt(1),
             "全部"
         )

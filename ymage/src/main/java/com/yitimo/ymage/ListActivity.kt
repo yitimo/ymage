@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -46,6 +47,7 @@ class ListActivity : AppCompatActivity() {
                 }
                 finish()
             } else {
+                finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${nowChosen.size}/$limit" else "${nowChosen.size}")
                 adapter.setChosen(nowChosen)
             }
         }
