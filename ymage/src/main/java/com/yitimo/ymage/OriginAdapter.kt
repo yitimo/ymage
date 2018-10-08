@@ -46,7 +46,7 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
                 val iv = ImageView(container.context)
                 val lp = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 iv.layoutParams = lp
-                iv.scaleType = ImageView.ScaleType.CENTER
+                iv.scaleType = ImageView.ScaleType.FIT_CENTER
                 Ymager.setCommon?.invoke(container.context, iv, File(image.Data))
                 container.addView(iv)
                 return iv
