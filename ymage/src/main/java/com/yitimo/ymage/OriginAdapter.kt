@@ -86,8 +86,8 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
         val image = Ymage(
             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            0,
-            0,
+            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
+            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         val index = chosen.indexOfFirst { it.Id == image.Id }

@@ -48,8 +48,8 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
         val image = Ymage(
             cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            0,
-            0,
+            cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
+            cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         Ymager.setThumb?.invoke(holder.itemView.context, holder.image, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
