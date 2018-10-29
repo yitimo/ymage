@@ -24,43 +24,47 @@ object Ymager {
         chosenTheme = theme
     }
 
-    fun pick(activity: Activity?, limit: Int = 1) {
+    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false) {
         if (activity == null) {
             return
         }
         val intent = Intent(activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
         activity.startActivityForResult(intent, resultYmage)
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<String>) {
+    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
         if (activity == null) {
             return
         }
         val list = DBUtils.queryChosen(activity, chosen)
         val intent = Intent(activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
         activity.startActivityForResult(intent, resultYmage)
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<File>) {
+    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
         if (activity == null) {
             return
         }
         val list = DBUtils.queryChosen(activity, chosen.map { it.absolutePath }.toTypedArray())
         val intent = Intent(activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
         activity.startActivityForResult(intent, resultYmage)
     }
 
-    fun pick(activity: Activity?, limit: Int = 1, chosen: Array<Ymage>) {
+    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
         if (activity == null) {
             return
         }
         val intent = Intent(activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
         activity.startActivityForResult(intent, resultYmage)
     }

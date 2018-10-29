@@ -1,6 +1,7 @@
 package com.yitimo.ymage
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.database.Cursor
 import android.support.v7.widget.RecyclerView
@@ -10,35 +11,49 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.database.DataSetObserver
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.support.graphics.drawable.VectorDrawableCompat
+import android.support.v4.content.FileProvider
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import java.io.File
 
-class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int, _showCamera: Boolean): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var limit = _limit
     private var chosen = _chosen
     private var cursor = _cursor
     private var mDataValid = false
+    private val showCamera = _showCamera
     private var mRowIDColumn = 0
     private val size = Resources.getSystem().displayMetrics.widthPixels/4
     private var _onClick: ((Int) -> Unit)? = null
     private var _onPick: ((Int) -> Unit)? = null
+    private var _onTake: (() -> Unit)? = null
     init {
         setHasStableIds(true)
         swapCursor(cursor)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val holder = ListAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list, parent, false) as ViewGroup)
+        val holder =  if (viewType == 0) {
+            ListAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list_camera, parent, false) as ViewGroup)
+        } else {
+            ListAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list, parent, false) as ViewGroup)
+        }
         holder.itemView.layoutParams = FrameLayout.LayoutParams(size, size)
         return holder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (holder.itemViewType == 0) {
+            holder.itemView.setOnClickListener {
+                _onTake?.invoke()
+            }
+            return
+        }
         if(!mDataValid){
             throw IllegalStateException("this should only be called when the cursor is valid")
         }
@@ -52,30 +67,30 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
             cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
             cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
-        Ymager.setThumb?.invoke(holder.itemView.context, holder.image, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
+        Ymager.setThumb?.invoke(holder.itemView.context, holder.image!!, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
 
-        holder.image.setOnClickListener {
+        holder.image?.setOnClickListener {
             _onClick?.invoke(position)
         }
         val index = chosen.indexOfFirst { it.Id == image.Id }
         if (index >= 0) {
-            holder.picker.text = "${index+1}"
+            holder.picker?.text = "${index+1}"
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                holder.picker.setBackgroundResource(R.drawable.ymage_shape_number)
+                holder.picker?.setBackgroundResource(R.drawable.ymage_shape_number)
             } else {
-                holder.picker.setBackgroundColor(Color.BLACK)
-                holder.picker.setTextColor(Color.WHITE)
+                holder.picker?.setBackgroundColor(Color.BLACK)
+                holder.picker?.setTextColor(Color.WHITE)
             }
         } else {
-            holder.picker.text = ""
+            holder.picker?.text = ""
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                holder.picker.setBackgroundResource(R.drawable.ymage_shape_unchecked)
+                holder.picker?.setBackgroundResource(R.drawable.ymage_shape_unchecked)
             } else {
-                holder.picker.setBackgroundColor(Color.BLACK)
-                holder.picker.setTextColor(Color.WHITE)
+                holder.picker?.setBackgroundColor(Color.BLACK)
+                holder.picker?.setTextColor(Color.WHITE)
             }
         }
-        holder.picker.setOnClickListener { _ ->
+        holder.picker?.setOnClickListener { _ ->
             val i = chosen.indexOfFirst { it.Id == image.Id }
             if (i >= 0) {
                 chosen.removeAt(i)
@@ -94,17 +109,22 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
     }
 
     override fun getItemCount(): Int {
+        val base = if (showCamera) 1 else 0
         return if(mDataValid && cursor != null){
-            cursor!!.count
+            cursor!!.count + base
         }
         else{
-            0
+            0 + base
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (showCamera && position == 0) 0 else 1
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
-        holder.image.setImageResource(R.drawable.icon_image_placeholder)
+        holder.image?.setImageResource(R.drawable.icon_image_placeholder)
     }
 
     override fun getItemId(position: Int): Long {
@@ -153,6 +173,10 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
         _onPick = listener
     }
 
+    fun setOnCamera(listener: () -> Unit) {
+        _onTake = listener
+    }
+
     private fun getCursor(): Cursor? {
         return cursor
     }
@@ -195,7 +219,7 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
     }
 
     class ViewHolder(view: ViewGroup): RecyclerView.ViewHolder(view) {
-        var image: ImageView = view.findViewById(R.id.adapter_ymage_img)
-        var picker: TextView = view.findViewById(R.id.adapter_ymage_img_chosen)
+        var image: ImageView? = view.findViewById(R.id.adapter_ymage_img)
+        var picker: TextView? = view.findViewById(R.id.adapter_ymage_img_chosen)
     }
 }

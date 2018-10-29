@@ -48,3 +48,4 @@ data class Ymage(
 
 const val resultYmageOrigin: Int = 30926
 const val resultYmage: Int = 30927
+const val resultYmageCamera: Int = 30925

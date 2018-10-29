@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         gridGL = findViewById(R.id.sample_result)
         chooseB.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Ymager.pick(this, maxCount, chosen)
+                Ymager.pick(this, maxCount, true, chosen)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
             }
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 1) {
             for (i in 0 until grantResults.size) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    Ymager.pick(this, maxCount, chosen)
+                    Ymager.pick(this, maxCount, true, chosen)
                 }
             }
         }

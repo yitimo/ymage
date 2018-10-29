@@ -1,0 +1,15 @@
+<FrameLayout android:layout_height="100dp"
+    android:layout_width="100dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="1dp">
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimenSpace"
+        android:src="@drawable/icon_camera"
+        android:tint="?colorFont"
+        android:scaleType="fitXY"
+        android:background="?colorDefault"
+        android:contentDescription="@null"/>
+</FrameLayout>
