@@ -55,10 +55,12 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
             return
         }
         if(!mDataValid){
-            throw IllegalStateException("this should only be called when the cursor is valid")
+            holder.image?.setImageResource(R.drawable.icon_image_placeholder)
+            return
         }
-        if(cursor?.moveToPosition(position) != true){
-            throw IllegalStateException("couldn't move cursor to position " + position)
+        if(cursor?.moveToPosition(resolvePosition(position)) != true){
+            holder.image?.setImageResource(R.drawable.icon_image_placeholder)
+            return
         }
         val image = Ymage(
             cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
@@ -94,18 +96,22 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
             val i = chosen.indexOfFirst { it.Id == image.Id }
             if (i >= 0) {
                 chosen.removeAt(i)
-                _onPick?.invoke(position)
+                _onPick?.invoke(resolvePosition(holder.adapterPosition))
                 notifyDataSetChanged()
             } else {
                 if (chosen.size >= limit) {
                     Toast.makeText(holder.itemView.context, R.string.over_limit, Toast.LENGTH_SHORT).show()
                 } else {
                     chosen.add(image)
-                    _onPick?.invoke(position)
+                    _onPick?.invoke(resolvePosition(holder.adapterPosition))
                     notifyDataSetChanged()
                 }
             }
         }
+    }
+
+    private fun resolvePosition(p: Int): Int {
+        return if (showCamera) p-1 else p
     }
 
     override fun getItemCount(): Int {
