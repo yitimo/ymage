@@ -72,7 +72,7 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
         Ymager.setThumb?.invoke(holder.itemView.context, holder.image!!, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
 
         holder.image?.setOnClickListener {
-            _onClick?.invoke(position)
+            _onClick?.invoke(resolvePosition(holder.adapterPosition))
         }
         val index = chosen.indexOfFirst { it.Id == image.Id }
         if (index >= 0) {
