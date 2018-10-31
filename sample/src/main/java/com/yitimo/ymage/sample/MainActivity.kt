@@ -29,12 +29,14 @@ class MainActivity : AppCompatActivity() {
     var chosen: Array<Ymage> = arrayOf()
     private lateinit var gridGL: GridLayout
     private lateinit var chooseB: Button
+    private lateinit var fragmentB: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         chooseB = findViewById(R.id.sample_pick)
+        fragmentB = findViewById(R.id.sample_fragment)
         gridGL = findViewById(R.id.sample_result)
         chooseB.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity() {
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
             }
+        }
+        fragmentB.setOnClickListener {
+            startActivity(Intent(this, FragmentActivity::class.java))
         }
     }
 

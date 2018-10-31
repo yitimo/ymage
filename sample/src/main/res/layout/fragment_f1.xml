@@ -4,23 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/sample_pick"
+        android:id="@+id/fragment_pick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose"/>
 
-    <Button
-        android:id="@+id/sample_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose in fragment"/>
-
     <GridLayout
-        android:id="@+id/sample_result"
+        android:id="@+id/fragment_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="3"/>

@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.widget.ImageView
 import java.io.File
@@ -24,6 +26,15 @@ object Ymager {
         chosenTheme = theme
     }
 
+    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false) {
+        if (fragment == null) {
+            return
+        }
+        val intent = Intent(fragment.activity, ListActivity::class.java)
+        intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
+        fragment.startActivityForResult(intent, resultYmage)
+    }
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false) {
         if (activity == null) {
             return
@@ -45,6 +56,17 @@ object Ymager {
         intent.putExtra("chosen", list)
         activity.startActivityForResult(intent, resultYmage)
     }
+    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
+        if (fragment == null) {
+            return
+        }
+        val list = DBUtils.queryChosen(fragment.context ?: return, chosen)
+        val intent = Intent(fragment.activity, ListActivity::class.java)
+        intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
+        intent.putExtra("chosen", list)
+        fragment.startActivityForResult(intent, resultYmage)
+    }
 
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
         if (activity == null) {
@@ -57,6 +79,17 @@ object Ymager {
         intent.putExtra("chosen", list)
         activity.startActivityForResult(intent, resultYmage)
     }
+    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
+        if (fragment == null) {
+            return
+        }
+        val list = DBUtils.queryChosen(fragment.context ?: return, chosen.map { it.absolutePath }.toTypedArray())
+        val intent = Intent(fragment.activity, ListActivity::class.java)
+        intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
+        intent.putExtra("chosen", list)
+        fragment.startActivityForResult(intent, resultYmage)
+    }
 
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
         if (activity == null) {
@@ -67,5 +100,15 @@ object Ymager {
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
         activity.startActivityForResult(intent, resultYmage)
+    }
+    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
+        if (fragment == null) {
+            return
+        }
+        val intent = Intent(fragment.activity, ListActivity::class.java)
+        intent.putExtra("limit", limit)
+        intent.putExtra("showCamera", showCamera)
+        intent.putExtra("chosen", ArrayList(chosen.toList()))
+        fragment.startActivityForResult(intent, resultYmage)
     }
 }
