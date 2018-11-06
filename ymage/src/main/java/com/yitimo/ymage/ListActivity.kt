@@ -155,15 +155,15 @@ class ListActivity : AppCompatActivity() {
     private fun resolveCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
-            val parent = File(cacheDir, "ymage_camera")
+            val parent = File(filesDir, "ymage_camera")
             if (!parent.exists()) {
                 parent.mkdir()
             }
-            photoFile = File.createTempFile("ymage_${System.currentTimeMillis()}", ".jpg", parent)
+            photoFile = File(parent, "ymage_${System.currentTimeMillis()}.jpg")
+            photoFile?.createNewFile()
             val photoURI = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) Uri.fromFile(photoFile) else FileProvider.getUriForFile(this,"${applicationContext.packageName}.provider", photoFile!!)
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
             startActivityForResult(takePictureIntent, resultYmageCamera)
-            photoFile?.deleteOnExit()
         }
     }
 }
