@@ -3,17 +3,12 @@ package com.yitimo.ymage.sample
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
 import com.yitimo.ymage.Ymager
 import java.io.File
 
@@ -22,13 +17,6 @@ class BaseApplication: Application() {
         super.onCreate()
 
         Ymager.setTheme(R.style.MyYmage)
-//        Ymager.setOrigin = fun (context: Context, src: File, width: Int, height: Int, callback: (Bitmap) -> Unit) {
-//            GlideApp.with(context).asBitmap().load(src).override(width, height).fitCenter().into(object: SimpleTarget<Bitmap>() {
-//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-//                    callback(resource)
-//                }
-//            })
-//        }
         Ymager.setOrigin = fun (context: Context, src: File, width: Int, height: Int, callback: (Bitmap) -> Unit) {
             GlideApp.with(context).asBitmap().load(src).override(width, height).fitCenter().listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
