@@ -1,8 +1,9 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.content.Context
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
+import com.yitimo.ymage.Ymager
 
 class OriginPager(context: Context, attributeSet: AttributeSet? = null): ViewPager(context, attributeSet), ViewPager.OnPageChangeListener {
     var scrolling = false

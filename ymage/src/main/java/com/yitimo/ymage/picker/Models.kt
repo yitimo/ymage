@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.os.Parcel
 import android.os.Parcelable

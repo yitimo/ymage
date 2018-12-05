@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="YmageGridView">
+        <attr name="itemSpace" format="dimension" />
+        <attr name="limit" format="dimension" />
+    </declare-styleable>
+</resources>

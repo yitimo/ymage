@@ -5,20 +5,17 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageView
-import com.yitimo.ymage.Ymage
+import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.Ymager
-import com.yitimo.ymage.resultYmage
-import java.io.ByteArrayOutputStream
+import com.yitimo.ymage.grider.YmageGridView
+import com.yitimo.ymage.picker.resultYmage
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val maxCount = 9
     private val size = Resources.getSystem().displayMetrics.widthPixels/3
     var chosen: Array<Ymage> = arrayOf()
-    private lateinit var gridGL: GridLayout
+    private lateinit var gridGL: YmageGridView
     private lateinit var chooseB: Button
     private lateinit var fragmentB: Button
 
@@ -38,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         chooseB = findViewById(R.id.sample_pick)
         fragmentB = findViewById(R.id.sample_fragment)
         gridGL = findViewById(R.id.sample_result)
+        gridGL.limit = Resources.getSystem().displayMetrics.widthPixels.toFloat()
         chooseB.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Ymager.pick(this, maxCount, true, chosen)
@@ -72,11 +70,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resolveChosen() {
-        gridGL.removeAllViews()
-        chosen.forEach {
-            val iv = ImageView(this)
-            GlideApp.with(this).load(File(it.Data)).override(size).centerCrop().into(iv)
-            gridGL.addView(iv)
-        }
+        gridGL.items = ArrayList(chosen.map { it.Data })
     }
 }

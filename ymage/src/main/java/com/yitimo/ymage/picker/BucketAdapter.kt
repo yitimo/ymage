@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SpinnerAdapter
 import android.widget.TextView
+import com.yitimo.ymage.R
+import com.yitimo.ymage.Ymager
 import java.io.File
 import java.util.*
 

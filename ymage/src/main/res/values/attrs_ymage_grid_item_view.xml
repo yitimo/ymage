@@ -1,0 +1,10 @@
+<resources>
+    <declare-styleable name="YmageGridItemView">
+        <attr name="myHeight" format="dimension" />
+        <attr name="myWidth" format="dimension" />
+        <attr name="maxHeight" format="dimension" />
+        <attr name="maxWidth" format="dimension" />
+        <attr name="minSize" format="dimension" />
+        <attr name="url" format="string" />
+    </declare-styleable>
+</resources>

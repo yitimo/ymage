@@ -1,7 +1,5 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
-import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
 import android.database.Cursor
 import android.support.v7.widget.RecyclerView
@@ -11,14 +9,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.database.DataSetObserver
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.content.FileProvider
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import com.yitimo.ymage.R
+import com.yitimo.ymage.Ymager
 import java.io.File
 
 class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int, _showCamera: Boolean): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
@@ -39,9 +35,9 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val holder =  if (viewType == 0) {
-            ListAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list_camera, parent, false) as ViewGroup)
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list_camera, parent, false) as ViewGroup)
         } else {
-            ListAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list, parent, false) as ViewGroup)
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.ymage_adapter_list, parent, false) as ViewGroup)
         }
         holder.itemView.layoutParams = FrameLayout.LayoutParams(size, size)
         return holder
@@ -63,11 +59,11 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
             return
         }
         val image = Ymage(
-            cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
-            cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
-            cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
-            cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
+                cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
+                cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
+                cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         Ymager.setThumb?.invoke(holder.itemView.context, holder.image!!, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
 
@@ -143,11 +139,11 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
     fun setChosen(position: Int) {
         cursor!!.moveToPosition(position)
         val image = Ymage(
-            cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
-            cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            0,
-            0,
-            cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
+                cursor!!.getLong(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
+                0,
+                0,
+                cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         chosen.add(image)
         notifyItemChanged(position)

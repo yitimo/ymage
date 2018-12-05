@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.Manifest
 import android.app.Activity
@@ -13,12 +13,11 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
-import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.*
+import com.yitimo.ymage.*
 import com.yitimo.ymage.Ymager.chosenTheme
 import java.io.File
 
@@ -101,7 +100,7 @@ class ListActivity : AppCompatActivity() {
         }
 
         val defaultChosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
-        adapter = ListAdapter(defaultChosen,null, limit, showCamera)
+        adapter = ListAdapter(defaultChosen, null, limit, showCamera)
 
         finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${defaultChosen.size}/$limit" else "${defaultChosen.size}")
 

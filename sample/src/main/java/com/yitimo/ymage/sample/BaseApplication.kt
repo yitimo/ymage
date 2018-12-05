@@ -45,5 +45,44 @@ class BaseApplication: Application() {
         Ymager.resumeGlide = fun (context: Context) {
             GlideApp.with(context).resumeRequests()
         }
+        Ymager.fetchSize = fun (context: Context, url: String, callback: (Int, Int) -> Unit, holderRes: Int) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .placeholder(holderRes)
+                    .error(holderRes)
+                    .listener(object : RequestListener<Bitmap> {
+                        override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            if (resource == null) {
+                                return false
+                            }
+                            callback(resource.width, resource.height)
+                            return false
+                        }
+
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                            return false
+                        }
+                    }).submit()
+        }
+        Ymager.setGridItem = fun (context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .placeholder(holderRes)
+                    .error(holderRes)
+                    .override(width, height)
+                    .centerCrop()
+                    .into(iv)
+        }
+        Ymager.setSingleGridItem = fun (context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .placeholder(holderRes)
+                    .error(holderRes)
+                    .override(width, height)
+                    .into(iv)
+        }
     }
 }

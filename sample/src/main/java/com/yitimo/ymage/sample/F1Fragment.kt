@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import com.yitimo.ymage.Ymage
+import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.Ymager
-import com.yitimo.ymage.resultYmage
-import java.io.File
+import com.yitimo.ymage.picker.resultYmage
 
 class F1Fragment : Fragment() {
 

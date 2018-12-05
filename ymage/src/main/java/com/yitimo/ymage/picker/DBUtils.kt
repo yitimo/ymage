@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -28,18 +28,18 @@ object DBUtils {
         }
         if (cursor.moveToFirst()) {
             list.add(Bucket(
-                cursor.getLong(0),
-                cursor.getString(2),
-                cursor.getInt(3),
-                cursor.getString(1)
+                    cursor.getLong(0),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(1)
             ))
         }
         while (cursor.moveToNext()) {
             list.add(Bucket(
-                cursor.getLong(0),
-                cursor.getString(2),
-                cursor.getInt(3),
-                cursor.getString(1)
+                    cursor.getLong(0),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(1)
             ))
         }
         cursor.close()
@@ -82,19 +82,19 @@ object DBUtils {
         ) ?: return rs
         cursor.moveToFirst()
         rs.add(Ymage(
-            cursor.getLong(0),
-            cursor.getString(1),
-            cursor.getInt(2),
-            cursor.getInt(3),
-            cursor.getString(4) == "image/gif"
-        ))
-        while (cursor.moveToNext()) {
-            rs.add(Ymage(
                 cursor.getLong(0),
                 cursor.getString(1),
                 cursor.getInt(2),
                 cursor.getInt(3),
                 cursor.getString(4) == "image/gif"
+        ))
+        while (cursor.moveToNext()) {
+            rs.add(Ymage(
+                    cursor.getLong(0),
+                    cursor.getString(1),
+                    cursor.getInt(2),
+                    cursor.getInt(3),
+                    cursor.getString(4) == "image/gif"
             ))
         }
         cursor.close()
@@ -116,10 +116,10 @@ object DBUtils {
         ) ?: return Bucket()
         cursor.moveToFirst()
         val rs = Bucket(
-            0,
-            cursor.getString(0) ?: "",
-            cursor.getInt(1),
-            "全部"
+                0,
+                cursor.getString(0) ?: "",
+                cursor.getInt(1),
+                "全部"
         )
         cursor.close()
         return rs

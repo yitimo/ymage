@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.app.Activity
 import android.content.Intent
@@ -6,9 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import com.yitimo.ymage.R
+import com.yitimo.ymage.Ymager
 
 class OriginActivity : AppCompatActivity() {
     private lateinit var pager: OriginPager
@@ -36,7 +37,8 @@ class OriginActivity : AppCompatActivity() {
         chosen = intent?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
 
         pager = findViewById(R.id.ymage_origin_pager)
-        adapter = OriginAdapter(chosen,DBUtils.query(this, bucket) ?: return)
+        adapter = OriginAdapter(chosen, DBUtils.query(this, bucket)
+                ?: return)
         pager.offscreenPageLimit = 1
         pager.adapter = adapter
         pager.currentItem = position

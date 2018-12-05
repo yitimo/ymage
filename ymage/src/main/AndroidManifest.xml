@@ -16,7 +16,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".ListActivity" />
-        <activity android:name=".OriginActivity" />
+        <activity android:name=".picker.ListActivity" />
+        <activity android:name=".picker.OriginActivity" />
     </application>
 </manifest>

@@ -1,4 +1,4 @@
-package com.yitimo.ymage
+package com.yitimo.ymage.picker
 
 import android.content.res.Resources
 import android.database.Cursor
@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.*
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.yitimo.ymage.Ymager
 import java.io.File
 import java.lang.Exception
 
@@ -34,11 +35,11 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
         imageSSIV.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         cursor.moveToPosition(position)
         val image = Ymage(
-            cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
-            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
-            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
-            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
+                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         imageSSIV.setOnImageEventListener(null)
         when {
@@ -84,11 +85,11 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
     fun toggleItemPick(position: Int): Boolean {
         cursor.moveToPosition(position)
         val image = Ymage(
-            cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
-            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
-            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
-            cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
-            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
+                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.WIDTH)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         val index = chosen.indexOfFirst { it.Id == image.Id }
         val nowChosen = if (index >= 0 ) {
@@ -104,8 +105,8 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
     fun setItemPick(position: Int) {
         cursor.moveToPosition(position)
         val image = Ymage(
-            cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
-            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))
+                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))
         )
         val index = chosen.indexOfFirst { it.Id == image.Id }
         if (index < 0 ) {

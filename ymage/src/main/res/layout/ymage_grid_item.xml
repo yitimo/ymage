@@ -1,0 +1,21 @@
+<FrameLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/ymager_grid_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@drawable/icon_image_placeholder"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/ymager_grid_item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:background="#77000000"
+        android:padding="8dp"
+        android:layout_gravity="end|bottom"/>
+</FrameLayout>

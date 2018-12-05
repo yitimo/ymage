@@ -19,9 +19,9 @@
         android:layout_height="wrap_content"
         android:text="Choose in fragment"/>
 
-    <GridLayout
+    <com.yitimo.ymage.grider.YmageGridView
         android:id="@+id/sample_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="3"/>
+        app:itemSpace="@dimen/dimenSpace"/>
 </LinearLayout>
