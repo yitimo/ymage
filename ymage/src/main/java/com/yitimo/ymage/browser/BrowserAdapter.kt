@@ -82,7 +82,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                     imageSSIV.setImage(ImageSource.bitmap(resource))
                 }
             }
-            imageSSIV.setOnTouchListener { view, motionEvent ->
+            imageSSIV.setOnTouchListener { _, motionEvent ->
                 when (motionEvent.action and MotionEvent.ACTION_MASK) {
                     MotionEvent.ACTION_DOWN -> {
                         canLeave = true

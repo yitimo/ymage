@@ -56,15 +56,15 @@ class YmageGridItemView: FrameLayout {
         }
 
     constructor(context: Context) : super(context) {
-        init(null, 0)
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        init(attrs, defStyle)
+        init()
     }
     fun setTag(type: String) {
         when (type) {
@@ -82,7 +82,7 @@ class YmageGridItemView: FrameLayout {
         }
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
+    private fun init() {
         inflate(context, R.layout.ymage_grid_item, this)
         image = findViewById(R.id.ymager_grid_item_image)
         tag = findViewById(R.id.ymager_grid_item_tag)
@@ -105,33 +105,33 @@ class YmageGridItemView: FrameLayout {
                 Ymager.setSingleGridItem?.invoke(context, image!!, url!!, Ymager.screenWidth, height*Ymager.screenWidth/width, R.drawable.icon_image_placeholder)
                 return@invoke
             }
-            var ivHeight: Int
+//            var ivHeight: Int
             var ivWidth: Int
             if (myWidth == 0f || myHeight == 0f) {
                 if (width < maxWidth && height < maxHeight) {
-                    ivHeight = height
+//                    ivHeight = height
                     ivWidth = width
                 } else {
                     val scaleX = maxWidth / width
                     val scaleY = maxHeight / height
-                    if (scaleX > scaleY) {
-                        ivHeight = (height * scaleY).toInt()
-                        ivWidth = (width * scaleY).toInt()
+                    ivWidth = if (scaleX > scaleY) {
+            //                        ivHeight = (height * scaleY).toInt()
+                        (width * scaleY).toInt()
                     } else {
-                        ivHeight = (height * scaleX).toInt()
-                        ivWidth = (width * scaleX).toInt()
+            //                        ivHeight = (height * scaleX).toInt()
+                        (width * scaleX).toInt()
                     }
                 }
             } else {
-                ivHeight = myHeight.toInt()
+//                ivHeight = myHeight.toInt()
                 ivWidth = myWidth.toInt()
             }
             if (ivWidth < minSize) {
                 ivWidth = minSize.toInt()
             }
-            if (ivHeight < minSize) {
-                ivHeight = minSize.toInt()
-            }
+//            if (ivHeight < minSize) {
+//                ivHeight = minSize.toInt()
+//            }
             Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
         }, R.drawable.icon_image_placeholder)
     }
