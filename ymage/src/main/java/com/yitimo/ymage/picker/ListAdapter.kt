@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
-import java.io.File
 
 class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int, _showCamera: Boolean): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     private var limit = _limit
@@ -65,7 +64,7 @@ class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _
                 cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
                 cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
-        Ymager.setThumb?.invoke(holder.itemView.context, holder.image!!, File(image.Data), size, 30, R.drawable.icon_image_placeholder)
+        Ymager.setGridItem?.invoke(holder.itemView.context, holder.image!!, image.Data, size, 30, R.drawable.icon_image_placeholder)
 
         holder.image?.setOnClickListener {
             _onClick?.invoke(resolvePosition(holder.adapterPosition))

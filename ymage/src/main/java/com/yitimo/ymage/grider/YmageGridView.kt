@@ -10,24 +10,40 @@ import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 
 class YmageGridView: GridLayout {
+    /*
+    todo 对attr属性的支持 ?color颜色
+    todo 更多属性自定义
+    todo 对xml直接配置图片源的支持
+     */
 
     private var _itemSpace: Float = 0f
     private var _limit: Float = 0f
     private var _items: ArrayList<String> = arrayListOf()
+
     private var imageClickListener: ((Int) -> Unit)? = null
 
+    /*
+    多张图之间的空隙间隔
+     */
     var itemSpace: Float
         get() = _itemSpace
         set(value) {
             _itemSpace = value
         }
 
+    /*
+    图片的尺寸范围 最高/宽不会超过这个
+     */
     var limit: Float
         get() = _limit
         set(value) {
             _limit = value
         }
 
+    /*
+    图片路径列表
+    设置这一属性会触发重新渲染图片
+     */
     var items: ArrayList<String>
         get() = _items
         set(value) {
@@ -63,9 +79,7 @@ class YmageGridView: GridLayout {
             return
         }
         removeAllViews()
-        // 默认为三等分 limit为0则取屏幕宽
         var itemSize = ((if (limit > 0f) limit else Ymager.screenWidth.toFloat()) - itemSpace*4)/3
-        // limit为0且单张图时取0
         val space = if (limit == 0f && items.size == 1) 0 else itemSpace.toInt()
         when (items.size) {
             1 -> {

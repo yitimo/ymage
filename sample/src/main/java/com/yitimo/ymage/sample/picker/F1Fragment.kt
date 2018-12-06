@@ -1,4 +1,4 @@
-package com.yitimo.ymage.sample
+package com.yitimo.ymage.sample.picker
 
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +12,7 @@ import android.widget.Button
 import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.picker.resultYmage
+import com.yitimo.ymage.sample.R
 
 class F1Fragment : Fragment() {
 

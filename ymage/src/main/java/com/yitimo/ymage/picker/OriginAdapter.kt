@@ -12,8 +12,8 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.*
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
-import java.io.File
 import java.lang.Exception
 
 class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() {
@@ -48,7 +48,7 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
                 val lp = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 iv.layoutParams = lp
                 iv.scaleType = ImageView.ScaleType.FIT_CENTER
-                Ymager.setCommon?.invoke(container.context, iv, File(image.Data))
+                Ymager.setGif?.invoke(container.context, iv, image.Data, R.drawable.icon_image_placeholder)
                 container.addView(iv)
                 return iv
             }
@@ -69,7 +69,7 @@ class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() 
                 imageSSIV.setImage(ImageSource.uri(image.Data))
             }
             else -> {
-                Ymager.setOrigin?.invoke(container.context, File(image.Data), limitWidth, limitHeight) {
+                Ymager.getLimitResource?.invoke(container.context, image.Data, limitWidth, limitHeight) {
                     imageSSIV.setImage(ImageSource.bitmap(it))
                 }
             }

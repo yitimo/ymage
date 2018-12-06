@@ -7,11 +7,16 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.support.v4.app.Fragment
 import android.widget.ImageView
+import com.yitimo.ymage.browser.BrowserActivity
 import com.yitimo.ymage.picker.DBUtils
 import com.yitimo.ymage.picker.ListActivity
 import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.picker.resultYmage
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 object Ymager {
     var chosenTheme = R.style.Ymage_Light
@@ -20,13 +25,11 @@ object Ymager {
 
     var screenWidth = Resources.getSystem().displayMetrics.widthPixels
 
-    var setOrigin: ((context: Context, src: File, width: Int, height: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
-    var setCommon: ((context: Context, imageView: ImageView, src: File) -> Unit)? = null
-    var setThumb: ((context: Context, imageView: ImageView, src: File, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
-
-    var fetchSize: ((context: Context, url: String, callback: (width: Int, height: Int) -> Unit, holderRes: Int) -> Unit)? = null
-    var setGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
+    var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
     var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
+    var setGif: ((context: Context, iv: ImageView, url: String, holderRes: Int) -> Unit)? = null
+    var getResource: ((context: Context, url: String, callback: (resource: Bitmap) -> Unit, holderRes: Int) -> Unit)? = null
+    var getLimitResource: ((context: Context, src: String, width: Int, height: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
 
     var pauseGlide: ((context: Context) -> Unit)? = null
     var resumeGlide: ((context: Context) -> Unit)? = null
@@ -119,5 +122,56 @@ object Ymager {
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
         fragment.startActivityForResult(intent, resultYmage)
+    }
+
+    fun browse(context: Context, start: Int, list: ArrayList<String>) {
+        if (list.size == 0) {
+            return
+        }
+        val intent = Intent(context, BrowserActivity::class.java)
+        intent.putExtra("start", start)
+        intent.putExtra("list", list)
+        context.startActivity(intent)
+        if (context is Activity) {
+            context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
+
+    fun md5(src: String): String {
+        try {
+            val instance: MessageDigest = MessageDigest.getInstance("MD5")
+            val digest:ByteArray = instance.digest(src.toByteArray())
+            val sb : StringBuffer = StringBuffer()
+            for (b in digest) {
+                val i :Int = b.toInt() and 0xff
+                var hexString = Integer.toHexString(i)
+                if (hexString.length < 2) {
+                    hexString = "0$hexString"
+                }
+                sb.append(hexString)
+            }
+            return sb.toString()
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    fun onceDir(context: Context): File {
+        val parent = File(context.cacheDir, "ymage_once")
+        if (!parent.exists()) {
+            parent.mkdir()
+        }
+        return parent
+    }
+    fun clearOnceCache(context: Context) {
+        GlobalScope.launch {
+            try {
+                val parent = File(context.cacheDir, "once")
+                if (parent.exists()) {
+                    parent.deleteRecursively()
+                }
+            } catch (_: Throwable) {}
+        }
     }
 }

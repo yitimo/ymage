@@ -1,8 +1,9 @@
-package com.yitimo.ymage.sample
+package com.yitimo.ymage.sample.picker
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import com.yitimo.ymage.sample.R
 
 class FragmentActivity : AppCompatActivity() {
     private lateinit var parentVP: ViewPager

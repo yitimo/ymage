@@ -86,19 +86,14 @@ class YmageGridItemView: FrameLayout {
         inflate(context, R.layout.ymage_grid_item, this)
         image = findViewById(R.id.ymager_grid_item_image)
         tag = findViewById(R.id.ymager_grid_item_tag)
-        val a = context.obtainStyledAttributes(attrs, R.styleable.YmageGridItemView, defStyle, 0)
-        _myWidth = a.getDimension(R.styleable.YmageGridItemView_myWidth, myWidth)
-        _myHeight = a.getDimension(R.styleable.YmageGridItemView_myHeight, myHeight)
-        _maxWidth = a.getDimension(R.styleable.YmageGridItemView_maxWidth, maxWidth)
-        _maxHeight = a.getDimension(R.styleable.YmageGridItemView_maxHeight, maxHeight)
-        _minSize = a.getDimension(R.styleable.YmageGridItemView_minSize, minSize)
-        a.recycle()
     }
     private fun resolveImage() {
         if (image == null || url == null) {
             return
         }
-        Ymager.fetchSize?.invoke(context, url!!, { width, height ->
+        Ymager.getResource?.invoke(context, url!!, { resource ->
+            val width = resource.width
+            val height = resource.height
             if (url!!.indexOf(".gif") >= 0 || url!!.indexOf(".GIF") >= 0) {
                 setTag("gif")
             } else if (height > width * 2) {
@@ -137,8 +132,7 @@ class YmageGridItemView: FrameLayout {
             if (ivHeight < minSize) {
                 ivHeight = minSize.toInt()
             }
-            Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
-
+            Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
         }, R.drawable.icon_image_placeholder)
     }
 

@@ -1,75 +1,45 @@
 package com.yitimo.ymage.sample
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.widget.Button
-import android.widget.GridLayout
-import android.widget.ImageView
-import com.yitimo.ymage.picker.Ymage
+import android.support.constraint.ConstraintLayout
 import com.yitimo.ymage.Ymager
-import com.yitimo.ymage.grider.YmageGridView
-import com.yitimo.ymage.picker.resultYmage
-import java.io.File
+import com.yitimo.ymage.sample.grider.GriderActivity
+import com.yitimo.ymage.sample.picker.PickerActivity
 
 class MainActivity : AppCompatActivity() {
-    private val need = arrayListOf<String>()
-
-    private val maxCount = 9
-    private val size = Resources.getSystem().displayMetrics.widthPixels/3
-    var chosen: Array<Ymage> = arrayOf()
-    private lateinit var gridGL: YmageGridView
-    private lateinit var chooseB: Button
-    private lateinit var fragmentB: Button
+    private lateinit var blockPickerCL: ConstraintLayout
+    private lateinit var blockGriderCL: ConstraintLayout
+    private lateinit var blockBrowserCL: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        chooseB = findViewById(R.id.sample_pick)
-        fragmentB = findViewById(R.id.sample_fragment)
-        gridGL = findViewById(R.id.sample_result)
-        gridGL.limit = Resources.getSystem().displayMetrics.widthPixels.toFloat()
-        chooseB.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Ymager.pick(this, maxCount, true, chosen)
-            } else {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-            }
-        }
-        fragmentB.setOnClickListener {
-            startActivity(Intent(this, FragmentActivity::class.java))
-        }
+        initDOM()
+        initListen()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            for (i in 0 until grantResults.size) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    Ymager.pick(this, maxCount, true, chosen)
-                }
-            }
-        }
+    private fun initDOM() {
+        blockGriderCL = findViewById(R.id.main_block_grider)
+        blockPickerCL = findViewById(R.id.main_block_picker)
+        blockBrowserCL = findViewById(R.id.main_block_browser)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == resultYmage) {
-            if (data != null) {
-                chosen = data.getParcelableArrayListExtra<Ymage>("chosen").toTypedArray()
-                resolveChosen()
-            }
+    private fun initListen() {
+        blockPickerCL.setOnClickListener {
+            startActivity(Intent(this, PickerActivity::class.java))
         }
-    }
-
-    private fun resolveChosen() {
-        gridGL.items = ArrayList(chosen.map { it.Data })
+        blockGriderCL.setOnClickListener {
+            startActivity(Intent(this, GriderActivity::class.java))
+        }
+        blockBrowserCL.setOnClickListener {
+            Ymager.browse(this, 0, arrayListOf(
+                    "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
+                    "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
+                    "http://pic2.16pic.com/00/32/64/16pic_3264151_b.jpg"
+            ))
+        }
     }
 }
