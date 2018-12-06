@@ -25,6 +25,9 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import android.view.GestureDetector
+
+
 
 class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter() {
     private val limitHeight = Resources.getSystem().displayMetrics.heightPixels
@@ -159,13 +162,67 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         onLeaveListener = listener
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun resolveGif(context: Context, src: String): ImageView {
         val iv = ImageView(context)
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         iv.layoutParams = lp
         iv.scaleType = ImageView.ScaleType.FIT_CENTER
-        iv.setOnClickListener {
-            onClickListener?.invoke("")
+        val gestureDetector = GestureDetector(context, SingleTapConfirm())
+        iv.setOnTouchListener { _, motionEvent ->
+            if (gestureDetector.onTouchEvent(motionEvent)) {
+                onClickListener?.invoke("")
+                return@setOnTouchListener true
+            }
+            when (motionEvent.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    canLeave = true
+                    startY = motionEvent.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (canLeave) {
+                        if (!timeToCheckLeave) {
+                            timeToCheckLeave = true
+                        } else {
+                            val offsetY = motionEvent.y - startY
+                            iv.translationY += offsetY
+                            val alpha = Math.abs(iv.translationY)*2/limitHeight
+                            shouldLeave = alpha > 0.5
+                            onLeaveListener?.invoke(when (alpha) {
+                                in 0f..0.3f -> 1f
+                                in 0.3f..1f -> 1-alpha+0.3f
+                                else -> 0.3f
+                            }, false)
+                        }
+                    }
+                }
+                MotionEvent.ACTION_UP -> {
+                    canLeave = true
+                    timeToCheckLeave = false
+                    onLeaveListener?.invoke(1f, shouldLeave)
+                    if (!shouldLeave) {
+                        iv.translationY = 0f
+                        startY = 0f
+                    } else {
+                        shouldLeave = false
+                    }
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    canLeave = true
+                    timeToCheckLeave = false
+                    onLeaveListener?.invoke(1f, shouldLeave)
+                    if (!shouldLeave) {
+                        iv.translationY = 0f
+                        startY = 0f
+                    } else {
+                        shouldLeave = false
+                    }
+                }
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    canLeave = false
+                }
+            }
+            true
         }
         Ymager.setGif?.invoke(context, iv, src, R.drawable.icon_image_placeholder)
         return iv
@@ -191,6 +248,12 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                 override fun onPreviewReleased() {}
                 override fun onTileLoadError(e: Exception?) {}
             })
+        }
+    }
+
+    private class SingleTapConfirm: GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            return true
         }
     }
 }

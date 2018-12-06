@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             Ymager.browse(this, 0, arrayListOf(
                     "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
                     "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
-                    "http://pic2.16pic.com/00/32/64/16pic_3264151_b.jpg"
+                    "http://test.image.zaneds.com/zanmsg/RN/Kc/6c8da9314601c7ad_1544064435765.gif"
             ))
         }
     }

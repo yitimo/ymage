@@ -1,9 +1,6 @@
 package com.yitimo.ymage.browser
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +17,7 @@ class BrowserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_browser)
+        setContentView(R.layout.ymage_activity_browser)
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         window.setLayout(Resources.getSystem().displayMetrics.widthPixels, Resources.getSystem().displayMetrics.heightPixels)
         initPager()
@@ -35,14 +32,14 @@ class BrowserActivity : AppCompatActivity() {
             finish()
             return
         }
-        pagerVP = findViewById(R.id.image_pager)
+        pagerVP = findViewById(R.id.ymage_browser_pager)
         adapter = BrowserAdapter(pagerVP, data)
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start
         pagerVP.offscreenPageLimit = 0
 
-        parent = findViewById(R.id.image_parent)
+        parent = findViewById(R.id.ymage_browser_parent)
         adapter.setOnLeaveListener {alpha: Float, shouldLeave: Boolean ->
             if (shouldLeave) {
                 finish()
