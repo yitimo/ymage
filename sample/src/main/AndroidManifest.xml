@@ -28,6 +28,8 @@
         <activity android:name=".picker.FragmentActivity" />
         <activity android:name=".picker.PickerActivity" />
         <activity android:name=".grider.GriderActivity" />
+        <activity android:name=".tester.TesterActivity"
+            android:theme="@style/activity_swiper"/>
     </application>
 
 </manifest>

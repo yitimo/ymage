@@ -7,11 +7,13 @@ import android.support.constraint.ConstraintLayout
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
+import com.yitimo.ymage.sample.tester.TesterActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var blockPickerCL: ConstraintLayout
     private lateinit var blockGriderCL: ConstraintLayout
     private lateinit var blockBrowserCL: ConstraintLayout
+    private lateinit var blockTesterCL: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         blockGriderCL = findViewById(R.id.main_block_grider)
         blockPickerCL = findViewById(R.id.main_block_picker)
         blockBrowserCL = findViewById(R.id.main_block_browser)
+        blockTesterCL = findViewById(R.id.main_block_tester)
+
     }
 
     private fun initListen() {
@@ -40,6 +44,9 @@ class MainActivity : AppCompatActivity() {
                     "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
                     "http://test.image.zaneds.com/zanmsg/RN/Kc/6c8da9314601c7ad_1544064435765.gif"
             ))
+        }
+        blockTesterCL.setOnClickListener {
+            startActivity(Intent(this, TesterActivity::class.java))
         }
     }
 }
