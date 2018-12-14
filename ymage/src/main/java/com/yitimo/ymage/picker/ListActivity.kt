@@ -84,7 +84,9 @@ class ListActivity : AppCompatActivity() {
                 val intent = Intent()
                 val image = BitmapFactory.decodeFile(photoFile!!.absolutePath)
                 intent.putExtra("chosen", arrayListOf(Ymage(0, photoFile!!.absolutePath, image.width, image.height, false)))
+                intent.putExtra("fromCamera", true)
                 setResult(Activity.RESULT_OK, intent)
+                image.recycle()
                 finish()
             }
         }
