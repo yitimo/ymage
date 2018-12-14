@@ -159,10 +159,11 @@ class ListActivity : AppCompatActivity() {
                 parent.mkdir()
             }
             photoFile = File(parent, "ymage_${System.currentTimeMillis()}.jpg")
-            photoFile?.createNewFile()
-            val photoURI = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) Uri.fromFile(photoFile) else FileProvider.getUriForFile(this,"${applicationContext.packageName}.provider", photoFile!!)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            startActivityForResult(takePictureIntent, resultYmageCamera)
+            if (photoFile?.createNewFile() == true) {
+                val photoURI = FileProvider.getUriForFile(this,"${applicationContext.packageName}.provider", photoFile!!)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, resultYmageCamera)
+            }
         }
     }
 }
