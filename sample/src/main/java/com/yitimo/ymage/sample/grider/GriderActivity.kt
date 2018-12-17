@@ -20,6 +20,7 @@ class GriderActivity : AppCompatActivity() {
         singleYGV = findViewById(R.id.grider_single)
 
         singleYGV.limit = Resources.getSystem().displayMetrics.widthPixels.toFloat()
+        singleYGV.itemSpace = 30f
         singleYGV.items = arrayListOf(
                 "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
                 "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",

@@ -1,10 +1,7 @@
 package com.yitimo.ymage.grider
 
 import android.content.Context
-import android.content.res.Resources
 import android.util.AttributeSet
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.GridLayout
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
@@ -96,8 +93,8 @@ class YmageGridView: GridLayout {
         }
         for (index in 0 until items.size) {
             val iv = YmageGridItemView(context)
-            val lp = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            lp.marginStart = space
+            val lp = GridLayout.LayoutParams()
+            lp.leftMargin = space
             lp.topMargin = space
             iv.layoutParams = lp
             iv.maxHeight = limit*0.7f
