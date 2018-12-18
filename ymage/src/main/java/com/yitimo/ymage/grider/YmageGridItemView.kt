@@ -66,6 +66,7 @@ class YmageGridItemView: FrameLayout {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
         init()
     }
+
     fun setTag(type: String) {
         when (type) {
             "long" -> {
@@ -102,38 +103,44 @@ class YmageGridItemView: FrameLayout {
                 setTag("common")
             }
             if ((myWidth == 0f || myHeight == 0f) && (maxWidth == 0f || maxHeight == 0f)) {
+                // 单张图且以屏幕宽为边界
                 Ymager.setSingleGridItem?.invoke(context, image!!, url!!, Ymager.screenWidth, height*Ymager.screenWidth/width, R.drawable.icon_image_placeholder)
                 return@invoke
             }
-//            var ivHeight: Int
+            // 指定宽高和边界 超出裁剪 不足则放大
+            var ivHeight: Int
             var ivWidth: Int
             if (myWidth == 0f || myHeight == 0f) {
+                // 单张图
                 if (width < maxWidth && height < maxHeight) {
-//                    ivHeight = height
+                    ivHeight = height
                     ivWidth = width
                 } else {
                     val scaleX = maxWidth / width
                     val scaleY = maxHeight / height
                     ivWidth = if (scaleX > scaleY) {
-            //                        ivHeight = (height * scaleY).toInt()
+                        ivHeight = (height * scaleY).toInt()
                         (width * scaleY).toInt()
                     } else {
-            //                        ivHeight = (height * scaleX).toInt()
+                        ivHeight = (height * scaleX).toInt()
                         (width * scaleX).toInt()
                     }
                 }
+                if (ivWidth < minSize) {
+                    ivWidth = minSize.toInt()
+                }
+                if (ivHeight < minSize) {
+                    ivHeight = minSize.toInt()
+                }
+                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
             } else {
-//                ivHeight = myHeight.toInt()
+                // 多张图
                 ivWidth = myWidth.toInt()
+                if (ivWidth < minSize) {
+                    ivWidth = minSize.toInt()
+                }
+                Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
             }
-            if (ivWidth < minSize) {
-                ivWidth = minSize.toInt()
-            }
-//            if (ivHeight < minSize) {
-//                ivHeight = minSize.toInt()
-//            }
-            Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
         }, R.drawable.icon_image_placeholder)
     }
-
 }
