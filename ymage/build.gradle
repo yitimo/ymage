@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 21
-        versionName "1.2.4"
+        versionCode 22
+        versionName "1.2.5"
     }
 
     buildTypes {
@@ -31,7 +31,7 @@ ext {
     siteUrl = 'https://github.com/yitimo/ymage'
     gitUrl = 'https://github.com/yitimo/ymage.git'
 
-    libraryVersion = '1.2.4'
+    libraryVersion = '1.2.5'
 
     developerId = 'yitimo'
     developerName = 'yitimo'
