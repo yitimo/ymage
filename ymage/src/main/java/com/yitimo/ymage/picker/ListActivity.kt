@@ -19,6 +19,8 @@ import android.view.View
 import android.widget.*
 import com.yitimo.ymage.*
 import com.yitimo.ymage.Ymager.chosenTheme
+import com.yitimo.ymage.Ymager.requestYmageCamera
+import com.yitimo.ymage.Ymager.requestYmageOrigin
 import java.io.File
 
 class ListActivity : AppCompatActivity() {
@@ -63,7 +65,7 @@ class ListActivity : AppCompatActivity() {
             return
         }
         when (requestCode) {
-            resultYmageOrigin -> {
+            requestYmageOrigin -> {
                 val nowChosen = data?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
                 if (data?.getBooleanExtra("finish", false) == true) {
                     if (nowChosen.size > 0) {
@@ -77,7 +79,7 @@ class ListActivity : AppCompatActivity() {
                     adapter.setChosen(nowChosen)
                 }
             }
-            resultYmageCamera -> {
+            requestYmageCamera -> {
                 if (photoFile == null) {
                     return
                 }
@@ -164,7 +166,7 @@ class ListActivity : AppCompatActivity() {
             if (photoFile?.createNewFile() == true) {
                 val photoURI = FileProvider.getUriForFile(this,"${applicationContext.packageName}.provider", photoFile!!)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(takePictureIntent, resultYmageCamera)
+                startActivityForResult(takePictureIntent, requestYmageCamera)
             }
         }
     }

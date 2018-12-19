@@ -11,14 +11,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.Ymager
-import com.yitimo.ymage.picker.resultYmage
+import com.yitimo.ymage.Ymager.requestYmage
 import com.yitimo.ymage.sample.R
 
 class F1Fragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == resultYmage) {
+        if (resultCode == Activity.RESULT_OK && requestCode == requestYmage) {
             val chosen = data?.getParcelableArrayListExtra<Ymage>("chosen")?.toTypedArray()
             chosen?.forEach {
                 Log.i("【】", it.Data)

@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
+import com.yitimo.ymage.Ymager.requestYmageOrigin
 
 class OriginActivity : AppCompatActivity() {
     private lateinit var pager: OriginPager
@@ -107,7 +108,7 @@ class OriginActivity : AppCompatActivity() {
             intent.putExtra("position", position)
             intent.putExtra("limit", limit)
             intent.putExtra("chosen", chosen)
-            activity.startActivityForResult(intent, resultYmageOrigin)
+            activity.startActivityForResult(intent, requestYmageOrigin)
         }
     }
 }

@@ -11,7 +11,6 @@ import com.yitimo.ymage.browser.BrowserActivity
 import com.yitimo.ymage.picker.DBUtils
 import com.yitimo.ymage.picker.ListActivity
 import com.yitimo.ymage.picker.Ymage
-import com.yitimo.ymage.picker.resultYmage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -22,6 +21,14 @@ object Ymager {
     var chosenTheme = R.style.Ymage_Light
     val themeDefault = R.style.Ymage_Default
     val themeLight = R.style.Ymage_Light
+
+    var browserClickBack = true
+
+    const val requestYmageOrigin: Int = 30926
+    const val requestYmage: Int = 30927
+    const val requestYmageCamera: Int = 30925
+
+    const val broadcastYmage = "broadcast_ymage"
 
     var screenWidth = Resources.getSystem().displayMetrics.widthPixels
 
@@ -45,7 +52,7 @@ object Ymager {
         val intent = Intent(fragment.activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
-        fragment.startActivityForResult(intent, resultYmage)
+        fragment.startActivityForResult(intent, requestYmage)
     }
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false) {
         if (activity == null) {
@@ -54,7 +61,7 @@ object Ymager {
         val intent = Intent(activity, ListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
-        activity.startActivityForResult(intent, resultYmage)
+        activity.startActivityForResult(intent, requestYmage)
     }
 
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
@@ -66,7 +73,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
-        activity.startActivityForResult(intent, resultYmage)
+        activity.startActivityForResult(intent, requestYmage)
     }
     fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
         if (fragment == null) {
@@ -77,7 +84,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
-        fragment.startActivityForResult(intent, resultYmage)
+        fragment.startActivityForResult(intent, requestYmage)
     }
 
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
@@ -89,7 +96,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
-        activity.startActivityForResult(intent, resultYmage)
+        activity.startActivityForResult(intent, requestYmage)
     }
     fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
         if (fragment == null) {
@@ -100,7 +107,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
-        fragment.startActivityForResult(intent, resultYmage)
+        fragment.startActivityForResult(intent, requestYmage)
     }
 
     fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
@@ -111,7 +118,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
-        activity.startActivityForResult(intent, resultYmage)
+        activity.startActivityForResult(intent, requestYmage)
     }
     fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
         if (fragment == null) {
@@ -121,7 +128,7 @@ object Ymager {
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
-        fragment.startActivityForResult(intent, resultYmage)
+        fragment.startActivityForResult(intent, requestYmage)
     }
 
     fun browse(context: Context, start: Int, list: ArrayList<String>) {

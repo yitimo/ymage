@@ -1,6 +1,7 @@
 package com.yitimo.ymage.browser
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager
 import android.view.WindowManager
 import android.widget.Toast
 import com.yitimo.ymage.R
+import com.yitimo.ymage.Ymager
 
 class BrowserActivity : AppCompatActivity() {
     private lateinit var pagerVP: ViewPager
@@ -47,8 +49,23 @@ class BrowserActivity : AppCompatActivity() {
                 parent.alpha = alpha
             }
         }
-        adapter.setOnClickListener {
-            finish()
+        adapter.setOnClickListener { src, position ->
+            if (Ymager.browserClickBack) {
+                finish()
+            } else {
+                val intent = Intent(Ymager.broadcastYmage)
+                intent.putExtra("action", "click")
+                intent.putExtra("index", position)
+                intent.putExtra("src", src)
+                sendBroadcast(intent)
+            }
+        }
+        adapter.setOnLongClickListener { src, position ->
+            val intent = Intent(Ymager.broadcastYmage)
+            intent.putExtra("action", "longClick")
+            intent.putExtra("index", position)
+            intent.putExtra("src", src)
+            sendBroadcast(intent)
         }
     }
 

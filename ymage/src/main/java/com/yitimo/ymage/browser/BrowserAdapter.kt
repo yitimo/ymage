@@ -2,6 +2,7 @@ package com.yitimo.ymage.browser
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.PointF
@@ -27,13 +28,12 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import android.view.GestureDetector
 
-
-
 class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter() {
     private val limitHeight = Resources.getSystem().displayMetrics.heightPixels
     private val limitWidth = Resources.getSystem().displayMetrics.widthPixels
     private val data = _list
-    private var onClickListener: ((String) -> Unit)? = null
+    private var onClickListener: ((String, Int) -> Unit)? = null
+    private var onLongClickListener: ((String, Int) -> Unit)? = null
     private var onLeaveListener: ((Float, Boolean) -> Unit)? = null
 
     private var startY = 0f
@@ -62,7 +62,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
     @SuppressLint("ClickableViewAccessibility")
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         if (data[position].endsWith(".gif") || data[position].endsWith(".GIF")) {
-            val iv = resolveGif(container.context, data[position])
+            val iv = resolveGif(container.context, data[position], position)
             container.addView(iv)
             return iv
         }
@@ -71,9 +71,6 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         imageSSIV.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM)
         imageSSIV.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         imageSSIV.setOnImageEventListener(null)
-        imageSSIV.setOnClickListener {
-            onClickListener?.invoke("")
-        }
 
         Ymager.getResource?.invoke(container.context, data[position], { resource ->
             val width = resource.width
@@ -84,6 +81,13 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                 Ymager.getLimitResource?.invoke(container.context, data[position], limitWidth*2, limitHeight*2) {
                     imageSSIV.setImage(ImageSource.bitmap(resource))
                 }
+            }
+            imageSSIV.setOnClickListener {
+                onClickListener?.invoke(data[position], position)
+            }
+            imageSSIV.setOnLongClickListener {
+                onLongClickListener?.invoke(data[position], position)
+                true
             }
             imageSSIV.setOnTouchListener { _, motionEvent ->
                 when (motionEvent.action and MotionEvent.ACTION_MASK) {
@@ -155,15 +159,18 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         return null
     }
 
-    fun setOnClickListener(listener: (String) -> Unit) {
+    fun setOnClickListener(listener: (String, Int) -> Unit) {
         onClickListener = listener
+    }
+    fun setOnLongClickListener(listener: (String, Int) -> Unit) {
+        onLongClickListener = listener
     }
     fun setOnLeaveListener(listener: (Float, Boolean) -> Unit) {
         onLeaveListener = listener
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun resolveGif(context: Context, src: String): ImageView {
+    private fun resolveGif(context: Context, src: String, position: Int): ImageView {
         val iv = ImageView(context)
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         iv.layoutParams = lp
@@ -171,7 +178,8 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         val gestureDetector = GestureDetector(context, SingleTapConfirm())
         iv.setOnTouchListener { _, motionEvent ->
             if (gestureDetector.onTouchEvent(motionEvent)) {
-                onClickListener?.invoke("")
+                // todo GIF image does not support long press currently
+                onClickListener?.invoke(src, position)
                 return@setOnTouchListener true
             }
             when (motionEvent.action and MotionEvent.ACTION_MASK) {

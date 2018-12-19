@@ -15,6 +15,7 @@ class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Ymager.browserClickBack = true
         Ymager.setTheme(R.style.MyYmage)
 
         Ymager.getResource = fun (context: Context, url: String, callback: (Bitmap) -> Unit, holderRes: Int) {

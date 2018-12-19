@@ -1,10 +1,14 @@
 package com.yitimo.ymage.sample
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.widget.Toast
+import com.yitimo.ymage.YmageBroadcast
 import com.yitimo.ymage.Ymager
+import com.yitimo.ymage.browser.BrowserDialog
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
 import com.yitimo.ymage.sample.tester.TesterActivity
@@ -14,6 +18,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var blockGriderCL: ConstraintLayout
     private lateinit var blockBrowserCL: ConstraintLayout
     private lateinit var blockTesterCL: ConstraintLayout
+
+    private val list = arrayListOf(
+            "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
+            "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
+            "http://pic2.16pic.com/00/32/64/16pic_3264151_b.jpg"
+//                "http://test.image.zaneds.com/zanmsg/NR/rL/publish3535621208239813520_1545061673031.jpg!thumb"
+    )
+
+    private var receiver: YmageBroadcast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +42,19 @@ class MainActivity : AppCompatActivity() {
         blockBrowserCL = findViewById(R.id.main_block_browser)
         blockTesterCL = findViewById(R.id.main_block_tester)
 
+        receiver = YmageBroadcast()
+        registerReceiver(receiver, IntentFilter(Ymager.broadcastYmage))
+        receiver?.setOnImageClickListener { src, index ->
+            Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
+        }
+        receiver?.setOnImageLongClickListener { src, index ->
+            Toast.makeText(this, "Long clicked!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
     private fun initListen() {
@@ -39,11 +65,23 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GriderActivity::class.java))
         }
         blockBrowserCL.setOnClickListener {
-            Ymager.browse(this, 0, arrayListOf(
-                    "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
-                    "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
-                    "http://test.image.zaneds.com/zanmsg/RN/Kc/6c8da9314601c7ad_1544064435765.gif"
-            ))
+//            Ymager.browse(this, 0, arrayListOf(
+//                    "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
+//                    "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
+//                    "http://test.image.zaneds.com/zanmsg/RN/Kc/6c8da9314601c7ad_1544064435765.gif"
+//            ))
+            val dialog = BrowserDialog()
+            val bundle = Bundle()
+            bundle.putStringArrayList("list", list)
+            bundle.putInt("start", 1)
+            dialog.arguments = bundle
+            dialog.show(supportFragmentManager, "ymage_browse")
+            dialog.setOnClickListener { s, i ->
+                Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
+            }
+            dialog.setOnLongClickListener { s, i ->
+                Toast.makeText(this, "Long clicked!", Toast.LENGTH_SHORT).show()
+            }
         }
         blockTesterCL.setOnClickListener {
             startActivity(Intent(this, TesterActivity::class.java))

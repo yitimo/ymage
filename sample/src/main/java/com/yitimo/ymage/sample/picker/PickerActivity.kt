@@ -13,7 +13,7 @@ import android.widget.Button
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.grider.YmageGridView
 import com.yitimo.ymage.picker.Ymage
-import com.yitimo.ymage.picker.resultYmage
+import com.yitimo.ymage.Ymager.requestYmage
 import com.yitimo.ymage.sample.R
 
 class PickerActivity : AppCompatActivity() {
@@ -56,7 +56,7 @@ class PickerActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == resultYmage) {
+        if (resultCode == Activity.RESULT_OK && requestCode == requestYmage) {
             if (data != null) {
                 chosen = data.getParcelableArrayListExtra<Ymage>("chosen").toTypedArray()
                 resolveChosen()
