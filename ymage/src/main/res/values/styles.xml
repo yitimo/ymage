@@ -31,10 +31,10 @@
     </style>
 
     <style name="YmageBrowser" parent="@style/activity_transparent">
-        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+        <item name="android:windowAnimationStyle">@style/YmageBrowserAnimation</item>
     </style>
 
-    <style name="PauseDialogAnimation">
+    <style name="YmageBrowserAnimation">
         <item name="android:windowEnterAnimation">@anim/browser_in</item>
         <item name="android:windowExitAnimation">@anim/browser_out</item>
     </style>
