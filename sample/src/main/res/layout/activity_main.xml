@@ -1,105 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:overScrollMode="never"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
+    android:orientation="vertical"
     tools:context=".MainActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark">
-    <android.support.constraint.ConstraintLayout
+    android:fitsSystemWindows="true">
+    <ScrollView android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:background="@color/colorPrimaryDark">
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/main_block_picker"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/main_block_grider">
-            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/main_block_picker"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:drawableTop="@drawable/ic_main_picker"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Photo Picker"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintEnd_toStartOf="@id/main_block_grider">
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:drawableTop="@drawable/ic_main_picker"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photo Picker"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground" />
+            </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/main_block_grider"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            app:layout_constraintStart_toEndOf="@id/main_block_picker"
-            app:layout_constraintEnd_toEndOf="parent">
-            <TextView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:drawableTop="@drawable/ic_main_grider"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Image Grider"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground" />
-        </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/main_block_grider"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                app:layout_constraintStart_toEndOf="@id/main_block_picker"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:drawableTop="@drawable/ic_main_grider"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Image Grider"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground" />
+            </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/main_block_browser"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/main_block_grider"
-            app:layout_constraintTop_toBottomOf="@id/main_block_picker">
-            <TextView
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/main_block_browser"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:drawableTop="@drawable/ic_main_browser"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Image Browser"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintEnd_toStartOf="@id/main_block_grider"
+                app:layout_constraintTop_toBottomOf="@id/main_block_picker">
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:drawableTop="@drawable/ic_main_browser"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Image Browser"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground" />
+            </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/main_block_tester"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            app:layout_constraintStart_toEndOf="@id/main_block_browser"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_block_picker">
-            <TextView
-                app:layout_constraintStart_toStartOf="parent"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/main_block_tester"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                app:layout_constraintStart_toEndOf="@id/main_block_browser"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:drawableTop="@drawable/ic_main_tester"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BlackMagic Tester"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground" />
+                app:layout_constraintTop_toBottomOf="@id/main_block_picker">
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:drawableTop="@drawable/ic_main_tester"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BlackMagic Tester"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground" />
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:hint="Enter here"
+        android:textColorHint="#969696"
+        android:gravity="start"
+        android:padding="@dimen/dimenSpace"
+        android:inputType="textMultiLine"/>
+</LinearLayout>

@@ -30,8 +30,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="YmageBrowser" parent="activity_transparent">
-        <item name="android:windowEnterAnimation">@android:style/Animation.Dialog</item>
-        <item name="android:windowExitAnimation">@android:style/Animation.Dialog</item>
+    <style name="YmageBrowser" parent="@style/activity_transparent">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/browser_in</item>
+        <item name="android:windowExitAnimation">@anim/browser_out</item>
     </style>
 </resources>

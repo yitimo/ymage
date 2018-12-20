@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.view.WindowManager
 import android.widget.Toast
 import com.yitimo.ymage.YmageBroadcast
 import com.yitimo.ymage.Ymager
@@ -26,11 +27,11 @@ class MainActivity : AppCompatActivity() {
 //                "http://test.image.zaneds.com/zanmsg/NR/rL/publish3535621208239813520_1545061673031.jpg!thumb"
     )
 
-    private var receiver: YmageBroadcast? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        setFullscreen()
 
         initDOM()
         initListen()
@@ -41,20 +42,6 @@ class MainActivity : AppCompatActivity() {
         blockPickerCL = findViewById(R.id.main_block_picker)
         blockBrowserCL = findViewById(R.id.main_block_browser)
         blockTesterCL = findViewById(R.id.main_block_tester)
-
-        receiver = YmageBroadcast()
-        registerReceiver(receiver, IntentFilter(Ymager.broadcastYmage))
-        receiver?.setOnImageClickListener { src, index ->
-            Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
-        }
-        receiver?.setOnImageLongClickListener { src, index ->
-            Toast.makeText(this, "Long clicked!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(receiver)
     }
 
     private fun initListen() {
@@ -65,17 +52,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GriderActivity::class.java))
         }
         blockBrowserCL.setOnClickListener {
-//            Ymager.browse(this, 0, arrayListOf(
-//                    "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
-//                    "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
-//                    "http://test.image.zaneds.com/zanmsg/RN/Kc/6c8da9314601c7ad_1544064435765.gif"
-//            ))
-            val dialog = BrowserDialog()
-            val bundle = Bundle()
-            bundle.putStringArrayList("list", list)
-            bundle.putInt("start", 1)
-            dialog.arguments = bundle
-            dialog.show(supportFragmentManager, "ymage_browse")
+            val dialog = BrowserDialog.show(supportFragmentManager, list, 1) ?: return@setOnClickListener
             dialog.setOnClickListener { s, i ->
                 Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
             }
@@ -85,6 +62,18 @@ class MainActivity : AppCompatActivity() {
         }
         blockTesterCL.setOnClickListener {
             startActivity(Intent(this, TesterActivity::class.java))
+        }
+    }
+
+    private fun setFullscreen(enabled: Boolean = false) {
+        if (enabled) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
     }
 }
