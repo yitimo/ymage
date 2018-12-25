@@ -25,9 +25,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var blockCutterCL: ConstraintLayout
 
     private val list = arrayListOf(
-            "http://img0.imgtn.bdimg.com/it/u=3946057059,755959423&fm=200&gp=0.jpg",
-            "http://imgsrc.baidu.com/imgad/pic/item/0824ab18972bd40767fe632971899e510fb3092c.jpg",
-            "http://pic2.16pic.com/00/32/64/16pic_3264151_b.jpg"
+            "http://192.168.0.86:8080/publish1585698172_1545143782809.gif",
+            "http://192.168.0.86:8080/publish463943540_1545143783923.jpg",
+            "http://192.168.0.86:8080/publish551108273_1545143783539.jpg",
+            "http://192.168.0.86:8080/publish733834479_1545143782395.jpg",
+            "http://192.168.0.86:8080/publish865261351_1545143784872.jpg",
+            "http://192.168.0.86:8080/publish904752478_1545143781123.jpg"
 //                "http://test.image.zaneds.com/zanmsg/NR/rL/publish3535621208239813520_1545061673031.jpg!thumb"
     )
 

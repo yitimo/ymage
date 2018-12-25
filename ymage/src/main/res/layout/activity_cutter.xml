@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".cutter.CutterActivity"
     android:background="#333333">
-    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+    <com.yitimo.ymage.cutter.CutterImageView
         android:id="@+id/ymage_cutter_origin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#CD5C5C"
         android:contentDescription="@null"/>
     <View
         android:id="@+id/ymage_cutter_mask_left"

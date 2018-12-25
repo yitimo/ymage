@@ -56,7 +56,7 @@ class BrowserDialog: DialogFragment() {
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start
-        pagerVP.offscreenPageLimit = 0
+        pagerVP.offscreenPageLimit = 2
 
         parent = dialog.findViewById(R.id.ymage_browser_parent)
 

@@ -31,6 +31,7 @@ object Ymager {
     const val broadcastYmage = "broadcast_ymage"
 
     var screenWidth = Resources.getSystem().displayMetrics.widthPixels
+    var screenHeight = Resources.getSystem().displayMetrics.heightPixels
 
     var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
     var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null

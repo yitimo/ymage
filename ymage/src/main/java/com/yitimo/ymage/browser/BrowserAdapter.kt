@@ -78,8 +78,8 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
             if (height > limitHeight*2 && height > width*2) {
                 resolveLong(container.context, imageSSIV, data[position], resource)
             } else {
-                Ymager.getLimitResource?.invoke(container.context, data[position], limitWidth*2, limitHeight*2) {
-                    imageSSIV.setImage(ImageSource.bitmap(resource))
+                Ymager.getLimitResource?.invoke(container.context, data[position], (limitWidth*1.5).toInt(), (limitHeight*1.5).toInt()) {
+                    imageSSIV.setImage(ImageSource.bitmap(it))
                 }
             }
             imageSSIV.setOnClickListener {
@@ -176,10 +176,14 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         iv.layoutParams = lp
         iv.scaleType = ImageView.ScaleType.FIT_CENTER
         val gestureDetector = GestureDetector(context, SingleTapConfirm())
+        val longGestureDetector = GestureDetector(context, LongTapConfirm())
         iv.setOnTouchListener { _, motionEvent ->
             if (gestureDetector.onTouchEvent(motionEvent)) {
-                // todo GIF image does not support long press currently
                 onClickListener?.invoke(src, position)
+                return@setOnTouchListener true
+            }
+            if (longGestureDetector.onTouchEvent(motionEvent)) {
+                onLongClickListener?.invoke(src, position)
                 return@setOnTouchListener true
             }
             when (motionEvent.action and MotionEvent.ACTION_MASK) {
@@ -262,6 +266,11 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
     private class SingleTapConfirm: GestureDetector.SimpleOnGestureListener() {
         override fun onSingleTapUp(e: MotionEvent?): Boolean {
             return true
+        }
+    }
+    private class LongTapConfirm: GestureDetector.SimpleOnGestureListener() {
+        override fun onLongPress(e: MotionEvent?) {
+            super.onLongPress(e)
         }
     }
 }
