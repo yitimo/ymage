@@ -1,30 +1,26 @@
 package com.yitimo.ymage.cutter
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapRegionDecoder
 import android.graphics.Rect
-import android.os.Build
-import android.support.v4.view.MotionEventCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
-import android.view.View
 import android.widget.ImageView
 import com.yitimo.ymage.Ymager
-import java.io.*
-import java.util.jar.Attributes
+import java.io.FileInputStream
 
 class CutterImageView: ImageView {
     private lateinit var regionDecoder: BitmapRegionDecoder
+    private var region: Rect = Rect()
 
-    private var offsetX = 0f
-    private var offsetY = 0f
+    private val limitRatio: Float = Ymager.screenWidth/Ymager.screenHeight.toFloat()
 
+    private val option = BitmapFactory.Options()
     private var fileStream: FileInputStream? = null
     private var _iWidth: Int = 0
     private var _iHeight: Int = 0
@@ -32,6 +28,18 @@ class CutterImageView: ImageView {
     private var _translateX: Float = 1f
     private var _translateY: Float = 1f
     private var _src: String = ""
+    private var ratio = 1f
+
+    private var offsetX = 0f
+    private var offsetY = 0f
+    private var scaleGate = false
+
+    init {
+        option.inPreferredConfig = Bitmap.Config.RGB_565
+    }
+
+    var maxLimitX: Int = 0
+    var maxLimitY: Int = 0
 
     var iWidth: Int
         get() {
@@ -66,6 +74,10 @@ class CutterImageView: ImageView {
         iWidth = regionDecoder.width
         iHeight = regionDecoder.height
 
+        region.set(0, 0, iWidth, iHeight)
+        _scale = Ymager.screenWidth / iWidth.toFloat()
+
+        ratio = iWidth/iHeight.toFloat()
         resolveTransform()
     }
 
@@ -94,41 +106,71 @@ class CutterImageView: ImageView {
             resolveTransform()
         }
 
+    var sWidth: Int
+        get() = (iWidth * scale).toInt()
+        private set(_) {}
+    var sHeight: Int
+        get() = (iHeight * scale).toInt()
+        private set(_) {}
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(motionEvent: MotionEvent?): Boolean {
         mScaleDetector.onTouchEvent(motionEvent)
+        if (motionEvent == null) {
+            return true
+        }
+        when (motionEvent.action and MotionEvent.ACTION_MASK) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                scaleGate = true
+            }
+            MotionEvent.ACTION_DOWN -> {
+                offsetY = motionEvent.y
+                offsetX = motionEvent.x
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (scaleGate) {
+                    return true
+                }
+                val x = motionEvent.x - offsetX
+                val y = motionEvent.y - offsetY
+                _translateX += x/scale
+                _translateY += y/scale
+                offsetX = motionEvent.x
+                offsetY = motionEvent.y
+
+                Log.i("【】", "${_translateX*scale},${_translateY*scale}")
+                resolveTransform()
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                offsetX = 0f
+                offsetY = 0f
+                scaleGate = false
+            }
+        }
         return true
     }
 
     private fun resolveTransform() {
-        val option = BitmapFactory.Options()
-        option.inPreferredConfig = Bitmap.Config.RGB_565
+        val cutX = Ymager.screenWidth / scale
+        val cutY = Ymager.screenHeight / scale
 
-        var left = (iWidth * (scale-1) / 2).toInt()
-        if (iWidth - left - left < Ymager.screenWidth) {
-            left = (iWidth - Ymager.screenWidth) / 2
-        }
-        val right = iWidth - left
-        val top = 0 // (iHeight * (scale-1) / 2).toInt()
-        val bottom = iHeight - top
+        region.set(0, 0, cutX.toInt(), cutY.toInt())
+        region.offset(-((cutX - iWidth)/2).toInt(), -((cutY - iHeight)/2).toInt())
 
-        val initBitmap = regionDecoder.decodeRegion(Rect(left, top, right, bottom), option)
-        setImageBitmap(initBitmap)
+        region.offset(-translateX.toInt(), -translateY.toInt())
+        setImageBitmap(regionDecoder.decodeRegion(region, option))
     }
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         fileStream?.close()
     }
 
-    private var mScaleFactor = 1f
-
     private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-
         override fun onScale(detector: ScaleGestureDetector): Boolean {
-            mScaleFactor *= detector.scaleFactor
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f))
+            _scale *= detector.scaleFactor
+            _scale = Math.max(0.1f, Math.min(_scale, 5.0f))
             invalidate()
-            scale = mScaleFactor
+            scale = _scale
             return true
         }
     }
