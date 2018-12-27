@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cutter.CutterActivity">
+    <ImageView
+        android:id="@+id/cutter_result"
+        android:contentDescription="@null"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/icon_image_placeholder"/>
+    <Button
+        android:id="@+id/cutter_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cutter_result"
+        android:layout_marginTop="@dimen/dimenSpace"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="来一张"/>
+</android.support.constraint.ConstraintLayout>

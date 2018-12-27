@@ -2,17 +2,15 @@ package com.yitimo.ymage.sample
 
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.WindowManager
 import android.widget.Toast
-import com.yitimo.ymage.YmageBroadcast
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.browser.BrowserDialog
-import com.yitimo.ymage.cutter.CutterActivity
 import com.yitimo.ymage.picker.Ymage
+import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
 import com.yitimo.ymage.sample.tester.TesterActivity
@@ -38,27 +36,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        setFullscreen()
-
         initDOM()
         initListen()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-        when (requestCode) {
-            Ymager.requestYmage -> {
-                val chosen = data?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
-                if (chosen.isNotEmpty()) {
-                    val intent = Intent(this, CutterActivity::class.java)
-                    intent.putExtra("origin", chosen[0].Data)
-                    startActivity(intent)
-                }
-            }
-        }
     }
 
     private fun initDOM() {
@@ -89,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, TesterActivity::class.java))
         }
         blockCutterCL.setOnClickListener {
-            Ymager.pick(this, 1, true)
+            startActivity(Intent(this, CutterActivity::class.java))
         }
     }
 

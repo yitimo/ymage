@@ -22,7 +22,6 @@
         <activity
             android:name=".browser.BrowserActivity"
             android:theme="@style/activity_transparent" />
-        <activity android:name=".cutter.CutterActivity"></activity>
     </application>
 
 </manifest>

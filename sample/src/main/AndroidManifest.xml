@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,8 +30,11 @@
         <activity android:name=".picker.FragmentActivity" />
         <activity android:name=".picker.PickerActivity" />
         <activity android:name=".grider.GriderActivity" />
-        <activity android:name=".tester.TesterActivity"
-            android:theme="@style/activity_swiper"/>
+        <activity
+            android:name=".tester.TesterActivity"
+            android:theme="@style/activity_swiper" />
+        <activity android:name=".cutter.CutterActivity" />
+        <activity android:name=".cutter.CutterEditActivity"></activity>
     </application>
 
 </manifest>
