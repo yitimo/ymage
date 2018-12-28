@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Parcelable
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
     private var canLeave = true
     private var shouldLeave = false
     private var timeToCheckLeave = false
+    private var ignoreLong = false
 
     init {
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -114,18 +116,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                             }
                         }
                     }
-                    MotionEvent.ACTION_UP -> {
-                        canLeave = true
-                        timeToCheckLeave = false
-                        onLeaveListener?.invoke(1f, shouldLeave)
-                        if (!shouldLeave) {
-                            imageSSIV.translationY = 0f
-                            startY = 0f
-                        } else {
-                            shouldLeave = false
-                        }
-                    }
-                    MotionEvent.ACTION_CANCEL -> {
+                    MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
                         canLeave = true
                         timeToCheckLeave = false
                         onLeaveListener?.invoke(1f, shouldLeave)
@@ -175,17 +166,18 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         iv.layoutParams = lp
         iv.scaleType = ImageView.ScaleType.FIT_CENTER
-        val gestureDetector = GestureDetector(context, SingleTapConfirm())
-        val longGestureDetector = GestureDetector(context, LongTapConfirm())
-        iv.setOnTouchListener { _, motionEvent ->
-            if (gestureDetector.onTouchEvent(motionEvent)) {
-                onClickListener?.invoke(src, position)
-                return@setOnTouchListener true
-            }
-            if (longGestureDetector.onTouchEvent(motionEvent)) {
+
+        iv.setOnClickListener {
+            onClickListener?.invoke(src, position)
+        }
+        iv.setOnLongClickListener {
+            if (!ignoreLong) {
                 onLongClickListener?.invoke(src, position)
-                return@setOnTouchListener true
             }
+            true
+        }
+
+        iv.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_DOWN -> {
                     canLeave = true
@@ -196,6 +188,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                         if (!timeToCheckLeave) {
                             timeToCheckLeave = true
                         } else {
+                            ignoreLong = true
                             val offsetY = motionEvent.y - startY
                             iv.translationY += offsetY
                             val alpha = Math.abs(iv.translationY)*2/limitHeight
@@ -208,18 +201,8 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                         }
                     }
                 }
-                MotionEvent.ACTION_UP -> {
-                    canLeave = true
-                    timeToCheckLeave = false
-                    onLeaveListener?.invoke(1f, shouldLeave)
-                    if (!shouldLeave) {
-                        iv.translationY = 0f
-                        startY = 0f
-                    } else {
-                        shouldLeave = false
-                    }
-                }
-                MotionEvent.ACTION_CANCEL -> {
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    ignoreLong = false
                     canLeave = true
                     timeToCheckLeave = false
                     onLeaveListener?.invoke(1f, shouldLeave)
@@ -234,7 +217,7 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                     canLeave = false
                 }
             }
-            true
+            false
         }
         Ymager.setGif?.invoke(context, iv, src, R.drawable.icon_image_placeholder)
         return iv
@@ -260,17 +243,6 @@ class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter()
                 override fun onPreviewReleased() {}
                 override fun onTileLoadError(e: Exception?) {}
             })
-        }
-    }
-
-    private class SingleTapConfirm: GestureDetector.SimpleOnGestureListener() {
-        override fun onSingleTapUp(e: MotionEvent?): Boolean {
-            return true
-        }
-    }
-    private class LongTapConfirm: GestureDetector.SimpleOnGestureListener() {
-        override fun onLongPress(e: MotionEvent?) {
-            super.onLongPress(e)
         }
     }
 }

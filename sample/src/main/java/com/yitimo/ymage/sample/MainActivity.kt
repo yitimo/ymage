@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var blockCutterCL: ConstraintLayout
 
     private val list = arrayListOf(
-            "http://192.168.0.86:8080/publish1585698172_1545143782809.gif",
+            "http://192.168.0.86:8080/84d642fd894f5163717f6a885f3ebce4.gif",
             "http://192.168.0.86:8080/publish463943540_1545143783923.jpg",
             "http://192.168.0.86:8080/publish551108273_1545143783539.jpg",
             "http://192.168.0.86:8080/publish733834479_1545143782395.jpg",
