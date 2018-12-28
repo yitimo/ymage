@@ -44,6 +44,9 @@ class CutterEditActivity : AppCompatActivity() {
     }
 
     private fun initListen() {
+        backB.setOnClickListener {
+            finish()
+        }
         rotateB.setOnClickListener {
             currRotate = (currRotate + 90)%360
             bodyYCV.rotate(currRotate)
