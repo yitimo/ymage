@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cutter.CutterActivity">
+    tools:context=".cutter.CutterActivity"
+    android:fitsSystemWindows="true">
     <ImageView
         android:id="@+id/cutter_result"
         android:contentDescription="@null"

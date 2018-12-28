@@ -22,6 +22,9 @@ import com.yitimo.ymage.Ymager.chosenTheme
 import com.yitimo.ymage.Ymager.requestYmageCamera
 import com.yitimo.ymage.Ymager.requestYmageOrigin
 import java.io.File
+import android.content.ClipData
+
+
 
 class ListActivity : AppCompatActivity() {
     private lateinit var albumsS: Spinner
@@ -165,6 +168,10 @@ class ListActivity : AppCompatActivity() {
             photoFile = File(parent, "ymage_${System.currentTimeMillis()}.jpg")
             if (photoFile?.createNewFile() == true) {
                 val photoURI = FileProvider.getUriForFile(this,"${applicationContext.packageName}.provider", photoFile!!)
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    takePictureIntent.clipData = ClipData.newRawUri("", photoURI)
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, requestYmageCamera)
             }
