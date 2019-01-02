@@ -98,8 +98,10 @@ class YmageCutterView : ConstraintLayout {
         originIV.setOnImageEventListener(object : SubsamplingScaleImageView.OnImageEventListener {
             override fun onImageLoaded() {
                 minScale = if (originIV.orientation == rotation0 || originIV.orientation == rotation180) {
+                    originIV.setScaleAndCenter(originIV.sWidth/Ymager.screenWidth.toFloat(), PointF(originIV.sWidth/2f, originIV.sHeight/2f))
                     Math.max(Math.max(frameV.width / originIV.sWidth.toFloat(), frameV.height / originIV.sHeight.toFloat()), defaultMinScale)
                 } else {
+                    originIV.setScaleAndCenter(originIV.sHeight/Ymager.screenWidth.toFloat(), PointF(originIV.sHeight/2f, originIV.sWidth/2f))
                     Math.max(Math.max(frameV.width / originIV.sHeight.toFloat(), frameV.height / originIV.sWidth.toFloat()), defaultMinScale)
                 }
                 maxScale = Math.max(minScale, _maxScale)
@@ -187,13 +189,15 @@ class YmageCutterView : ConstraintLayout {
     }
     fun reset() {
         originIV.orientation = rotation0
-        originIV.resetScaleAndCenter()
+        originIV.setScaleAndCenter(originIV.sWidth/Ymager.screenWidth.toFloat(), PointF(originIV.sWidth/2f, originIV.sHeight/2f))
     }
     fun rotate(rotate: Int) {
         originIV.orientation = rotate
         minScale = if (rotate == rotation0 || rotate == rotation180) {
+            originIV.setScaleAndCenter(originIV.sWidth/Ymager.screenWidth.toFloat(), PointF(originIV.sWidth/2f, originIV.sHeight/2f))
             Math.max(Math.max(frameV.width / originIV.sWidth.toFloat(), frameV.height / originIV.sHeight.toFloat()), defaultMinScale)
         } else {
+            originIV.setScaleAndCenter(originIV.sHeight/Ymager.screenWidth.toFloat(), PointF(originIV.sHeight/2f, originIV.sWidth/2f))
             Math.max(Math.max(frameV.width / originIV.sHeight.toFloat(), frameV.height / originIV.sWidth.toFloat()), defaultMinScale)
         }
         maxScale = Math.max(minScale, _maxScale)
