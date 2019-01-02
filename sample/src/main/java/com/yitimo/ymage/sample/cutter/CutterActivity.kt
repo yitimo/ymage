@@ -5,14 +5,12 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.picker.Ymage
 import com.yitimo.ymage.sample.R
-import java.io.File
 
 class CutterActivity : AppCompatActivity() {
     private val requestCutter = 1

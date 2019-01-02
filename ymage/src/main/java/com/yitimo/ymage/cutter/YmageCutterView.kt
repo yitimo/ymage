@@ -11,10 +11,13 @@ import android.widget.FrameLayout
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.yitimo.ymage.R
+import com.yitimo.ymage.Ymager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
+import java.lang.Exception
+import java.util.TimerTask
+import java.util.Timer
 import kotlin.concurrent.schedule
 
 class YmageCutterView : ConstraintLayout {
@@ -29,12 +32,38 @@ class YmageCutterView : ConstraintLayout {
     private var inCheck = false
 
     private var _src: String = ""
+    private var _ratio: String = "1:1"
+    private val defaultMinScale = 0.05f
+    private val defaultMaxScale = 2.95f
+    private var _minScale: Float = defaultMinScale
+    private var _maxScale: Float = defaultMaxScale
     var src: String
-    get() = _src
-    set(value) {
-        _src = value
-        resolveOrigin()
-    }
+        get() = _src
+        set(value) {
+            _src = value
+            resolveOrigin()
+        }
+    var ratio: String
+        get() = _ratio
+        set(value) {
+            _ratio = if (value.matches(Regex("""[0-9]+:[0-9]+"""))) {
+                value
+            } else "1:1"
+            (frameV.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = _ratio
+        }
+    var maxScale: Float
+        get() = _maxScale
+        set(value) {
+            _maxScale = if (value > 0) value else defaultMaxScale
+            originIV.maxScale = _maxScale
+        }
+    var minScale: Float
+        get() = _minScale
+        set(value) {
+            _minScale = if (value > 0) value else defaultMinScale
+            originIV.minScale = _minScale
+        }
+
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -54,12 +83,34 @@ class YmageCutterView : ConstraintLayout {
 
         frameV = findViewById(R.id.ymage_cutter_frame)
         originIV = findViewById(R.id.ymage_cutter_origin)
+        originIV.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM)
 
         // Load attributes
         val a = context.obtainStyledAttributes(
                 attrs, R.styleable.YmageCutterView, defStyle, 0)
+        _ratio = a.getString(R.styleable.YmageCutterView_ratio) ?: "1:1"
+        _maxScale = a.getDimension(R.styleable.YmageCutterView_maxScale, defaultMaxScale)
+        _minScale = a.getDimension(R.styleable.YmageCutterView_minScale, defaultMinScale)
         a.recycle()
 
+        (frameV.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = _ratio
+
+        originIV.setOnImageEventListener(object : SubsamplingScaleImageView.OnImageEventListener {
+            override fun onImageLoaded() {
+                minScale = if (originIV.orientation == rotation0 || originIV.orientation == rotation180) {
+                    Math.max(Math.max(frameV.width / originIV.sWidth.toFloat(), frameV.height / originIV.sHeight.toFloat()), defaultMinScale)
+                } else {
+                    Math.max(Math.max(frameV.width / originIV.sHeight.toFloat(), frameV.height / originIV.sWidth.toFloat()), defaultMinScale)
+                }
+                maxScale = Math.max(minScale, _maxScale)
+                Ymager.log("MinScale:$minScale,MaxScale:$maxScale")
+            }
+            override fun onImageLoadError(e: Exception?) {}
+            override fun onPreviewLoadError(e: Exception?) {}
+            override fun onPreviewReleased() {}
+            override fun onReady() {}
+            override fun onTileLoadError(e: Exception?) {}
+        })
         originIV.setOnStateChangedListener(object : SubsamplingScaleImageView.OnStateChangedListener {
             override fun onCenterChanged(newCenter: PointF?, origin: Int) {
                 if (inDrag || inCheck) {
@@ -103,8 +154,6 @@ class YmageCutterView : ConstraintLayout {
         if (src.isEmpty()) {
             return
         }
-//        val fileStream = FileInputStream(src)
-//        regionDecoder = BitmapRegionDecoder.newInstance(fileStream, false)
         originIV.setImage(ImageSource.uri(src))
         originIV.setPanLimit(SubsamplingScaleImageView.PAN_LIMIT_OUTSIDE)
     }
@@ -142,6 +191,13 @@ class YmageCutterView : ConstraintLayout {
     }
     fun rotate(rotate: Int) {
         originIV.orientation = rotate
+        minScale = if (rotate == rotation0 || rotate == rotation180) {
+            Math.max(Math.max(frameV.width / originIV.sWidth.toFloat(), frameV.height / originIV.sHeight.toFloat()), defaultMinScale)
+        } else {
+            Math.max(Math.max(frameV.width / originIV.sHeight.toFloat(), frameV.height / originIV.sWidth.toFloat()), defaultMinScale)
+        }
+        maxScale = Math.max(minScale, _maxScale)
+        Ymager.log("MinScale:$minScale,MaxScale:$maxScale")
     }
 
     private fun resolvePositionCheck() {

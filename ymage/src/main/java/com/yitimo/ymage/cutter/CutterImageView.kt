@@ -7,11 +7,9 @@ import android.graphics.BitmapFactory
 import android.graphics.BitmapRegionDecoder
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.widget.ImageView
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.yitimo.ymage.Ymager
 import java.io.FileInputStream
 
@@ -144,8 +142,6 @@ class CutterImageView: ImageView {
                 _translateY += y/scale
                 offsetX = motionEvent.x
                 offsetY = motionEvent.y
-
-                Log.i("【】", "${_translateX*scale},${_translateY*scale}")
                 resolveTransform()
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {

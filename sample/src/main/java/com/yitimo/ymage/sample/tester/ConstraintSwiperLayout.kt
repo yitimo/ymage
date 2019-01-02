@@ -1,14 +1,10 @@
 package com.yitimo.ymage.sample.tester
 
-import android.app.Activity
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
-import java.util.jar.Attributes
 
 class ConstraintSwiperLayout: ConstraintLayout {
     private var currX = 0f

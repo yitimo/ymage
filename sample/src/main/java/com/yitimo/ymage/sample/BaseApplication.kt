@@ -15,6 +15,7 @@ class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Ymager.debug = true
         Ymager.browserClickBack = true
         Ymager.setTheme(R.style.MyYmage)
 

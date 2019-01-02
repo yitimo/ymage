@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.widget.ImageView
 import com.yitimo.ymage.browser.BrowserActivity
 import com.yitimo.ymage.picker.DBUtils
@@ -18,6 +19,8 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 object Ymager {
+    var debug: Boolean = false
+
     var chosenTheme = R.style.Ymage_Light
     val themeDefault = R.style.Ymage_Default
     val themeLight = R.style.Ymage_Light
@@ -180,6 +183,12 @@ object Ymager {
                     parent.deleteRecursively()
                 }
             } catch (_: Throwable) {}
+        }
+    }
+
+    fun log(info: String) {
+        if (debug) {
+            Log.i("Ymage", info)
         }
     }
 }

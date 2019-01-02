@@ -1,16 +1,9 @@
 package com.yitimo.ymage.sample
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.support.v4.content.res.ResourcesCompat
-import android.text.TextPaint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 
 class MyStatusBar : View {
 

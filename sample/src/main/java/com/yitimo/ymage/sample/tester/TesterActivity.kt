@@ -2,11 +2,7 @@ package com.yitimo.ymage.sample.tester
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import com.yitimo.ymage.sample.R
 
 class TesterActivity : AppCompatActivity() {

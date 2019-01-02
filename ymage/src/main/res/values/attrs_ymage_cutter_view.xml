@@ -1,3 +1,7 @@
 <resources>
-    <declare-styleable name="YmageCutterView" />
+    <declare-styleable name="YmageCutterView">
+        <attr name="ratio">string</attr>
+        <attr name="maxScale">dimension</attr>
+        <attr name="minScale">dimension</attr>
+    </declare-styleable>
 </resources>

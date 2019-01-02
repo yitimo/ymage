@@ -2,7 +2,6 @@ package com.yitimo.ymage.browser
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.PointF
@@ -10,7 +9,6 @@ import android.net.Uri
 import android.os.Parcelable
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +25,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
-import android.view.GestureDetector
 
 class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter() {
     private val limitHeight = Resources.getSystem().displayMetrics.heightPixels
