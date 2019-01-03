@@ -1,10 +1,14 @@
 package com.yitimo.ymage.sample.cutter
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -24,6 +28,17 @@ class CutterActivity : AppCompatActivity() {
 
         initDOM()
         initListen()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            for (i in 0 until grantResults.size) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    Ymager.pick(this, 1, true)
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,7 +72,11 @@ class CutterActivity : AppCompatActivity() {
     }
     private fun initListen() {
         chooseB.setOnClickListener {
-            Ymager.pick(this, 1, true)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Ymager.pick(this, 1, true)
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".picker.ListActivity"
+    tools:context=".picker.YmageListActivity"
     android:background="?colorDefault">
     <LinearLayout
         android:id="@+id/ymage_nav"

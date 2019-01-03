@@ -26,7 +26,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
 
-class BrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter() {
+class YmageBrowserAdapter(pager: ViewPager, _list: ArrayList<String>): PagerAdapter() {
     private val limitHeight = Resources.getSystem().displayMetrics.heightPixels
     private val limitWidth = Resources.getSystem().displayMetrics.widthPixels
     private val data = _list

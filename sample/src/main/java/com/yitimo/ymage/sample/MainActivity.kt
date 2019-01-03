@@ -1,15 +1,12 @@
 package com.yitimo.ymage.sample
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.WindowManager
 import android.widget.Toast
-import com.yitimo.ymage.Ymager
-import com.yitimo.ymage.browser.BrowserDialog
-import com.yitimo.ymage.picker.Ymage
+import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
@@ -56,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GriderActivity::class.java))
         }
         blockBrowserCL.setOnClickListener {
-            val dialog = BrowserDialog.show(supportFragmentManager, list, 1) ?: return@setOnClickListener
+            val dialog = YmageBrowserDialog.show(supportFragmentManager, list, 1) ?: return@setOnClickListener
             dialog.setOnClickListener { s, i ->
                 Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
             }

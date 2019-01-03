@@ -13,7 +13,7 @@ import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 import java.util.*
 
-class BucketAdapter(_context: Context, _list: ArrayList<Bucket>): SpinnerAdapter {
+class YmageBucketAdapter(_context: Context, _list: ArrayList<Bucket>): SpinnerAdapter {
     private var context = _context
     private var list = _list
     override fun getCount(): Int {

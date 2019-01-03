@@ -12,9 +12,9 @@ import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.Ymager.requestYmageOrigin
 
-class OriginActivity : AppCompatActivity() {
-    private lateinit var pager: OriginPager
-    private lateinit var adapter: OriginAdapter
+class YmageOriginActivity : AppCompatActivity() {
+    private lateinit var pager: YmageOriginPager
+    private lateinit var adapter: YmageOriginAdapter
     private lateinit var pick: TextView
     private lateinit var finish: TextView
     private lateinit var back: TextView
@@ -38,7 +38,7 @@ class OriginActivity : AppCompatActivity() {
         chosen = intent?.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
 
         pager = findViewById(R.id.ymage_origin_pager)
-        adapter = OriginAdapter(chosen, DBUtils.query(this, bucket)
+        adapter = YmageOriginAdapter(chosen, YmageDBUtils.query(this, bucket)
                 ?: return)
         pager.offscreenPageLimit = 1
         pager.adapter = adapter
@@ -103,7 +103,7 @@ class OriginActivity : AppCompatActivity() {
 
     companion object {
         fun show(activity: Activity, bucket: Long, position: Int, chosen: ArrayList<Ymage>, limit: Int) {
-            val intent = Intent(activity, OriginActivity::class.java)
+            val intent = Intent(activity, YmageOriginActivity::class.java)
             intent.putExtra("bucket", bucket)
             intent.putExtra("position", position)
             intent.putExtra("limit", limit)

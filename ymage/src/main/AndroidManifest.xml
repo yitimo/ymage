@@ -8,7 +8,7 @@
 
     <application>
         <provider
-            android:name=".Provider"
+            android:name=".YmageProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -17,10 +17,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".picker.ListActivity" />
-        <activity android:name=".picker.OriginActivity" />
+        <activity android:name=".picker.YmageListActivity" />
+        <activity android:name=".picker.YmageOriginActivity" />
         <activity
-            android:name=".browser.BrowserActivity"
+            android:name=".browser.YmageBrowserActivity"
             android:theme="@style/activity_transparent" />
     </application>
 

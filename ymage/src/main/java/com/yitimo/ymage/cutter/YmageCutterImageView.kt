@@ -13,13 +13,13 @@ import android.widget.ImageView
 import com.yitimo.ymage.Ymager
 import java.io.FileInputStream
 
-//class CutterImageView: SubsamplingScaleImageView {
+//class YmageCutterImageView: SubsamplingScaleImageView {
 //    constructor(context: Context): super(context) {}
 //    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {}
 //}
 
 @Deprecated("Use SubsamplingScaleImageView directly for now.")
-class CutterImageView: ImageView {
+class YmageCutterImageView: ImageView {
     private lateinit var regionDecoder: BitmapRegionDecoder
     private var region: Rect = Rect()
 

@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.provider.MediaStore
 import java.util.*
 
-object DBUtils {
+object YmageDBUtils {
     fun queryAlbums(context: Context): ArrayList<Bucket> {
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(

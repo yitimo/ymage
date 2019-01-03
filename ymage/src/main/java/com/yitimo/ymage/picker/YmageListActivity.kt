@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -24,13 +23,15 @@ import com.yitimo.ymage.Ymager.requestYmageOrigin
 import java.io.File
 import android.content.ClipData
 
+/*
+todo 图片选择只涉及本地图片，使用Glide可能会显得浪费，后续考虑实现轻型的图片渲染
+ */
 
-
-class ListActivity : AppCompatActivity() {
+class YmageListActivity : AppCompatActivity() {
     private lateinit var albumsS: Spinner
     private lateinit var gridRV: RecyclerView
-    private lateinit var adapter: ListAdapter
-    private lateinit var albumAdapter: BucketAdapter
+    private lateinit var adapter: YmageListAdapter
+    private lateinit var albumAdapter: YmageBucketAdapter
     private lateinit var finish: TextView
     private lateinit var back: TextView
 
@@ -107,7 +108,7 @@ class ListActivity : AppCompatActivity() {
         }
 
         val defaultChosen = intent.getParcelableArrayListExtra<Ymage>("chosen") ?: arrayListOf()
-        adapter = ListAdapter(defaultChosen, null, limit, showCamera)
+        adapter = YmageListAdapter(defaultChosen, null, limit, showCamera)
 
         finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${defaultChosen.size}/$limit" else "${defaultChosen.size}")
 
@@ -115,19 +116,19 @@ class ListActivity : AppCompatActivity() {
         gridRV.layoutManager = GridLayoutManager(this, 4)
 
         albumsS = findViewById(R.id.ymage_albums)
-        albumAdapter = BucketAdapter(this, arrayListOf(DBUtils.first(this)))
+        albumAdapter = YmageBucketAdapter(this, arrayListOf(YmageDBUtils.first(this)))
         albumsS.adapter = albumAdapter
 
         albumsS.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                adapter.changeCursor(DBUtils.query(applicationContext, p3) ?: return)
+                adapter.changeCursor(YmageDBUtils.query(applicationContext, p3) ?: return)
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                adapter.changeCursor(DBUtils.query(applicationContext, 0) ?: return)
+                adapter.changeCursor(YmageDBUtils.query(applicationContext, 0) ?: return)
             }
         }
         adapter.setImageOnClick {
-            OriginActivity.show(this, albumsS.selectedItemId, it, adapter.getChosen(), limit)
+            YmageOriginActivity.show(this, albumsS.selectedItemId, it, adapter.getChosen(), limit)
         }
         adapter.setImagePick {
             finish.text = resources.getString(R.string.finish_with_count, if (limit > 0) "${adapter.getChosen().size}/$limit" else "${adapter.getChosen().size}")
@@ -151,11 +152,11 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun initGallery() {
-        adapter.changeCursor(DBUtils.query(this) ?: return)
+        adapter.changeCursor(YmageDBUtils.query(this) ?: return)
     }
 
     private fun initAlbum() {
-        albumAdapter.push(DBUtils.queryAlbums(this))
+        albumAdapter.push(YmageDBUtils.queryAlbums(this))
     }
 
     private fun resolveCamera() {

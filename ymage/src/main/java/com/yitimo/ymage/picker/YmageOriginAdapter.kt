@@ -16,7 +16,7 @@ import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 import java.lang.Exception
 
-class OriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() {
+class YmageOriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapter() {
     private var chosen = _chosen
     private var cursor = _cursor
     private val limitWidth = Resources.getSystem().displayMetrics.widthPixels

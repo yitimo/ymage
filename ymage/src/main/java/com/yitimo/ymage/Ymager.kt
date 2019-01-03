@@ -6,11 +6,13 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.widget.ImageView
-import com.yitimo.ymage.browser.BrowserActivity
-import com.yitimo.ymage.picker.DBUtils
-import com.yitimo.ymage.picker.ListActivity
+import com.yitimo.ymage.browser.YmageBrowserActivity
+import com.yitimo.ymage.browser.YmageBrowserDialog
+import com.yitimo.ymage.picker.YmageDBUtils
+import com.yitimo.ymage.picker.YmageListActivity
 import com.yitimo.ymage.picker.Ymage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,7 +55,7 @@ object Ymager {
         if (fragment == null) {
             return
         }
-        val intent = Intent(fragment.activity, ListActivity::class.java)
+        val intent = Intent(fragment.activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         fragment.startActivityForResult(intent, requestYmage)
@@ -62,7 +64,7 @@ object Ymager {
         if (activity == null) {
             return
         }
-        val intent = Intent(activity, ListActivity::class.java)
+        val intent = Intent(activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         activity.startActivityForResult(intent, requestYmage)
@@ -72,8 +74,8 @@ object Ymager {
         if (activity == null) {
             return
         }
-        val list = DBUtils.queryChosen(activity, chosen)
-        val intent = Intent(activity, ListActivity::class.java)
+        val list = YmageDBUtils.queryChosen(activity, chosen)
+        val intent = Intent(activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
@@ -83,8 +85,8 @@ object Ymager {
         if (fragment == null) {
             return
         }
-        val list = DBUtils.queryChosen(fragment.context ?: return, chosen)
-        val intent = Intent(fragment.activity, ListActivity::class.java)
+        val list = YmageDBUtils.queryChosen(fragment.context ?: return, chosen)
+        val intent = Intent(fragment.activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
@@ -95,8 +97,8 @@ object Ymager {
         if (activity == null) {
             return
         }
-        val list = DBUtils.queryChosen(activity, chosen.map { it.absolutePath }.toTypedArray())
-        val intent = Intent(activity, ListActivity::class.java)
+        val list = YmageDBUtils.queryChosen(activity, chosen.map { it.absolutePath }.toTypedArray())
+        val intent = Intent(activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
@@ -106,8 +108,8 @@ object Ymager {
         if (fragment == null) {
             return
         }
-        val list = DBUtils.queryChosen(fragment.context ?: return, chosen.map { it.absolutePath }.toTypedArray())
-        val intent = Intent(fragment.activity, ListActivity::class.java)
+        val list = YmageDBUtils.queryChosen(fragment.context ?: return, chosen.map { it.absolutePath }.toTypedArray())
+        val intent = Intent(fragment.activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", list)
@@ -118,7 +120,7 @@ object Ymager {
         if (activity == null) {
             return
         }
-        val intent = Intent(activity, ListActivity::class.java)
+        val intent = Intent(activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
@@ -128,24 +130,29 @@ object Ymager {
         if (fragment == null) {
             return
         }
-        val intent = Intent(fragment.activity, ListActivity::class.java)
+        val intent = Intent(fragment.activity, YmageListActivity::class.java)
         intent.putExtra("limit", limit)
         intent.putExtra("showCamera", showCamera)
         intent.putExtra("chosen", ArrayList(chosen.toList()))
         fragment.startActivityForResult(intent, requestYmage)
     }
 
+    @Deprecated("Browse by activity is weak for callback listener, use dialog way instead.")
     fun browse(context: Context, start: Int, list: ArrayList<String>) {
         if (list.size == 0) {
             return
         }
-        val intent = Intent(context, BrowserActivity::class.java)
+        val intent = Intent(context, YmageBrowserActivity::class.java)
         intent.putExtra("start", start)
         intent.putExtra("list", list)
         context.startActivity(intent)
         if (context is Activity) {
             context.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
+    }
+
+    fun browse(manager: FragmentManager, list: ArrayList<String>, index: Int): YmageBrowserDialog? {
+        return YmageBrowserDialog.show(manager, list, index)
     }
 
     fun md5(src: String): String {
@@ -178,9 +185,10 @@ object Ymager {
     fun clearOnceCache(context: Context) {
         GlobalScope.launch {
             try {
-                val parent = File(context.cacheDir, "once")
+                val parent = File(context.cacheDir, "ymage_once")
                 if (parent.exists()) {
                     parent.deleteRecursively()
+                    log("Deleted once dir.")
                 }
             } catch (_: Throwable) {}
         }

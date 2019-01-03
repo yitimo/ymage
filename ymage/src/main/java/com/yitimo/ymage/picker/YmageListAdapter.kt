@@ -16,7 +16,7 @@ import android.widget.Toast
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 
-class ListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int, _showCamera: Boolean): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class YmageListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Cursor?, _limit: Int, _showCamera: Boolean): RecyclerView.Adapter<YmageListAdapter.ViewHolder>() {
     private var limit = _limit
     private var chosen = _chosen
     private var cursor = _cursor

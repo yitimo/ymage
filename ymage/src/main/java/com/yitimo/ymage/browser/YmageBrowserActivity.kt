@@ -12,9 +12,9 @@ import android.widget.Toast
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 
-class BrowserActivity : AppCompatActivity() {
+class YmageBrowserActivity : AppCompatActivity() {
     private lateinit var pagerVP: ViewPager
-    private lateinit var adapter: BrowserAdapter
+    private lateinit var adapter: YmageBrowserAdapter
     private lateinit var parent: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class BrowserActivity : AppCompatActivity() {
             return
         }
         pagerVP = findViewById(R.id.ymage_browser_pager)
-        adapter = BrowserAdapter(pagerVP, data)
+        adapter = YmageBrowserAdapter(pagerVP, data)
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start

@@ -48,7 +48,7 @@
             android:text="@string/origin_finish"
             android:gravity="center"/>
     </LinearLayout>
-    <com.yitimo.ymage.picker.OriginPager
+    <com.yitimo.ymage.picker.YmageOriginPager
         android:id="@+id/ymage_origin_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
