@@ -10,22 +10,16 @@ import android.util.AttributeSet
 import android.view.View
 import com.yitimo.ymage.sample.R
 
-/**
- * TODO: document your custom view class.
- */
 class MyView : View {
 
-    private var _exampleString: String? = null // TODO: use a default from R.string...
-    private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
-    private var _exampleDimension: Float = 0f // TODO: use a default from R.dimen...
+    private var _exampleString: String? = null
+    private var _exampleColor: Int = Color.RED
+    private var _exampleDimension: Float = 0f
 
     private var textPaint: TextPaint? = null
     private var textWidth: Float = 0f
     private var textHeight: Float = 0f
 
-    /**
-     * The text to draw
-     */
     var exampleString: String?
         get() = _exampleString
         set(value) {
@@ -33,9 +27,6 @@ class MyView : View {
             invalidateTextPaintAndMeasurements()
         }
 
-    /**
-     * The font color
-     */
     var exampleColor: Int
         get() = _exampleColor
         set(value) {
@@ -43,9 +34,6 @@ class MyView : View {
             invalidateTextPaintAndMeasurements()
         }
 
-    /**
-     * In the example view, this dimension is the font size.
-     */
     var exampleDimension: Float
         get() = _exampleDimension
         set(value) {
@@ -53,9 +41,6 @@ class MyView : View {
             invalidateTextPaintAndMeasurements()
         }
 
-    /**
-     * In the example view, this drawable is drawn above the text.
-     */
     var exampleDrawable: Drawable? = null
 
     constructor(context: Context) : super(context) {
@@ -115,8 +100,6 @@ class MyView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
         val paddingLeft = paddingLeft
         val paddingTop = paddingTop
