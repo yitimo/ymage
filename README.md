@@ -16,6 +16,8 @@ To import the lib into your project, add the following line to your app's gradle
 implementation 'com.yitimo.ymage:ymage:1.3.3'
 ```
 
+Then you should add some code to your project's ``BaseApplication`` or any other app-init file as the [sample app does](https://github.com/yitimo/ymage/blob/master/sample/src/main/java/com/yitimo/ymage/sample/BaseApplication.kt). **These code is used to set Glide engine for ymage picker、browser、grider.**
+
 ## Picker
 
 1. Thumb list with 4 columns grid layout
