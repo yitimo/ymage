@@ -7,6 +7,15 @@ Yitimo's image libs for Android. Include:
 3. Image grider 信息流九宫格图片组件
 4. Image cutter 简单图片裁剪组件
 
+
+To run my sample: ``clone the repo and run the sample app``
+
+To import the lib into your project, add the following line to your app's gradle file:
+
+```
+implementation 'com.yitimo.ymage:ymage:1.3.3'
+```
+
 ## Picker
 
 1. Thumb list with 4 columns grid layout
