@@ -27,7 +27,7 @@ class GriderActivity : AppCompatActivity() {
         singleYGV = findViewById(R.id.grider_single)
 
         singleYGV.limit = Resources.getSystem().displayMetrics.widthPixels.toFloat()
-        singleYGV.itemSpace = 30f
+//        singleYGV.itemSpace = 30f
         singleYGV.items = list
         singleYGV.setOnImageClickListener {
             Ymager.browse(this, it, list)

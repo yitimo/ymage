@@ -26,28 +26,28 @@ class ConstraintSwiperLayout: ConstraintLayout {
     }
 
     private fun init() {
-        setOnTouchListener { v, event ->
-            if (v == null || event == null) {
-                v?.performClick()
-                return@setOnTouchListener false
-            }
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    currX = event.x
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val offset = event.x - currX
-
-                    translationX += offset
-                    currX = event.x
-                }
-                MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
-                    currX = 0f
-                    translationX = 0f
-                }
-            }
-            return@setOnTouchListener true
-        }
+//        setOnTouchListener { v, event ->
+//            if (v == null || event == null) {
+//                v?.performClick()
+//                return@setOnTouchListener false
+//            }
+//            when (event.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    currX = event.x
+//                }
+//                MotionEvent.ACTION_MOVE -> {
+//                    val offset = event.x - currX
+//
+//                    translationX += offset
+//                    currX = event.x
+//                }
+//                MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
+//                    currX = 0f
+//                    translationX = 0f
+//                }
+//            }
+//            return@setOnTouchListener true
+//        }
     }
 
 //    override fun onTouch(v: View?, event: MotionEvent?): Boolean {

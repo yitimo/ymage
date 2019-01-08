@@ -1,16 +1,27 @@
 package com.yitimo.ymage.sample
 
 import android.content.Intent
+import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.Toast
+import com.bumptech.glide.load.engine.Resource
+import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
+import com.yitimo.ymage.sample.tester.Swiper
 import com.yitimo.ymage.sample.tester.TesterActivity
+import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
     private lateinit var blockPickerCL: ConstraintLayout
@@ -18,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var blockBrowserCL: ConstraintLayout
     private lateinit var blockTesterCL: ConstraintLayout
     private lateinit var blockCutterCL: ConstraintLayout
+    var count = 0
 
     private val list = arrayListOf(
             "http://192.168.0.86:8080/84d642fd894f5163717f6a885f3ebce4.gif",
@@ -35,6 +47,21 @@ class MainActivity : AppCompatActivity() {
 
         initDOM()
         initListen()
+        Swiper.manager.subscribe {
+            if (it == 1) {
+                Swiper.subject?.subscribe ({
+                    window.decorView.translationX = (it - Ymager.screenWidth) * 0.3f
+                }, {}, {
+                    window.decorView.translationX = 0f
+                })
+            }
+        }
+        Timer().schedule(1000, 1000) {
+            count = (count + 1)%50
+            GlobalScope.launch (Dispatchers.Main) {
+                findViewById<EditText>(R.id.main_input).setText("就算现在在侧滑，我也还在累加$count")
+            }
+        }
     }
 
     private fun initDOM() {

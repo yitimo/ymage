@@ -36,7 +36,7 @@
             android:name=".tester.TesterActivity"
             android:theme="@style/activity_swiper" />
         <activity android:name=".cutter.CutterActivity" />
-        <activity android:name=".cutter.CutterEditActivity"></activity>
+        <activity android:name=".cutter.CutterEditActivity" />
     </application>
 
 </manifest>

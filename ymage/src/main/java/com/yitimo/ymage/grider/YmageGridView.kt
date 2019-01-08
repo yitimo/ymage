@@ -2,6 +2,7 @@ package com.yitimo.ymage.grider
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
 import android.widget.GridLayout
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
@@ -76,7 +77,8 @@ class YmageGridView: GridLayout {
             return
         }
         removeAllViews()
-        var itemSize = ((if (limit > 0f) limit else Ymager.screenWidth.toFloat()) - itemSpace*4)/3
+        val margin = (layoutParams as ViewGroup.MarginLayoutParams).marginStart + (layoutParams as ViewGroup.MarginLayoutParams).marginEnd
+        var itemSize = ((if (limit > 0f) (limit - margin) else (Ymager.screenWidth.toFloat() - margin)) - itemSpace*2)/3
         val space = if (limit == 0f && items.size == 1) 0 else itemSpace.toInt()
         when (items.size) {
             1 -> {
@@ -85,7 +87,7 @@ class YmageGridView: GridLayout {
             }
             2, 4 -> {
                 columnCount = 2
-                itemSize = if (limit == 0f) (Ymager.screenWidth.toFloat() - space*3)/2 else itemSize * 1.2f
+                itemSize = if (limit == 0f) (Ymager.screenWidth.toFloat() - margin - space)/2 else itemSize * 1.2f
             }
             else -> {
                 columnCount = 3
@@ -94,7 +96,11 @@ class YmageGridView: GridLayout {
         for (index in 0 until items.size) {
             val iv = YmageGridItemView(context)
             val lp = GridLayout.LayoutParams()
-            lp.leftMargin = space
+            if (items.size == 4) {
+                lp.leftMargin = if (index % 2 == 0) 0 else space
+            } else {
+                lp.leftMargin = if (index % 3 == 0) 0 else space
+            }
             if (index > 2) {
                 lp.topMargin = space
             }

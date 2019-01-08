@@ -11,5 +11,7 @@
         android:id="@+id/grider_single"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemSpace="@dimen/dimenSpace"/>
+        android:layout_marginStart="@dimen/dimenSpace"
+        android:layout_marginEnd="@dimen/dimenSpace"
+        app:itemSpace="5dp"/>
 </LinearLayout>
