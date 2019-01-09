@@ -23,7 +23,7 @@
                 android:layout_height="120dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/main_block_grider">
-                <TextView
+                <com.yitimo.ymage.sample.tester.LimitTextView
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -128,6 +128,36 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground" />
             </android.support.constraint.ConstraintLayout>
+            <!--<com.yitimo.ymage.sample.tester.LimitTextView-->
+                <!--android:id="@+id/limit_text"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--android:text="你\n你\n你\n你                                                                                                                                                                                                                                                                                                                                                              你你你"-->
+                <!--android:maxLines="4"-->
+                <!--app:ellipsisText="111111"-->
+                <!--app:extraText="222222"-->
+                <!--app:extraColor="@color/colorPrimary"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/main_block_cutter"-->
+                <!--android:ellipsize="end"-->
+                <!--tools:targetApi="lollipop" />-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/limit_text"-->
+                <!--android:ellipsize="end"-->
+                <!--android:text="你\n你\n你\n你                                                                                                                                                                                                                                                                                                                                                              你你你"-->
+                <!--android:maxLines="4"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--android:text="0\n00000000\n0000\n000000000000000000000000000000000000000000000000\t\t\t\t\n0000\n\n\n0000000000\n00000000000000000\n0\n0\n0"-->
+                <!--android:maxLines="4"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/main_block_cutter"-->
+                <!--android:ellipsize="end"-->
+                <!--tools:targetApi="lollipop" />-->
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
     <EditText

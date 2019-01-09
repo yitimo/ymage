@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="LimitTextView">
+        <attr name="ellipsisText" format="string" />
+        <attr name="extraText" format="string" />
+        <attr name="extraColor" format="color" />
+    </declare-styleable>
+</resources>

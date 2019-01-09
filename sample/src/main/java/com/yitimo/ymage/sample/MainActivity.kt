@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-        Timer().schedule(1000, 1000) {
-            count = (count + 1)%50
-            GlobalScope.launch (Dispatchers.Main) {
-                findViewById<EditText>(R.id.main_input).setText("就算现在在侧滑，我也还在累加$count")
-            }
-        }
+//        Timer().schedule(1000, 1000) {
+//            count = (count + 1)%50
+//            GlobalScope.launch (Dispatchers.Main) {
+//                findViewById<EditText>(R.id.main_input).setText("就算现在在侧滑，我也还在累加$count")
+//            }
+//        }
     }
 
     private fun initDOM() {
