@@ -128,19 +128,26 @@
                     android:layout_height="match_parent"
                     android:background="?android:attr/selectableItemBackground" />
             </android.support.constraint.ConstraintLayout>
-            <!--<com.yitimo.ymage.sample.tester.LimitTextView-->
-                <!--android:id="@+id/limit_text"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:text="你\n你\n你\n你                                                                                                                                                                                                                                                                                                                                                              你你你"-->
-                <!--android:maxLines="4"-->
-                <!--app:ellipsisText="111111"-->
-                <!--app:extraText="222222"-->
-                <!--app:extraColor="@color/colorPrimary"-->
-                <!--app:layout_constraintTop_toBottomOf="@id/main_block_cutter"-->
-                <!--android:ellipsize="end"-->
-                <!--tools:targetApi="lollipop" />-->
+            <com.yitimo.ymage.sample.tester.LimitTextView
+                android:id="@+id/limit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimenFont"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="@dimen/dimenSpace"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:letterSpacing="0.05"
+                android:maxLines="7"
+                android:ellipsize="end"
+                app:ellipsisText="... "
+                app:extraColor="@color/colorAccent"
+                app:extraText="全文"
+                android:lineSpacingExtra="4dp"
+                android:text="林翠玲幸福银行[爱心]亲子分享: \n\n很多父母抱怨孩子不听话抱怨孩子不听话抱怨孩子不听话n很多父母抱怨孩子不听话抱怨孩子不听话抱怨孩子不听话n很多父母抱怨孩子不听话抱怨孩子不听话抱怨孩子不听话，然而，有几位父母真正倾听孩子呢？父母更倾向于\n 反应和纠正：不许那样和我说话。你怎么就不能更积极，更感恩更感恩更感，更尊重？你不该有那种感觉。你为什"
+                app:layout_constraintTop_toBottomOf="@id/main_block_cutter"
+                app:forceEllipsis="true"
+                tools:targetApi="lollipop" />
             <!--<TextView-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -149,15 +156,6 @@
                 <!--android:ellipsize="end"-->
                 <!--android:text="你\n你\n你\n你                                                                                                                                                                                                                                                                                                                                                              你你你"-->
                 <!--android:maxLines="4"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:text="0\n00000000\n0000\n000000000000000000000000000000000000000000000000\t\t\t\t\n0000\n\n\n0000000000\n00000000000000000\n0\n0\n0"-->
-                <!--android:maxLines="4"-->
-                <!--app:layout_constraintTop_toBottomOf="@id/main_block_cutter"-->
-                <!--android:ellipsize="end"-->
-                <!--tools:targetApi="lollipop" />-->
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
     <EditText

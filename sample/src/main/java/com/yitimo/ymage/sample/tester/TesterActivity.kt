@@ -16,8 +16,6 @@ class TesterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tester)
-        Swiper.subject = PublishSubject.create<Float>()
-        Swiper.manager.onNext(1)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -38,9 +36,10 @@ class TesterActivity : AppCompatActivity() {
                 val offset = event.x - currX
 
                 window.decorView.translationX =  if (window.decorView.translationX + offset > 0) window.decorView.translationX + offset else 0f
+//                parent?.window?.decorView?.translationX = (window.decorView.translationX - Ymager.screenWidth) * 0.3f
 
+                Swiper.manager?.onNext(window.decorView.translationX)
                 currX = event.x
-                Swiper.subject?.onNext(window.decorView.translationX)
             }
             MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
                 if (window.decorView.translationX > Ymager.screenWidth*0.5f) {
@@ -50,18 +49,13 @@ class TesterActivity : AppCompatActivity() {
                     currX = 0f
                     window.decorView.translationX = 0f
                 }
-
+                parent?.window?.decorView?.translationX = 0f
+                Swiper.manager?.onNext(-1f)
                 prevent = true
                 // todo translateX over 30% -> animation to 100% -> finish
                 // todo translateX less 30% -> animation to 0%
             }
         }
         return true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Swiper.subject?.onComplete()
-        Swiper.subject = null
     }
 }
