@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
+import android.util.TypedValue
 import android.widget.ImageView
 import com.yitimo.ymage.browser.YmageBrowserActivity
 import com.yitimo.ymage.browser.YmageBrowserDialog
@@ -49,6 +50,10 @@ object Ymager {
 
     fun setTheme(theme: Int) {
         chosenTheme = theme
+    }
+
+    fun dp2px(context: Context, dp: Float): Int {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
     }
 
     fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false) {

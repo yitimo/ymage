@@ -67,7 +67,7 @@ open class SwipeBackActivity(private val linked: Boolean = false): AppCompatActi
         }
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                if (event.x < 10) {
+                if (event.x < Ymager.dp2px(this, 25f)) {
                     prevent = false
                     currX = event.x
                 }

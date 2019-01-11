@@ -6,16 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tester.TesterActivity"
-    android:background="#CD5C5C"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true">
-    <com.yitimo.ymage.sample.tester.MyView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:background="#ccc"
-        android:paddingLeft="20dp"
-        android:paddingBottom="40dp"
-        app:exampleColor="#33b5e5"
-        app:exampleDimension="24sp"
-        app:exampleDrawable="@drawable/ic_launcher_foreground"
-        app:exampleString="Hello, MyView" />
+    <TextView
+        android:id="@+id/tester_ltv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A smarter text view for limit line ellipsis:"
+        android:padding="@dimen/dimenSpace"
+        android:textColor="#FFFFFF"/>
+    <com.yitimo.ymage.sample.tester.LimitTextView
+        android:id="@+id/limit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimenFont"
+        android:textColor="#FFFFFF"
+        android:layout_margin="@dimen/dimenSpace"
+        android:letterSpacing="0.05"
+        android:maxLines="11"
+        android:ellipsize="end"
+        app:ellipsisText="... "
+        app:extraColor="@android:color/holo_blue_bright"
+        app:extraText="全文"
+        android:lineSpacingExtra="4dp"
+        android:text="当我在蒙马特 看见满街的马戏\n无端却自觉 太自由 再也变不出惊喜\n避了你至少 几千百公里\n原来为了让你不愿再度被提起\n遇不到他 怎够狠 放得开你\n愿我那尾站在马德里\n伤心像旅行 盼会遇上安份\n在地球尽处 共我拥吻\n最怕世上游遍 发觉没有此人\n冰岛也没有 避世的小镇\n一生在旅行 买票预了双份\n站站停下 最后也空等\n毕竟也自由过 算有幸 有不幸\n当作四出消遣散心 预备66岁初吻"
+        app:layout_constraintTop_toBottomOf="@id/tester_ltv"
+        app:forceEllipsis="true"
+        tools:targetApi="lollipop" />
 </android.support.constraint.ConstraintLayout>
