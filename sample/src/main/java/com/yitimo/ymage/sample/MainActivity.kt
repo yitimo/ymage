@@ -10,9 +10,10 @@ import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
+import com.yitimo.ymage.sample.tester.SwiperBackActivity
 import com.yitimo.ymage.sample.tester.TesterActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : SwiperBackActivity(true) {
     private lateinit var blockPickerCL: ConstraintLayout
     private lateinit var blockGriderCL: ConstraintLayout
     private lateinit var blockBrowserCL: ConstraintLayout
