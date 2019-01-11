@@ -1,24 +1,26 @@
 package com.yitimo.ymage.sample
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 import android.widget.Toast
 import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
 import com.yitimo.ymage.sample.picker.PickerActivity
-import com.yitimo.ymage.sample.tester.SwiperBackActivity
+import com.yitimo.ymage.sample.swiper.SwiperTickActivity
+import com.yitimo.ymage.sample.tester.SwipeBackActivity
 import com.yitimo.ymage.sample.tester.TesterActivity
 
-class MainActivity : SwiperBackActivity(true) {
+class MainActivity : AppCompatActivity() {
     private lateinit var blockPickerCL: ConstraintLayout
     private lateinit var blockGriderCL: ConstraintLayout
     private lateinit var blockBrowserCL: ConstraintLayout
     private lateinit var blockTesterCL: ConstraintLayout
     private lateinit var blockCutterCL: ConstraintLayout
+    private lateinit var blockSwiperCL: ConstraintLayout
     var count = 0
 
     private val list = arrayListOf(
@@ -52,6 +54,7 @@ class MainActivity : SwiperBackActivity(true) {
         blockBrowserCL = findViewById(R.id.main_block_browser)
         blockTesterCL = findViewById(R.id.main_block_tester)
         blockCutterCL = findViewById(R.id.main_block_cutter)
+        blockSwiperCL = findViewById(R.id.main_block_swiper)
     }
 
     private fun initListen() {
@@ -75,6 +78,10 @@ class MainActivity : SwiperBackActivity(true) {
         }
         blockCutterCL.setOnClickListener {
             startActivity(Intent(this, CutterActivity::class.java))
+        }
+        blockSwiperCL.setOnClickListener {
+            startActivity(Intent(this, SwiperTickActivity::class.java))
+            overridePendingTransition(0, android.R.anim.slide_out_right)
         }
     }
 
