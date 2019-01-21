@@ -13,7 +13,7 @@ To run my sample: ``clone the repo and run the sample app``
 To import the lib into your project, add the following line to your app's gradle file:
 
 ```
-implementation 'com.yitimo.ymage:ymage:1.3.3'
+implementation 'com.yitimo.ymage:ymage:1.3.7'
 ```
 
 Then you should add some code to your project's ``BaseApplication`` or any other app-init file as the [sample app does](https://github.com/yitimo/ymage/blob/master/sample/src/main/java/com/yitimo/ymage/sample/BaseApplication.kt). **These code is used to set Glide engine for ymage picker、browser、grider.**
