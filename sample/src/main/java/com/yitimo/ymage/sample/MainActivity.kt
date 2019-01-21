@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 import android.widget.Toast
+import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.sample.cutter.CutterActivity
 import com.yitimo.ymage.sample.grider.GriderActivity
@@ -24,13 +25,16 @@ class MainActivity : AppCompatActivity() {
     var count = 0
 
     private val list = arrayListOf(
-            "http://192.168.0.86:8080/84d642fd894f5163717f6a885f3ebce4.gif",
-            "http://192.168.0.86:8080/publish463943540_1545143783923.jpg",
-            "http://192.168.0.86:8080/publish551108273_1545143783539.jpg",
-            "http://192.168.0.86:8080/publish733834479_1545143782395.jpg",
-            "http://192.168.0.86:8080/publish865261351_1545143784872.jpg",
-            "http://192.168.0.86:8080/publish904752478_1545143781123.jpg"
-//                "http://test.image.zaneds.com/zanmsg/NR/rL/publish3535621208239813520_1545061673031.jpg!thumb"
+            "http://192.168.0.86:8080/Screenshot_2018-09-23-08-55-16-153_com.autonavi.m.png",
+            "http://test.image.zaneds.com/article/Xs/QL/%E5%B1%AF%E8%B4%A7_1547689554603.jpg",
+            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg",
+            "http://192.168.0.86:8080/20190121132208.gif"
+    )
+    private val snaps = arrayListOf(
+            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
+            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
+            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
+            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GriderActivity::class.java))
         }
         blockBrowserCL.setOnClickListener {
-            val dialog = YmageBrowserDialog.show(supportFragmentManager, list, 1) ?: return@setOnClickListener
+            val dialog = Ymager.browse(supportFragmentManager, list, 0, snaps) ?: return@setOnClickListener
             dialog.setOnClickListener { s, i ->
                 Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
             }

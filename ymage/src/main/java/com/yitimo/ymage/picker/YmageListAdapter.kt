@@ -65,6 +65,9 @@ class YmageListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Curso
                 cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
         Ymager.setGridItem?.invoke(holder.itemView.context, holder.image!!, image.Data, size, 30, R.drawable.icon_image_placeholder)
+//        Ymager.loadLimitBitmap?.invoke(holder.itemView.context, image.Data, R.drawable.icon_image_placeholder, Pair(size, size)) {
+//            holder.image!!.setImageBitmap(it)
+//        }
 
         holder.image?.setOnClickListener {
             _onClick?.invoke(resolvePosition(holder.adapterPosition))
@@ -124,8 +127,8 @@ class YmageListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Curso
     }
 
     override fun onViewRecycled(holder: ViewHolder) {
-        super.onViewRecycled(holder)
         holder.image?.setImageResource(R.drawable.icon_image_placeholder)
+        super.onViewRecycled(holder)
     }
 
     override fun getItemId(position: Int): Long {

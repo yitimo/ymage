@@ -69,7 +69,7 @@ class YmageOriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapt
                 imageSSIV.setImage(ImageSource.uri(image.Data))
             }
             else -> {
-                Ymager.getLimitResource?.invoke(container.context, image.Data, limitWidth, limitHeight) {
+                Ymager.loadLimitBitmap?.invoke(container.context, image.Data, R.drawable.icon_image_placeholder, Pair(limitWidth, limitHeight)) {
                     imageSSIV.setImage(ImageSource.bitmap(it))
                 }
             }

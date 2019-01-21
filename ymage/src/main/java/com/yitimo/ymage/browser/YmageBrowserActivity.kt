@@ -35,7 +35,7 @@ class YmageBrowserActivity : AppCompatActivity() {
             return
         }
         pagerVP = findViewById(R.id.ymage_browser_pager)
-        adapter = YmageBrowserAdapter(pagerVP, data)
+        adapter = YmageBrowserAdapter(data, arrayListOf())
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start

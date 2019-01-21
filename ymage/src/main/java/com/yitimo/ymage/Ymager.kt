@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
@@ -40,10 +42,12 @@ object Ymager {
     var screenHeight = Resources.getSystem().displayMetrics.heightPixels
 
     var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
-    var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
+//    var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
+
     var setGif: ((context: Context, iv: ImageView, url: String, holderRes: Int) -> Unit)? = null
-    var getResource: ((context: Context, url: String, callback: (resource: Bitmap) -> Unit, holderRes: Int) -> Unit)? = null
-    var getLimitResource: ((context: Context, src: String, width: Int, height: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
+    var loadBitmap: ((context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
+    var loadFile: ((context: Context, src: String, holderRes: Int, callback: (File) -> Unit) -> Unit)? = null
+    var loadLimitBitmap: ((context: Context, src: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) -> Unit)? = null
 
     var pauseGlide: ((context: Context) -> Unit)? = null
     var resumeGlide: ((context: Context) -> Unit)? = null
@@ -156,8 +160,23 @@ object Ymager {
         }
     }
 
-    fun browse(manager: FragmentManager, list: ArrayList<String>, index: Int): YmageBrowserDialog? {
-        return YmageBrowserDialog.show(manager, list, index)
+    private var browserShowing = false
+    fun browse(manager: FragmentManager, list: ArrayList<String>, index: Int, snaps: ArrayList<String> = arrayListOf()): YmageBrowserDialog? {
+        if (browserShowing) {
+            return null
+        }
+        browserShowing = true
+        val dialog = YmageBrowserDialog()
+        val bundle = Bundle()
+        bundle.putStringArrayList("list", list)
+        bundle.putStringArrayList("snaps", snaps)
+        bundle.putInt("start", index)
+        dialog.arguments = bundle
+        dialog.show(manager, "ymage_browse")
+        dialog.setOnDismissListener {
+            browserShowing = false
+        }
+        return dialog
     }
 
     fun md5(src: String): String {

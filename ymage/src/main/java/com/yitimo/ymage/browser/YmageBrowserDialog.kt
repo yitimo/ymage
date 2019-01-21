@@ -30,7 +30,7 @@ class YmageBrowserDialog: DialogFragment() {
         // todo 根据当前图片上下位置决定是要 坐等淡出 向上滚出并淡出 向下滚出并淡出
         super.onDismiss(dialog)
         onDismissListener?.invoke()
-        Ymager.clearOnceCache(context?:return)
+//        Ymager.clearOnceCache(context?:return)
     }
 
     override fun onStart() {
@@ -40,6 +40,7 @@ class YmageBrowserDialog: DialogFragment() {
 
         val start = arguments?.getInt("start", 0) ?: 0
         val data = arguments?.getStringArrayList("list") ?: arrayListOf()
+        val snaps = arguments?.getStringArrayList("snaps") ?: arrayListOf()
         if (data.size == 0) {
             Toast.makeText(context, "没有图片可以浏览", Toast.LENGTH_SHORT).show()
             dismiss()
@@ -47,11 +48,11 @@ class YmageBrowserDialog: DialogFragment() {
         }
 
         pagerVP = dialog.findViewById(R.id.ymage_browser_pager)
-        adapter = YmageBrowserAdapter(pagerVP, data)
+        adapter = YmageBrowserAdapter(data, snaps)
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start
-        pagerVP.offscreenPageLimit = 2
+        pagerVP.offscreenPageLimit = 1
 
         parent = dialog.findViewById(R.id.ymage_browser_parent)
 
@@ -79,7 +80,8 @@ class YmageBrowserDialog: DialogFragment() {
         }
     }
 
-    private fun setOnDismissListener(listener: () -> Unit) {
+    @SuppressWarnings("This method is private, do not call in your codes.")
+    fun setOnDismissListener(listener: () -> Unit) {
         onDismissListener = listener
     }
 

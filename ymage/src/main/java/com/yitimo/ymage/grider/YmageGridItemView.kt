@@ -92,7 +92,7 @@ class YmageGridItemView: FrameLayout {
         if (image == null || url == null) {
             return
         }
-        Ymager.getResource?.invoke(context, url!!, { resource ->
+        Ymager.loadBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder) { resource ->
             val width = resource.width
             val height = resource.height
             if (url!!.indexOf(".gif") >= 0 || url!!.indexOf(".GIF") >= 0) {
@@ -104,7 +104,10 @@ class YmageGridItemView: FrameLayout {
             }
             if ((myWidth == 0f || myHeight == 0f) && (maxWidth == 0f || maxHeight == 0f)) {
                 // 单张图且以屏幕宽为边界
-                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, Ymager.screenWidth, height*Ymager.screenWidth/width, R.drawable.icon_image_placeholder)
+//                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, Ymager.screenWidth, height*Ymager.screenWidth/width, R.drawable.icon_image_placeholder)
+                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(Ymager.screenWidth, height*Ymager.screenWidth/width)) {
+                    image!!.setImageBitmap(it)
+                }
                 return@invoke
             }
             // 指定宽高和边界 超出裁剪 不足则放大
@@ -132,7 +135,10 @@ class YmageGridItemView: FrameLayout {
                 if (ivHeight < minSize) {
                     ivHeight = minSize.toInt()
                 }
-                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
+//                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
+                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivHeight)) {
+                    image!!.setImageBitmap(it)
+                }
             } else {
                 // 多张图
                 ivWidth = myWidth.toInt()
@@ -140,7 +146,10 @@ class YmageGridItemView: FrameLayout {
                     ivWidth = minSize.toInt()
                 }
                 Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
+//                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivWidth)) {
+//                    image!!.setImageBitmap(it)
+//                }
             }
-        }, R.drawable.icon_image_placeholder)
+        }
     }
 }
