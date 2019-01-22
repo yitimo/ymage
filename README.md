@@ -16,7 +16,108 @@ To import the lib into your project, add the following line to your app's gradle
 implementation 'com.yitimo.ymage:ymage:1.3.7'
 ```
 
-Then you should add some code to your project's ``BaseApplication`` or any other app-init file as the [sample app does](https://github.com/yitimo/ymage/blob/master/sample/src/main/java/com/yitimo/ymage/sample/BaseApplication.kt). **These code is used to set Glide engine for ymage picker、browser、grider.**
+Then you should add some code to your project's ``BaseApplication`` or any other app-init file as below:
+
+```
+// for ymage over v1.3.7
+Ymager.debug = true // to enable debug mode
+Ymager.browserClickBack = true // to enable browser close by single click
+Ymager.setTheme(R.style.MyYmage) // set custom theme color for ymage, remove to use default
+
+// glide engine code for bitmap load
+Ymager.loadBitmap = fun (context: Context, url: String, holderRes: Int, callback: (Bitmap) -> Unit) {
+    GlideApp.with(context)
+            .asBitmap()
+            .load(url)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<Bitmap> {
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+}
+// glide engine code for file load
+Ymager.loadFile = fun (context: Context, url: String, holderRes: Int, callback: (File) -> Unit) {
+    GlideApp.with(context)
+            .asFile()
+            .load(url)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<File> {
+                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+}
+// glide engine code for bitmap load with size
+Ymager.loadLimitBitmap = fun (context: Context, url: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) {
+    GlideApp.with(context)
+            .asBitmap()
+            .load(url)
+            .override(size.first, size.second)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<Bitmap> {
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+}
+// glide engine code for grid image
+Ymager.setGridItem = fun (context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) {
+    GlideApp.with(context)
+            .load(src)
+            .error(holderRes)
+            .transition(DrawableTransitionOptions.withCrossFade(fade))
+            .override(size, size)
+            .centerCrop()
+            .into(imageView)
+}
+// glide engine code for gif
+Ymager.setGif = fun (context: Context, iv: ImageView, url: String, holderRes: Int) {
+    GlideApp.with(context)
+            .load(url)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .centerInside()
+            .into(iv)
+}
+// glide engine for pause
+Ymager.pauseGlide = fun (context: Context) {
+    GlideApp.with(context).pauseRequests()
+}
+// glide engine for resume
+Ymager.resumeGlide = fun (context: Context) {
+    GlideApp.with(context).resumeRequests()
+}
+```
+
+For version before v1.3.7 can get code [here](https://github.com/yitimo/ymage/blob/2ded3728d0a1b3434d438f1d1e0402313cead702/sample/src/main/java/com/yitimo/ymage/sample/BaseApplication.kt).
 
 ## Picker
 
