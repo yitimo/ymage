@@ -97,7 +97,7 @@ class YmageGridItemView: FrameLayout {
             val height = resource.height
             if (url!!.indexOf(".gif") >= 0 || url!!.indexOf(".GIF") >= 0) {
                 setTag("gif")
-            } else if (height > width * 2) {
+            } else if (height > width * 3) {
                 setTag("long")
             } else {
                 setTag("common")
