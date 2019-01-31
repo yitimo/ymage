@@ -1,5 +1,12 @@
 # Change Logs of Ymage
 
+## v1.3.9
+
+### Feature
+
+1. *Grider* When set grid item size to 0 with single item src, only gif tag will be shown(long image tag will not show any more).
+2. *Grider* Update long image rule, change to ``height > width * 3``.
+
 ## v1.3.7
 
 ### Fix

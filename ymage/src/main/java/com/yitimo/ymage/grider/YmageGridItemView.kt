@@ -104,7 +104,9 @@ class YmageGridItemView: FrameLayout {
             }
             if ((myWidth == 0f || myHeight == 0f) && (maxWidth == 0f || maxHeight == 0f)) {
                 // 单张图且以屏幕宽为边界
-//                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, Ymager.screenWidth, height*Ymager.screenWidth/width, R.drawable.icon_image_placeholder)
+                if (url!!.indexOf(".gif") < 0 && url!!.indexOf(".GIF") < 0) {
+                    setTag("common")
+                }
                 Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(Ymager.screenWidth, height*Ymager.screenWidth/width)) {
                     image!!.setImageBitmap(it)
                 }
