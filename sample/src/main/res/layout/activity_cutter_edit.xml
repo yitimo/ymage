@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".cutter.CutterEditActivity"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true">
     <Button
         android:id="@+id/cutter_edit_back"

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".picker.PickerActivity"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary">
     <Button
         android:id="@+id/sample_pick"
         android:layout_width="match_parent"

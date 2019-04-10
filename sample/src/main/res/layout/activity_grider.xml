@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".grider.GriderActivity"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
     <com.yitimo.ymage.grider.YmageGridView
