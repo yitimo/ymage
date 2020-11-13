@@ -25,17 +25,17 @@ class MainActivity : AppCompatActivity() {
     var count = 0
 
     private val list = arrayListOf(
-            "http://192.168.0.86:8080/Screenshot_2018-09-23-08-55-16-153_com.autonavi.m.png",
-            "http://test.image.zaneds.com/article/Xs/QL/%E5%B1%AF%E8%B4%A7_1547689554603.jpg",
-            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg",
-            "http://192.168.0.86:8080/20190121132208.gif"
+            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%971.jpeg!preview",
+            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%972.jpeg!preview",
+            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%973.png!preview",
+            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%974.png!preview"
     )
-    private val snaps = arrayListOf(
-            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
-            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
-            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb",
-            "http://test.image.zaneds.com/article/FR/OH/publish7876500127334559943_1547397727578.jpg!thumb"
-    )
+//    private val snaps = arrayListOf(
+//            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%971.jpeg!preview",
+//            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%972.jpeg!preview",
+//            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%973.png!preview",
+//            "https://qiniu.yitimo.com/%E7%89%A9%E8%AF%AD%E7%B3%BB%E5%88%974.png!preview"
+//    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, GriderActivity::class.java))
         }
         blockBrowserCL.setOnClickListener {
-            val dialog = Ymager.browse(supportFragmentManager, list, 0, snaps) ?: return@setOnClickListener
+            val dialog = Ymager.browse(supportFragmentManager, list, 0) ?: return@setOnClickListener
             dialog.setOnClickListener { s, i ->
                 Toast.makeText(this, "Clicked!", Toast.LENGTH_SHORT).show()
             }
