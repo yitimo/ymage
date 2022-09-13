@@ -25,7 +25,7 @@ class YmageBrowserSSIV: SubsamplingScaleImageView {
     fun setSrc(origin: String, snap: String = "") {
         if (snap.isNotEmpty()) {
             Ymager.log("load snap for $origin")
-            Ymager.loadBitmap?.invoke(context, snap, R.drawable.icon_image_placeholder) {
+            Ymager.loadBitmap(context, snap, R.drawable.icon_image_placeholder) {
                 if (!loaded) {
                     Ymager.log("set snap for $origin")
                     setImage(ImageSource.bitmap(it))
@@ -33,7 +33,7 @@ class YmageBrowserSSIV: SubsamplingScaleImageView {
             }
         }
         Ymager.log("load origin for $origin")
-        Ymager.loadFile?.invoke(context, origin, R.drawable.icon_image_placeholder) { file ->
+        Ymager.loadFile(context, origin, R.drawable.icon_image_placeholder) { file ->
             Ymager.log("set origin for $origin")
             loaded = true
             setImage(ImageSource.uri(Uri.fromFile(file)))

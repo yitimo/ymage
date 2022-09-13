@@ -92,7 +92,7 @@ class YmageGridItemView: FrameLayout {
         if (image == null || url == null) {
             return
         }
-        Ymager.loadBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder) { resource ->
+        Ymager.loadBitmap(context, url!!, R.drawable.icon_image_placeholder) { resource ->
             val width = resource.width
             val height = resource.height
             if (url!!.indexOf(".gif") >= 0 || url!!.indexOf(".GIF") >= 0) {
@@ -107,10 +107,10 @@ class YmageGridItemView: FrameLayout {
                 if (url!!.indexOf(".gif") < 0 && url!!.indexOf(".GIF") < 0) {
                     setTag("common")
                 }
-                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(Ymager.screenWidth, height*Ymager.screenWidth/width)) {
+                Ymager.loadLimitBitmap(context, url!!, R.drawable.icon_image_placeholder, Pair(Ymager.screenWidth, height*Ymager.screenWidth/width)) {
                     image!!.setImageBitmap(it)
                 }
-                return@invoke
+                return@loadBitmap
             }
             // 指定宽高和边界 超出裁剪 不足则放大
             var ivHeight: Int
@@ -138,7 +138,7 @@ class YmageGridItemView: FrameLayout {
                     ivHeight = minSize.toInt()
                 }
 //                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
-                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivHeight)) {
+                Ymager.loadLimitBitmap(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivHeight)) {
                     image!!.setImageBitmap(it)
                 }
             } else {
@@ -147,7 +147,7 @@ class YmageGridItemView: FrameLayout {
                 if (ivWidth < minSize) {
                     ivWidth = minSize.toInt()
                 }
-                Ymager.setGridItem?.invoke(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
+                Ymager.setGridItem(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
 //                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivWidth)) {
 //                    image!!.setImageBitmap(it)
 //                }

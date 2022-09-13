@@ -5,18 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.yitimo.ymage.browser.YmageBrowserActivity
 import com.yitimo.ymage.browser.YmageBrowserDialog
 import com.yitimo.ymage.picker.YmageDBUtils
 import com.yitimo.ymage.picker.YmageListActivity
 import com.yitimo.ymage.picker.Ymage
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -41,16 +47,107 @@ object Ymager {
     var screenWidth = Resources.getSystem().displayMetrics.widthPixels
     var screenHeight = Resources.getSystem().displayMetrics.heightPixels
 
-    var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
+//    var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
 //    var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
 
-    var setGif: ((context: Context, iv: ImageView, url: String, holderRes: Int) -> Unit)? = null
-    var loadBitmap: ((context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
-    var loadFile: ((context: Context, src: String, holderRes: Int, callback: (File) -> Unit) -> Unit)? = null
-    var loadLimitBitmap: ((context: Context, src: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) -> Unit)? = null
+//    var setGif: ((context: Context, iv: ImageView, url: String, holderRes: Int) -> Unit)? = null
+    // var loadBitmap: ((context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
+//    var loadFile: ((context: Context, src: String, holderRes: Int, callback: (File) -> Unit) -> Unit)? = null
+//    var loadLimitBitmap: ((context: Context, src: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) -> Unit)? = null
 
-    var pauseGlide: ((context: Context) -> Unit)? = null
-    var resumeGlide: ((context: Context) -> Unit)? = null
+//    var pauseGlide: ((context: Context) -> Unit)? = null
+//    var resumeGlide: ((context: Context) -> Unit)? = null
+
+    fun loadBitmap(context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) {
+        Glide.with(context)
+            .asBitmap()
+            .load(src)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<Bitmap> {
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+    }
+
+    fun loadFile(context: Context, url: String, holderRes: Int, callback: (File) -> Unit) {
+        Glide.with(context)
+            .asFile()
+            .load(url)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<File> {
+                override fun onResourceReady(resource: File?, model: Any?, target: Target<File>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<File>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+    }
+
+    fun loadLimitBitmap(context: Context, url: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) {
+        Glide.with(context)
+            .asBitmap()
+            .load(url)
+            .override(size.first, size.second)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .listener(object : RequestListener<Bitmap> {
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    if (resource == null) {
+                        return false
+                    }
+                    callback(resource)
+                    return false
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+                    return false
+                }
+            }).submit()
+    }
+
+    fun setGridItem(context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) {
+        Glide.with(context)
+            .load(src)
+            .error(holderRes)
+            .transition(DrawableTransitionOptions.withCrossFade(fade))
+            .override(size, size)
+            .centerCrop()
+            .into(imageView)
+    }
+
+    fun setGif(context: Context, iv: ImageView, url: String, holderRes: Int) {
+        Glide.with(context)
+            .load(url)
+            .placeholder(holderRes)
+            .error(holderRes)
+            .centerInside()
+            .into(iv)
+    }
+
+    fun pauseGlide(context: Context) {
+        Glide.with(context).pauseRequests()
+    }
+
+    fun resumeGlide(context: Context) {
+        Glide.with(context).resumeRequests()
+    }
 
     fun setTheme(theme: Int) {
         chosenTheme = theme
@@ -206,6 +303,7 @@ object Ymager {
         }
         return parent
     }
+    @OptIn(DelicateCoroutinesApi::class)
     fun clearOnceCache(context: Context) {
         GlobalScope.launch {
             try {

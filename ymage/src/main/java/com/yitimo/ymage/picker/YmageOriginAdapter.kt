@@ -48,7 +48,7 @@ class YmageOriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapt
                 val lp = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 iv.layoutParams = lp
                 iv.scaleType = ImageView.ScaleType.FIT_CENTER
-                Ymager.setGif?.invoke(container.context, iv, image.Data, R.drawable.icon_image_placeholder)
+                Ymager.setGif(container.context, iv, image.Data, R.drawable.icon_image_placeholder)
                 container.addView(iv)
                 return iv
             }
@@ -69,7 +69,7 @@ class YmageOriginAdapter(_chosen: ArrayList<Ymage>, _cursor: Cursor): PagerAdapt
                 imageSSIV.setImage(ImageSource.uri(image.Data))
             }
             else -> {
-                Ymager.loadLimitBitmap?.invoke(container.context, image.Data, R.drawable.icon_image_placeholder, Pair(limitWidth, limitHeight)) {
+                Ymager.loadLimitBitmap(container.context, image.Data, R.drawable.icon_image_placeholder, Pair(limitWidth, limitHeight)) {
                     imageSSIV.setImage(ImageSource.bitmap(it))
                 }
             }

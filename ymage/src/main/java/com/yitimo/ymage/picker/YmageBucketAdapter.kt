@@ -61,7 +61,7 @@ class YmageBucketAdapter(_context: Context, _list: ArrayList<Bucket>): SpinnerAd
         val name = view.findViewById<TextView>(R.id.adapter_album_name)
         val size = view.findViewById<TextView>(R.id.adapter_album_size)
 //        GlideApp.with(context).load(list[position].Cover).override(70  * Resources.getSystem().displayMetrics.density.toInt()).into(cover)
-        Ymager.setGridItem?.invoke(context, cover, list[position].Cover, 70  * Resources.getSystem().displayMetrics.density.toInt(), 0, R.drawable.icon_image_placeholder)
+        Ymager.setGridItem(context, cover, list[position].Cover, 70  * Resources.getSystem().displayMetrics.density.toInt(), 0, R.drawable.icon_image_placeholder)
 //        Ymager.loadLimitBitmap?.invoke(context, list[position].Cover, R.drawable.icon_image_placeholder, Pair(Ymager.dp2px(context, 70f), Ymager.dp2px(context, 70f))) {
 //            cover.setImageBitmap(it)
 //        }

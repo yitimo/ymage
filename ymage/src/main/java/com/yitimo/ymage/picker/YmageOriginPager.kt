@@ -11,12 +11,12 @@ class YmageOriginPager(context: Context, attributeSet: AttributeSet? = null): Vi
         when (state) {
             0 -> {
 //                GlideApp.with(context.applicationContext).resumeRequests()
-                Ymager.resumeGlide?.invoke(context)
+                Ymager.resumeGlide(context)
                 scrolling = false
             }
             1 -> {
 //                GlideApp.with(context.applicationContext).pauseRequests()
-                Ymager.pauseGlide?.invoke(context)
+                Ymager.pauseGlide(context)
                 scrolling = true
             }
         }

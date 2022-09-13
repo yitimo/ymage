@@ -24,7 +24,7 @@ class YmageBrowserGif: AppCompatImageView {
     fun setSrc(origin: String, snap: String = "") {
         if (snap.isNotEmpty()) {
             Ymager.log("load snap for $origin")
-            Ymager.loadBitmap?.invoke(context, snap, R.drawable.icon_image_placeholder) {
+            Ymager.loadBitmap(context, snap, R.drawable.icon_image_placeholder) {
                 if (!loaded) {
                     Ymager.log("set snap for $origin")
                     setImageBitmap(it)
@@ -32,7 +32,7 @@ class YmageBrowserGif: AppCompatImageView {
             }
         }
         Ymager.log("load origin for $origin")
-        Ymager.setGif?.invoke(context, this, origin, R.drawable.icon_image_placeholder)
+        Ymager.setGif(context, this, origin, R.drawable.icon_image_placeholder)
     }
     constructor(context: Context): super(context) {
         init()

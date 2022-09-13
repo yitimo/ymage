@@ -64,7 +64,7 @@ class YmageListAdapter(_chosen: ArrayList<Ymage> = arrayListOf(), _cursor: Curso
                 cursor!!.getInt(cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.HEIGHT)),
                 cursor!!.getString(cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)) == "image/gif"
         )
-        Ymager.setGridItem?.invoke(holder.itemView.context, holder.image!!, image.Data, size, 30, R.drawable.icon_image_placeholder)
+        Ymager.setGridItem(holder.itemView.context, holder.image!!, image.Data, size, 30, R.drawable.icon_image_placeholder)
 //        Ymager.loadLimitBitmap?.invoke(holder.itemView.context, image.Data, R.drawable.icon_image_placeholder, Pair(size, size)) {
 //            holder.image!!.setImageBitmap(it)
 //        }
