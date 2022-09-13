@@ -3,10 +3,13 @@ package com.yitimo.ymage.browser
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.view.ViewPager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Toast
 import com.yitimo.ymage.R
@@ -26,7 +29,7 @@ class YmageBrowserDialog: DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.YmageBrowser)
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         // todo 根据当前图片上下位置决定是要 坐等淡出 向上滚出并淡出 向下滚出并淡出
         super.onDismiss(dialog)
         onDismissListener?.invoke()
@@ -35,8 +38,8 @@ class YmageBrowserDialog: DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
-        dialog.setContentView(R.layout.ymage_activity_browser)
+        dialog!!.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
+        dialog!!.setContentView(R.layout.ymage_activity_browser)
 
         val start = arguments?.getInt("start", 0) ?: 0
         val data = arguments?.getStringArrayList("list") ?: arrayListOf()
@@ -47,14 +50,14 @@ class YmageBrowserDialog: DialogFragment() {
             return
         }
 
-        pagerVP = dialog.findViewById(R.id.ymage_browser_pager)
+        pagerVP = dialog!!.findViewById(R.id.ymage_browser_pager)
         adapter = YmageBrowserAdapter(data, snaps)
 
         pagerVP.adapter = adapter
         pagerVP.currentItem = start
         pagerVP.offscreenPageLimit = 1
 
-        parent = dialog.findViewById(R.id.ymage_browser_parent)
+        parent = dialog!!.findViewById(R.id.ymage_browser_parent)
 
         initPager()
     }

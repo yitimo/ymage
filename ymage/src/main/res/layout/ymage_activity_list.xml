@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:text="@string/list_finish"/>
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ymage_grid"
         android:layout_below="@id/ymage_nav"
         android:overScrollMode="never"

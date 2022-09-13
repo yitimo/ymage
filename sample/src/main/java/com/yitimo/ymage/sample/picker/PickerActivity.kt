@@ -5,10 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import android.widget.Button
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.grider.YmageGridView
@@ -54,11 +54,12 @@ class PickerActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == requestYmage) {
             if (data != null) {
-                chosen = data.getParcelableArrayListExtra<Ymage>("chosen").toTypedArray()
+                chosen = data.getParcelableArrayListExtra<Ymage>("chosen")!!.toTypedArray()
                 resolveChosen()
             }
         }

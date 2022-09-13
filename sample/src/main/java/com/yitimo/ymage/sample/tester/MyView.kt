@@ -114,7 +114,7 @@ class MyView : View {
             canvas.drawText(it,
                     paddingLeft + (contentWidth - textWidth) / 2,
                     paddingTop + (contentHeight + textHeight) / 2,
-                    textPaint)
+                    textPaint!!)
         }
 
         // Draw the example drawable on top of the text.

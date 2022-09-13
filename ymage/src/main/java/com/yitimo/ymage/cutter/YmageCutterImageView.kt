@@ -9,7 +9,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import com.yitimo.ymage.Ymager
 import java.io.FileInputStream
 
@@ -19,7 +19,7 @@ import java.io.FileInputStream
 //}
 
 @Deprecated("Use SubsamplingScaleImageView directly for now.")
-class YmageCutterImageView: ImageView {
+class YmageCutterImageView: AppCompatImageView {
     private lateinit var regionDecoder: BitmapRegionDecoder
     private var region: Rect = Rect()
 
@@ -75,7 +75,7 @@ class YmageCutterImageView: ImageView {
     private fun resolveInit() {
         fileStream?.close()
         fileStream = FileInputStream(src)
-        regionDecoder = BitmapRegionDecoder.newInstance(fileStream, false)
+        regionDecoder = BitmapRegionDecoder.newInstance(fileStream!!, false)!!
         iWidth = regionDecoder.width
         iHeight = regionDecoder.height
 

@@ -5,12 +5,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import com.yitimo.ymage.R
 import com.yitimo.ymage.Ymager
 
-class YmageBrowserGif: ImageView {
+class YmageBrowserGif: AppCompatImageView {
     private var onLeaveListener: ((Float, Boolean) -> Unit)? = null
 
     private var startY = 0f

@@ -2,10 +2,10 @@ package com.yitimo.ymage.picker
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v4.view.ViewPager
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager.widget.ViewPager
 import android.widget.TextView
 import android.widget.Toast
 import com.yitimo.ymage.R

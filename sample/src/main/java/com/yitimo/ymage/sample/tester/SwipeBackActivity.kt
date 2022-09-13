@@ -3,7 +3,7 @@ package com.yitimo.ymage.sample.tester
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MotionEvent
 import com.yitimo.ymage.Ymager
 import io.reactivex.disposables.Disposable

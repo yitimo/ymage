@@ -1,12 +1,12 @@
 package com.yitimo.ymage.sample.picker
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 
-class FragmentAdapter(manager: FragmentManager): FragmentStatePagerAdapter(manager) {
-    private val pages = arrayListOf<Fragment>()
-    override fun getItem(position: Int): Fragment {
+class FragmentAdapter(manager: androidx.fragment.app.FragmentManager): androidx.fragment.app.FragmentStatePagerAdapter(manager) {
+    private val pages = arrayListOf<androidx.fragment.app.Fragment>()
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
         return pages[position]
     }
 
@@ -14,7 +14,7 @@ class FragmentAdapter(manager: FragmentManager): FragmentStatePagerAdapter(manag
         return pages.size
     }
 
-    fun setPage(page: Fragment): Int {
+    fun setPage(page: androidx.fragment.app.Fragment): Int {
         pages.add(page)
         notifyDataSetChanged()
         return pages.size

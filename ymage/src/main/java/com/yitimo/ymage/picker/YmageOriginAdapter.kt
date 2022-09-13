@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.graphics.PointF
 import android.os.Parcelable
 import android.provider.MediaStore
-import android.support.v4.view.PagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT

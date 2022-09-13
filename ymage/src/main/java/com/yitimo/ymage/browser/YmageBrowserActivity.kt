@@ -3,10 +3,10 @@ package com.yitimo.ymage.browser
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Resources
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.view.ViewPager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.viewpager.widget.ViewPager
 import android.view.WindowManager
 import android.widget.Toast
 import com.yitimo.ymage.R

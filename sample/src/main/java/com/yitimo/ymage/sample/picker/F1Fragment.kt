@@ -3,7 +3,7 @@ package com.yitimo.ymage.sample.picker
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +14,9 @@ import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.Ymager.requestYmage
 import com.yitimo.ymage.sample.R
 
-class F1Fragment : Fragment() {
+class F1Fragment : androidx.fragment.app.Fragment() {
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == requestYmage) {
@@ -29,7 +30,7 @@ class F1Fragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_f1, container, false)
         val b = view.findViewById<Button>(R.id.fragment_pick)
         b.setOnClickListener {
-            Log.i("【】", "${context is Fragment}")
+            Log.i("【】", "${context is androidx.fragment.app.Fragment}")
             Ymager.pick(this, 2, true)
         }
         return view

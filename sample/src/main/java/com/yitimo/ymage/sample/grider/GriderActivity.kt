@@ -1,7 +1,7 @@
 package com.yitimo.ymage.sample.grider
 
 import android.content.res.Resources
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yitimo.ymage.Ymager
 import com.yitimo.ymage.grider.YmageGridView

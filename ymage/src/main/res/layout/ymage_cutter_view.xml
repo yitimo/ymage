@@ -1,4 +1,4 @@
-<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -53,4 +53,4 @@
         app:layout_constraintWidth_percent="0.7"
         app:layout_constraintWidth_max="300dp"
         app:layout_constraintDimensionRatio="1:1"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
