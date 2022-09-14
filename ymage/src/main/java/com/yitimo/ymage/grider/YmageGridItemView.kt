@@ -108,7 +108,7 @@ class YmageGridItemView: FrameLayout {
                     setTag("common")
                 }
                 Ymager.loadLimitBitmap(context, url!!, R.drawable.icon_image_placeholder, Pair(Ymager.screenWidth, height*Ymager.screenWidth/width)) {
-                    image!!.setImageBitmap(it)
+                    post { image!!.setImageBitmap(it) }
                 }
                 return@loadBitmap
             }
@@ -139,7 +139,7 @@ class YmageGridItemView: FrameLayout {
                 }
 //                Ymager.setSingleGridItem?.invoke(context, image!!, url!!, ivWidth, ivHeight, R.drawable.icon_image_placeholder)
                 Ymager.loadLimitBitmap(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivHeight)) {
-                    image!!.setImageBitmap(it)
+                    post { image!!.setImageBitmap(it) }
                 }
             } else {
                 // 多张图
@@ -147,7 +147,9 @@ class YmageGridItemView: FrameLayout {
                 if (ivWidth < minSize) {
                     ivWidth = minSize.toInt()
                 }
-                Ymager.setGridItem(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
+                post {
+                    Ymager.setGridItem(context, image!!, url!!, ivWidth, 0, R.drawable.icon_image_placeholder)
+                }
 //                Ymager.loadLimitBitmap?.invoke(context, url!!, R.drawable.icon_image_placeholder, Pair(ivWidth, ivWidth)) {
 //                    image!!.setImageBitmap(it)
 //                }

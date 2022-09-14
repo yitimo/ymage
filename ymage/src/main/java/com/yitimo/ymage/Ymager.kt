@@ -6,28 +6,27 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
+import androidx.annotation.MainThread
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.yitimo.ymage.browser.YmageBrowserActivity
 import com.yitimo.ymage.browser.YmageBrowserDialog
-import com.yitimo.ymage.picker.YmageDBUtils
-import com.yitimo.ymage.picker.YmageListActivity
-import com.yitimo.ymage.picker.Ymage
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import kotlin.concurrent.thread
 
 object Ymager {
     var debug: Boolean = false
@@ -46,17 +45,6 @@ object Ymager {
 
     var screenWidth = Resources.getSystem().displayMetrics.widthPixels
     var screenHeight = Resources.getSystem().displayMetrics.heightPixels
-
-//    var setGridItem: ((context: Context, imageView: ImageView, src: String, size: Int, fade: Int, holderRes: Int) -> Unit)? = null
-//    var setSingleGridItem: ((context: Context, iv: ImageView, url: String, width: Int, height: Int, holderRes: Int) -> Unit)? = null
-
-//    var setGif: ((context: Context, iv: ImageView, url: String, holderRes: Int) -> Unit)? = null
-    // var loadBitmap: ((context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) -> Unit)? = null
-//    var loadFile: ((context: Context, src: String, holderRes: Int, callback: (File) -> Unit) -> Unit)? = null
-//    var loadLimitBitmap: ((context: Context, src: String, holderRes: Int, size: Pair<Int, Int>, callback: (Bitmap) -> Unit) -> Unit)? = null
-
-//    var pauseGlide: ((context: Context) -> Unit)? = null
-//    var resumeGlide: ((context: Context) -> Unit)? = null
 
     fun loadBitmap(context: Context, src: String, holderRes: Int, callback: (Bitmap) -> Unit) {
         Glide.with(context)
@@ -155,92 +143,6 @@ object Ymager {
 
     fun dp2px(context: Context, dp: Float): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
-    }
-
-    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false) {
-        if (fragment == null) {
-            return
-        }
-        val intent = Intent(fragment.activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        fragment.startActivityForResult(intent, requestYmage)
-    }
-    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false) {
-        if (activity == null) {
-            return
-        }
-        val intent = Intent(activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        activity.startActivityForResult(intent, requestYmage)
-    }
-
-    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
-        if (activity == null) {
-            return
-        }
-        val list = YmageDBUtils.queryChosen(activity, chosen)
-        val intent = Intent(activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", list)
-        activity.startActivityForResult(intent, requestYmage)
-    }
-    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<String>) {
-        if (fragment == null) {
-            return
-        }
-        val list = YmageDBUtils.queryChosen(fragment.context ?: return, chosen)
-        val intent = Intent(fragment.activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", list)
-        fragment.startActivityForResult(intent, requestYmage)
-    }
-
-    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
-        if (activity == null) {
-            return
-        }
-        val list = YmageDBUtils.queryChosen(activity, chosen.map { it.absolutePath }.toTypedArray())
-        val intent = Intent(activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", list)
-        activity.startActivityForResult(intent, requestYmage)
-    }
-    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<File>) {
-        if (fragment == null) {
-            return
-        }
-        val list = YmageDBUtils.queryChosen(fragment.context ?: return, chosen.map { it.absolutePath }.toTypedArray())
-        val intent = Intent(fragment.activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", list)
-        fragment.startActivityForResult(intent, requestYmage)
-    }
-
-    fun pick(activity: Activity?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
-        if (activity == null) {
-            return
-        }
-        val intent = Intent(activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", ArrayList(chosen.toList()))
-        activity.startActivityForResult(intent, requestYmage)
-    }
-    fun pick(fragment: Fragment?, limit: Int = 1, showCamera: Boolean = false, chosen: Array<Ymage>) {
-        if (fragment == null) {
-            return
-        }
-        val intent = Intent(fragment.activity, YmageListActivity::class.java)
-        intent.putExtra("limit", limit)
-        intent.putExtra("showCamera", showCamera)
-        intent.putExtra("chosen", ArrayList(chosen.toList()))
-        fragment.startActivityForResult(intent, requestYmage)
     }
 
     @Deprecated("Browse by activity is weak for callback listener, use dialog way instead.")

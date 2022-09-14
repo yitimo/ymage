@@ -5,16 +5,16 @@
     <ImageView
         android:id="@+id/adapter_ymage_img"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:background="?colorDefault"
         android:contentDescription="@null"/>
     <TextView
         android:id="@+id/adapter_ymage_img_chosen"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimenDefaultL"
-        android:minWidth="@dimen/dimenDefaultL"
+        android:layout_height="26dp"
+        android:minWidth="26dp"
         android:gravity="center"
         android:layout_gravity="top|end"
         android:layout_marginTop="@dimen/dimenMini"

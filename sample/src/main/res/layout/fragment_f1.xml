@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:text="Choose"/>
 
-    <GridLayout
-        android:id="@+id/fragment_result"
+    <com.yitimo.ymage.grider.YmageGridView
+        android:id="@+id/sample_fragment_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="3"/>
+        app:itemSpace="@dimen/dimenMini"/>
 </LinearLayout>

@@ -95,18 +95,17 @@ class YmageGridView: GridLayout {
         }
         for (index in 0 until items.size) {
             val iv = YmageGridItemView(context)
-            val lp = GridLayout.LayoutParams()
+            val lp = LayoutParams()
             if (items.size == 4) {
                 lp.leftMargin = if (index % 2 == 0) 0 else space
+                lp.topMargin = if (index > 1) space else 0
             } else {
                 lp.leftMargin = if (index % 3 == 0) 0 else space
-            }
-            if (index > 2) {
-                lp.topMargin = space
+                lp.topMargin = if (index > 2) space else 0
             }
             iv.layoutParams = lp
-            iv.maxHeight = limit*0.7f
-            iv.maxWidth = limit*0.7f
+            iv.maxHeight = limit * 0.7f
+            iv.maxWidth = limit * 0.7f
             iv.minSize = 70f
             iv.myHeight = itemSize
             iv.myWidth = itemSize
