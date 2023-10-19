@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PointF
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -28,7 +30,9 @@ class YmageBrowserSSIV: SubsamplingScaleImageView {
             Ymager.loadBitmap(context, snap, R.drawable.icon_image_placeholder) {
                 if (!loaded) {
                     Ymager.log("set snap for $origin")
-                    setImage(ImageSource.bitmap(it))
+                    Handler(Looper.getMainLooper()).post {
+                        setImage(ImageSource.bitmap(it))
+                    }
                 }
             }
         }
@@ -36,7 +40,9 @@ class YmageBrowserSSIV: SubsamplingScaleImageView {
         Ymager.loadFile(context, origin, R.drawable.icon_image_placeholder) { file ->
             Ymager.log("set origin for $origin")
             loaded = true
-            setImage(ImageSource.uri(Uri.fromFile(file)))
+            Handler(Looper.getMainLooper()).post {
+                setImage(ImageSource.uri(Uri.fromFile(file)))
+            }
         }
     }
 
