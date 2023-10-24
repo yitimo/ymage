@@ -1,8 +1,11 @@
 package com.yitimo.ymage.picker
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
+import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
 import java.util.*
 
@@ -13,15 +16,31 @@ object YmageDBUtils {
             MediaStore.Images.Media.BUCKET_ID,
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
             MediaStore.MediaColumns.DATA,
-            "COUNT(${MediaStore.Images.Media.BUCKET_ID}) as data_count"
+            "COUNT(${MediaStore.Images.Media.BUCKET_ID})"
         )
-        val cursor = context.contentResolver.query(
-            uri,
-            projection,
-            "0=0) GROUP BY ${MediaStore.Images.Media.BUCKET_ID} HAVING (COUNT(${MediaStore.Images.Media.BUCKET_ID})>0",
-            null,
-            "${MediaStore.Images.Media.DATE_TAKEN} DESC"
-        )
+        val cursor: Cursor?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val queryArgs = Bundle()
+            queryArgs.putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Images.Media.DATE_TAKEN))
+            queryArgs.putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
+            // TODO: support api 26~29 :(
+            queryArgs.putStringArray(ContentResolver.QUERY_ARG_GROUP_COLUMNS, arrayOf(MediaStore.Images.Media.BUCKET_ID))
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_HAVING, "COUNT(${MediaStore.Images.Media.BUCKET_ID})>0")
+            cursor = context.contentResolver.query(
+                uri,
+                projection,
+                queryArgs,
+                null
+            )
+        } else {
+            cursor = context.contentResolver.query(
+                uri,
+                projection,
+                "0=0) GROUP BY ${MediaStore.Images.Media.BUCKET_ID} HAVING (COUNT(${MediaStore.Images.Media.BUCKET_ID})>0",
+                null,
+                "${MediaStore.Images.Media.DATE_TAKEN} DESC"
+            )
+        }
         val list = arrayListOf<Bucket>()
         if (cursor == null) {
             return  arrayListOf()
@@ -102,24 +121,38 @@ object YmageDBUtils {
     }
     @SuppressLint("Recycle")
     fun first(context: Context): Bucket {
-        val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
             MediaStore.MediaColumns.DATA,
-            "COUNT(*) as count"
+            "COUNT(${MediaStore.Images.ImageColumns._ID})"
         )
-        val cursor = context.contentResolver.query(
+        val cursor: Cursor
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val queryArgs = Bundle()
+            queryArgs.putInt(ContentResolver.QUERY_ARG_LIMIT, 1)
+            queryArgs.putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Images.Media.DATE_TAKEN))
+            queryArgs.putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
+            cursor = context.contentResolver.query(
+                uri,
+                projection,
+                queryArgs,
+                null
+            ) ?: return Bucket()
+        } else {
+            cursor = context.contentResolver.query(
                 uri,
                 projection,
                 null,
                 null,
-                "${MediaStore.Images.Media.DATE_TAKEN} DESC LIMIT 1"
-        ) ?: return Bucket()
+                "${MediaStore.Images.Media.DATE_TAKEN} DESC"
+            ) ?: return Bucket()
+        }
         cursor.moveToFirst()
         val rs = Bucket(
-                0,
-                cursor.getString(0) ?: "",
-                cursor.getInt(1),
-                "全部"
+            0,
+            cursor.getString(0) ?: "",
+            cursor.getInt(1),
+            "全部"
         )
         cursor.close()
         return rs
